@@ -1,20 +1,19 @@
 requirejs.config({
 	paths: {
 		lodash : './libs/lodash',
-		phaser : './libs/phaser'
+		//phaser : './libs/phaser'
 	},
 
-	shim : {
+	/*shim : {
 		'phaser' : {
 			deps : ['lodash'],
 			exports : 'phaser'
 		}
-	}
+	}*/
 });
 
-require(['phaser', 'lodash'], function(phaser, _) {
+require(['lodash'], function(_) {
 	require(['./scripts/Game'], function(Game) {
 		window.Game = Game;
-		Game.init();
 	});
 });

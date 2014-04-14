@@ -1,22 +1,20 @@
 define(function(require) {
 
-	// var EnemyRef = require('Enemy');
-	//var Enemy = new Enemy();
+	return new Phaser.Game(1024, 768, Phaser.AUTO, 'game', {
+		preload: function(){
+			console.log('Game Preload');
+		},
 
-	// var EnemyVolRef = _.extend({
-	// 	vol:function(){
+		create: function(){
+			console.log('Game Create');
+		},
 
-	// 	}
-	// }, EnemyRef);
+		update: function(){
+			console.log('Game Update');
+		},
 
-	// return new EnemyVolRef();
-
-	var Game = {
-		// Enemy: require('Enemy'),
-		init: function(){
-			console.log(this);
+		render: function(){
+			console.log('Game Render');
 		}
-	};
-
-	return Game;
+	});
 });
