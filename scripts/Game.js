@@ -1,6 +1,7 @@
 define(function(require) {
 	var Map = require("./Map");
 	var Player = require('./Player');
+	var podsManager = require('./podsManager');
 	
 
 	return new Phaser.Game(1024, 768, Phaser.AUTO, 'game', {
@@ -11,6 +12,7 @@ define(function(require) {
     		//  Next we load the tileset. This.game is just an image, loaded in via the normal way we load images:
 
     		this.game.load.image('tiles', 'Assets/typeOfCase.png');
+    		podsManager.preload();
     		Player.preload();
 		},
 
@@ -36,11 +38,8 @@ define(function(require) {
 		    this.map = new Map(this.game.map,12,16);
 		    this.map.init();
 		    //this.game.layerObject.debug = true;
-
-		    //var cases = parseTiles(this.game.map);
-
-		    //console.log('Map Create', this.game.map);
 			
+			podsManager.create(this.map);
 		    Player.create();
 		},
 

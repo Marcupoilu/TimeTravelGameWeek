@@ -55,8 +55,8 @@ define(function(require) {
 
             }
 
-            console.log(this.layer1);
-            console.log(this.layer2);
+            //console.log(this.layer1);
+            //console.log(this.layer2);
         }
     }
 
