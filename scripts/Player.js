@@ -2,8 +2,6 @@ define(function(require){
 
 	var Player = {
 
-		speed: 400,
-
 		preload: function(){
 			Game.load.spritesheet('character', '../images/gabarit_chara.png', 64, 128, 1);
 		},
@@ -14,14 +12,11 @@ define(function(require){
 		    //sprite.animations.play('walk', 50, true);
 
 		    //  Enable if for physics. This creates a default rectangular body.
-			Game.physics.p2.enable(this.sprite);
+			Game.physics.arcade.enable(this.sprite);
 
-		    //  Modify a few body properties
-			this.sprite.body.setZeroDamping();
-			this.sprite.body.fixedRotation = true;
-			this.sprite.body.bounce.y = 0;
-    		this.sprite.body.linearDamping = 1;
-    		this.sprite.body.collideWorldBounds = true;
+			this.sprite.body.bounce.y = 0.2;
+		    this.sprite.body.linearDamping = 1;
+		    this.sprite.body.collideWorldBounds = true;
 
 			this.initInputs();
 		    
@@ -33,23 +28,37 @@ define(function(require){
 			this.cursors = Game.input.keyboard.createCursorKeys();
 		},
 
+		setTarget: function(target){
+		    Game.add.tween(this.sprite.body).to(target, 5000, Phaser.Easing.Linear.None, true);
+		},
+
 		checkInputs: function(){
+			var target = {
+				x: this.sprite.x,
+				y: this.sprite.y
+			}
+
 			if (this.cursors.up.isDown) {
-		    	console.log('up');
-		    	this.sprite.body.moveUp(this.speed);
+		    	//console.log('up');
+		    	target.y -= 64;
+		    	this.setTarget(target);
 
 		    } else if (this.cursors.down.isDown) {
-		    	console.log('down');
-		    	this.sprite.body.moveDown(this.speed);
+		    	//console.log('down');
+		    	target.y += 64;
+		    	this.setTarget(target);
 
 		    } else if (this.cursors.left.isDown) {
-		    	console.log('left');
-		    	this.sprite.body.moveLeft(this.speed);
+		    	//console.log('left');
+		    	target.x -= 64;
+		    	this.setTarget(target);
 
 		    } else if (this.cursors.right.isDown) {
-		    	console.log('right');
-		    	this.sprite.body.moveRight(this.speed);
+		    	//console.log('right');
+		    	target.x += 64;
+		    	this.setTarget(target);
 		    }
+
 		},
 
 		update: function(){

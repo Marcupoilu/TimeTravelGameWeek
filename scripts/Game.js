@@ -48,7 +48,6 @@ define(function(require) {
 			var _this = this;
 			//	Enable p2 physics
 			this.physics.startSystem(Phaser.Physics.ARCADE);
-			this.physics.p2.defaultRestitution = 0;
 
 			this.stage.backgroundColor = '#787878';
 
@@ -64,12 +63,12 @@ define(function(require) {
 		    var layerTiles = this.map.createLayer('Tiles');
 		    var layerObject = this.map.createLayer('Objects');
 
-		    var cases = parseTiles(this.map);
+		    //var cases = parseTiles(this.map);
 
 		    // enable les collisions pour les wall
-		    _.each(cases, function(tiles){
+		    /*_.each(cases, function(tiles){
 		    	_this.physics.p2.enable(_.where(tiles, {type: "wall"}));
-		    });
+		    });*/
 
 		    Player.create();
 		},
