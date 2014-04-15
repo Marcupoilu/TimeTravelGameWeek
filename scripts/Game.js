@@ -39,7 +39,7 @@ define(function(require) {
 		    this.game.mapCases.init();
 		    //this.game.layerObject.debug = true;
 			
-			podsManager.create(this.map);
+			podsManager.create(this.game.mapCases);
 		    Player.create();
 		},
 
