@@ -22,7 +22,6 @@ define(function(require){
 				new Pod(pod.x*64, pod.y*64);
 			});
 
-			console.log(this.pods);
 		}
 	}
 
