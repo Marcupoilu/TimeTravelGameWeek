@@ -72,11 +72,6 @@ define(function(require) {
 		update: function(){
 			// console.log('Game Update');
 			Player.update();
-			//console.log(this.game.map);
-			//console.log(Player.sprite);
-			this.game.physics.arcade.collide(Player.sprite, this.game.layerTiles, function(object1, object2){
-				console.log('Collide', object1, object2);
-			}, null, this);
 		},
 
 		render: function(){

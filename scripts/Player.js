@@ -10,13 +10,11 @@ define(function(require){
 
 		create: function(){
 			this.sprite = Game.add.sprite(0, 640, 'character');
-			this.sprite2 = Game.add.sprite(128, 640, 'character');
 			//sprite.animations.add('walk');
 		    //sprite.animations.play('walk', 50, true);
 
 		    //  Enable if for physics. This creates a default rectangular body.
 			Game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-			Game.physics.enable(this.sprite2, Phaser.Physics.ARCADE);
 
 			this.sprite.body.bounce.y = 0;
 			this.sprite.body.bounce.x = 0;
@@ -48,7 +46,7 @@ define(function(require){
 		    this.tween = Game.add.tween(this.sprite.body).to(target, 200, Phaser.Easing.Linear.None, true);
 		    this.tween.onUpdateCallback(function(){
 		    	if(Game.physics.arcade.collide(Player.sprite, Game.layerTiles)){
-		    		console.log('colide');
+		    		//console.log('colide');
 		    		_this.tween.stop();
 		    		_this.resetVelocity();
 		    		_this.canMove = true;
