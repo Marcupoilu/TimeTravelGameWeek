@@ -1,5 +1,6 @@
 define(function(require) {
 	var Door = function(id,x,y){
+		this.id = id;
 		this.x = x;
 		this.y = y;
 		this.opened = false;
@@ -8,10 +9,10 @@ define(function(require) {
 		this.sprite.body.bounce.y = 0;
 		this.sprite.body.bounce.x = 0;
 	    this.sprite.body.velocity = 0;
-	};
 
-	this.Open = function(){
-		
+		this.Open = function(){
+			this.opened = true;
+		};
 	};
 	return Door;
 });

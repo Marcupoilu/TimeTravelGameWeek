@@ -1,8 +1,9 @@
 define(function(require) {
 	var Map = require("./Map");
 	var Player = require('./Player');
-	var DoorManager = require("./DoorManager")
+	var DoorManager = require("./DoorManager");
 	var podsManager = require('./podsManager');
+	var SwitchManager = require("./SwitchManager");
 	var blocsManager = require('./blocsManager');
 
 	return new Phaser.Game(1024, 768, Phaser.AUTO, 'game', {
@@ -16,6 +17,7 @@ define(function(require) {
     		this.game.load.image('linksImg', 'Assets/links.png');
     		podsManager.preload();
     		DoorManager.preload();
+    		SwitchManager.preload();
     		Player.preload();
 		},
 
@@ -46,12 +48,15 @@ define(function(require) {
 			
 			podsManager.create(this.game.mapCases);
 			blocsManager.create(this.game.mapCases);
+			SwitchManager.create(this.game.mapCases);
 			DoorManager.create(this.game.mapCases);
 		    Player.create();
 		},
 
 		update: function(){
 			// console.log('Game Update');
+			DoorManager.update();
+			SwitchManager.update();
 			Player.update();
 		},
 

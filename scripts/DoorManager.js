@@ -20,7 +20,8 @@ define(function(require) {
 			});
 
 			_.each(this.doorsTile, function(door){
-				_this.doorsObject.push(new Door(0,door.x*64, door.y*64));
+				// console.log(Game.map.layers[1].data[door.y][door.x].index);
+				_this.doorsObject.push(new Door(Game.map.layers[2].data[door.y][door.x].index,door.x*64, door.y*64));
 			});
 
 		},
@@ -35,12 +36,6 @@ define(function(require) {
 					// 	console.log("overlapDoor")
 					// }		
 			});
-		},
-
-		checkOverlap :function(spriteA, spriteB){
-    		var boundsA = spriteA.getBounds();
-    		var boundsB = spriteB.getBounds();
-    		return Phaser.Rectangle.intersects(boundsA, boundsB);
 		}
 	}
 
