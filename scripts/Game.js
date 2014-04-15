@@ -1,6 +1,35 @@
 define(function(require) {
 	var Case = require("./Case");
 	var Player = require('./Player');
+	var typeCase = ["ground", "wall", "bloc", "vortex", "slow", "exit", "console", "door_switch", "pod_switch", "direction", "ice", "switch"];
+
+	function parseTiles(map){
+		var cases = [12];
+	    var tile;
+	    for(var y = 0; y < 12; ++y)
+	    {
+	    	cases[y] = [16];
+	    	for(var x = 0; x < 16; ++x)
+	    	{
+	    		tile = map.layers[0].data[y][x];
+	    		cases[y][x] = new Case(tile.x, tile.y, typeCase[tile.index]);
+	    	}
+
+	    }
+
+	    for(var y = 0; y < 12; ++y)
+	    {
+	    	for(var x = 0; x < 16; ++x)
+	    	{
+	    		tile = map.layers[1].data[y][x];
+	    		if(tile && tile.index != 0)
+	    			cases[y][x] = new Case(tile.x, tile.y, typeCase[tile.index]);
+	    	}
+
+	    }
+
+		return cases;
+	}
 
 	return new Phaser.Game(1024, 768, Phaser.AUTO, 'game', {
 		preload: function(){
@@ -30,10 +59,9 @@ define(function(require) {
 		    var layerTiles = this.map.createLayer('Tiles');
 		    var layerObject = this.map.createLayer('Objects');
 
-		    //  This resizes the game world to match the layer dimensions
-
+		    var cases = parseTiles(this.map);
+		    
 		    Player.create();
-
 		},
 
 		update: function(){
