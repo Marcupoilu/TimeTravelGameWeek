@@ -43,9 +43,10 @@ define(function(require) {
 		},
 
 		create: function(){
+			var _this = this;
 			console.log('Game Create');
 			//	Enable p2 physics
-			this.physics.startSystem(Phaser.Physics.P2JS);
+			this.physics.startSystem(Phaser.Physics.ARCADE);
 			this.physics.p2.defaultRestitution = 0;
 
 			this.stage.backgroundColor = '#787878';
@@ -66,7 +67,7 @@ define(function(require) {
 
 		    // enable les collisions pour les wall
 		    _.each(cases, function(tiles){
-		    	game.physics.p2.enable(_.where(tiles, {type: "wall"}));
+		    	_this.physics.p2.enable(_.where(tiles, {type: "wall"}));
 		    });
 
 		    Player.create();

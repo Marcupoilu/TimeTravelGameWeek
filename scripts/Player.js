@@ -19,6 +19,9 @@ define(function(require){
 		    //  Modify a few body properties
 			this.sprite.body.setZeroDamping();
 			this.sprite.body.fixedRotation = true;
+			this.sprite.body.bounce.y = 0;
+    		this.sprite.body.linearDamping = 1;
+    		this.sprite.body.collideWorldBounds = true;
 
 			this.initInputs();
 		    
