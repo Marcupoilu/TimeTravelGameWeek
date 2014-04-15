@@ -2,7 +2,7 @@ define(function(require) {
 	var Map = require("./Map");
 	var Player = require('./Player');
 	var podsManager = require('./podsManager');
-	
+	var blocsManager = require('./blocsManager');
 
 	return new Phaser.Game(1024, 768, Phaser.AUTO, 'game', {
 		preload: function(){
@@ -40,6 +40,7 @@ define(function(require) {
 		    //this.game.layerObject.debug = true;
 			
 			podsManager.create(this.game.mapCases);
+			blocsManager.create(this.game.mapCases);
 		    Player.create();
 		},
 
