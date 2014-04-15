@@ -19,7 +19,8 @@ define(function(require) {
         13: "direction_right",
         14: "direction_left",
         15: "fast",
-        16: "ice"
+        16: "ice",
+        17: "teleport"
     }
 
     var Map = function Map(map,line,column)
@@ -54,7 +55,7 @@ define(function(require) {
                     if(tile && tile.index != 0)
                         this.layer2[y][x] = new Case(tile.x, tile.y, typeCase[tile.index]);
                     else
-                        this.layer2[y][x] = 0;
+                        this.layer2[y][x] = new Case(x, y, "");
                 }
 
             }
