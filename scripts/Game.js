@@ -1,5 +1,5 @@
 define(function(require) {
-
+	var Case = require("./Case");
 	var Player = require('./Player');
 
 	return new Phaser.Game(1024, 768, Phaser.AUTO, 'game', {
@@ -22,7 +22,7 @@ define(function(require) {
 
 		    //  The first parameter is the tileset name, as specified in the Tiled map editor (and in the tilemap json file)
 		    //  The second parameter maps this name to the Phaser.Cache key 'tiles'
-		    this.map.addTilesetImage('World1', 'tiles');
+		    this.map.addTilesetImage('typeOfCase', 'tiles');
 		    
 		    //  Creates a layer from the World1 layer in the map data.
 		    //  A Layer is effectively like a Phaser.Sprite, so is added to the display list.
