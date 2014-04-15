@@ -12,6 +12,7 @@ define(function(require) {
     		//  Next we load the tileset. This.game is just an image, loaded in via the normal way we load images:
 
     		this.game.load.image('tiles', 'Assets/typeOfCase.png');
+    		this.game.load.image('linksImg', 'Assets/links.png');
     		podsManager.preload();
     		Player.preload();
 		},
@@ -26,10 +27,12 @@ define(function(require) {
 
 		    this.game.map = this.game.add.tilemap('test');
 		    this.game.map.addTilesetImage('typeOfCase', 'tiles');
+		    this.game.map.addTilesetImage('links', 'linksImg');
 		    this.game.map.setCollision([2, 10]);
 		    
 		    this.game.layerTiles = this.game.map.createLayer('Tiles');
 		    this.game.layerObject = this.game.map.createLayer('Objects');
+		    this.game.layerLinks = this.game.map.createLayer('Links');
 
 		    //this.game.map.setCollision(2, true, this.game.layerObject);
 
