@@ -1,5 +1,7 @@
 define(function(require) {
 
+	var Player = require('./Player');
+
 	return new Phaser.Game(1024, 768, Phaser.AUTO, 'game', {
 		preload: function(){
 			console.log('Game Preload');
@@ -28,17 +30,21 @@ define(function(require) {
 		    var layerObject = this.map.createLayer('Objects');
 
 		    //  This resizes the game world to match the layer dimensions
-		    layer.resizeWorld();
+		    //layer.resizeWorld();
 		    console.log("this.map  = ", this.map);
+
+		    Player.init();
 
 		},
 
 		update: function(){
 			// console.log('Game Update');
+			Player.update();
 		},
 
 		render: function(){
 			// console.log('Game Render');
+			Player.render();
 		}
 	});
 	
