@@ -35,8 +35,8 @@ define(function(require) {
 
 		    this.game.layerTiles.debug = true;
 
-		    this.map = new Map(this.game.map,12,16);
-		    this.map.init();
+		    this.game.mapCases = new Map(this.game.map,12,16);
+		    this.game.mapCases.init();
 		    //this.game.layerObject.debug = true;
 			
 			podsManager.create(this.map);
