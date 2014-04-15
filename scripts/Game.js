@@ -10,11 +10,12 @@ define(function(require) {
     		//  Next we load the tileset. This is just an image, loaded in via the normal way we load images:
 
     		this.load.image('tiles', 'Assets/typeOfCase.png');
-
+    		Player.preload();
 		},
 
 		create: function(){
 			console.log('Game Create');
+
 			this.stage.backgroundColor = '#787878';
 
 		    //  The 'mario' key here is the Loader key given in game.load.tilemap
@@ -31,7 +32,7 @@ define(function(require) {
 
 		    //  This resizes the game world to match the layer dimensions
 
-		    Player.init();
+		    Player.create();
 
 		},
 

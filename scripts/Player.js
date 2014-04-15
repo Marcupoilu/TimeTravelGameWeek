@@ -1,7 +1,21 @@
 define(function(require){
+
 	var Player = {
-		init: function(){
+
+		speed: 5,
+
+		preload: function(){
+			Game.load.spritesheet('character', '../images/gabarit_chara.png', 64, 128, 1);
+		},
+
+		create: function(){
+			this.sprite = Game.add.sprite(0, 640, 'character');
+			//sprite.animations.add('walk');
+		    //sprite.animations.play('walk', 50, true);
+
 			this.initInputs();
+		    
+		    console.log('Player Create', this);
 		},
 
 		initInputs: function(){
@@ -11,17 +25,20 @@ define(function(require){
 
 		checkInputs: function(){
 			if (this.cursors.up.isDown) {
-		    	console.log('up');
+		    	//console.log('up');
+		    	this.sprite.y -= this.speed;
 
 		    } else if (this.cursors.down.isDown) {
-		    	console.log('down');
+		    	//console.log('down');
+		    	this.sprite.y += this.speed;
 
 		    } else if (this.cursors.left.isDown) {
-		    	console.log('left');
+		    	//console.log('left');
+		    	this.sprite.x -= this.speed;
 
 		    } else if (this.cursors.right.isDown) {
-		    	console.log('right');
-
+		    	//console.log('right');
+		    	this.sprite.x += this.speed;
 		    }
 		},
 
