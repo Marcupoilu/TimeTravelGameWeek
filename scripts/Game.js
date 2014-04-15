@@ -1,5 +1,5 @@
 define(function(require) {
-
+	var Case = require("./Case");
 	var Player = require('./Player');
 	var typeCase = ["", "ground", "wall", "bloc", "vortex", "slow", "exit", "console", "door_switch", "pod_switch", "direction", "ice", "switch"];
 
@@ -44,6 +44,7 @@ define(function(require) {
 
 		create: function(){
 			console.log('Game Create');
+			var _this = this;
 			//	Enable p2 physics
 			this.physics.startSystem(Phaser.Physics.P2JS);
 			this.physics.p2.defaultRestitution = 0;
@@ -55,7 +56,7 @@ define(function(require) {
 
 		    //  The first parameter is the tileset name, as specified in the Tiled map editor (and in the tilemap json file)
 		    //  The second parameter maps this name to the Phaser.Cache key 'tiles'
-		    this.map.addTilesetImage('World1', 'tiles');
+		    this.map.addTilesetImage('typeOfCase', 'tiles');
 		    
 		    //  Creates a layer from the World1 layer in the map data.
 		    //  A Layer is effectively like a Phaser.Sprite, so is added to the display list.
@@ -66,7 +67,7 @@ define(function(require) {
 
 		    // enable les collisions pour les wall
 		    _.each(cases, function(tiles){
-		    	game.physics.p2.enable(_.where(tiles, {type: "wall"}));
+		    	_this.physics.p2.enable(_.where(tiles, {type: "wall"}));
 		    });
 
 		    Player.create();
