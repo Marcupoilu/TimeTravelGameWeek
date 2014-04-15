@@ -4,45 +4,45 @@ define(function(require) {
 
     var typeCase = ["", "ground", "wall", "bloc", "vortex", "slow", "exit", "console", "door_switch", "pod_switch", "direction", "ice", "switch"];
 
-    function parseTiles(map,line,column){
-        var cases = [line];
-        var tile;
-        for(var y = 0; y < line; ++y)
-        {
-            cases[y] = [column];
-            for(var x = 0; x < column; ++x)
-            {
-                tile = map.layers[0].data[y][x];
-                cases[y][x] = new Case(tile.x, tile.y, typeCase[tile.index]);
-            }
-
-        }
-
-        for(var y = 0; y < line; ++y)
-        {
-            for(var x = 0; x < column; ++x)
-            {
-                tile = map.layers[1].data[y][x];
-                if(tile && tile.index != 0)
-                    cases[y][x] = new Case(tile.x, tile.y, typeCase[tile.index]);
-            }
-
-        }
-
-        return cases;
-    }
-
     var Map = function Map(map,line,column)
     {
         this.map = map;
         this.lineNumber = line || 12;
         this.columnNumber = column || 16;
-        this.caseTable = [];
+        this.layer1 = [this.lineNumber];
+        this.layer2 = [this.lineNumber];
 
         this.init = function()
         {
-            this.caseTable = parseTiles(this.map,this.lineNumber,this.columnNumber);
-            console.log(this.caseTable);
+            //this.caseTable = parseTiles(this.map,this.lineNumber,this.columnNumber);
+            //console.log(this.caseTable);
+            for(var y = 0; y < this.lineNumber; ++y)
+            {
+                this.layer1[y] = [this.columnNumber];
+                for(var x = 0; x < this.columnNumber; ++x)
+                {
+                    tile = map.layers[0].data[y][x];
+                    this.layer1[y][x] = new Case(tile.x, tile.y, typeCase[tile.index]);
+                }
+
+            }
+
+            for(var y = 0; y < this.lineNumber; ++y)
+            {
+                this.layer2[y] = [this.columnNumber];
+                for(var x = 0; x < this.columnNumber; ++x)
+                {
+                    tile = map.layers[1].data[y][x];
+                    if(tile && tile.index != 0)
+                        this.layer2[y][x] = new Case(tile.x, tile.y, typeCase[tile.index]);
+                    else
+                        this.layer2[y][x] = 0;
+                }
+
+            }
+
+            console.log(this.layer1);
+            console.log(this.layer2);
         }
     }
 
