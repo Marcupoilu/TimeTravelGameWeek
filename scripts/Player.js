@@ -124,15 +124,16 @@ define(function(require){
 			else
 				move = true;
 			
+			//pour que le check des collisions se fasse quand même
+			this.sprite.body.velocity.x = idX - this.currCase.x;
+			this.sprite.body.velocity.y = idY - this.currCase.y;
+
+			target.x += 64 * this.sprite.body.velocity.x;
+			target.y += 64 * this.sprite.body.velocity.y;
+			this.setTarget(target);
+
 			if(move)
 			{
-				this.sprite.body.velocity.x = idX - this.currCase.x;
-				this.sprite.body.velocity.y = idY - this.currCase.y;
-
-				target.x += 64 * this.sprite.body.velocity.x;
-				target.y += 64 * this.sprite.body.velocity.y;
-				this.setTarget(target);
-
 				this.currCase.x = idX;
 				this.currCase.y = idY;
 			}
