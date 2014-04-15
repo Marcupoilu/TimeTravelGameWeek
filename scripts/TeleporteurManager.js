@@ -29,7 +29,7 @@ define(function(require) {
 
 			this.linkTeleporteurs();
 
-			console.log("this.teleporteurs = ", this.teleporteurs);
+			// console.log("this.teleporteurs = ", this.teleporteurs);
 		},
 
 		update: function(){
