@@ -1,7 +1,7 @@
 define(function(require) {
 
 	var Player = require('./Player');
-	var typeCase = ["ground", "wall", "bloc", "vortex", "slow", "exit", "console", "door_switch", "pod_switch", "direction", "ice", "switch"];
+	var typeCase = ["", "ground", "wall", "bloc", "vortex", "slow", "exit", "console", "door_switch", "pod_switch", "direction", "ice", "switch"];
 
 	function parseTiles(map){
 		var cases = [12];
@@ -63,7 +63,12 @@ define(function(require) {
 		    var layerObject = this.map.createLayer('Objects');
 
 		    var cases = parseTiles(this.map);
-		    
+
+		    // enable les collisions pour les wall
+		    _.each(cases, function(tiles){
+		    	game.physics.p2.enable(_.where(tiles, {type: "wall"}));
+		    });
+
 		    Player.create();
 		},
 
