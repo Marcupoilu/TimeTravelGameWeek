@@ -10,8 +10,10 @@ define(function(require) {
         {
             this.blocs = [];
             var objectsLayer = map.layer2;
-            _.each(objectsLayer, function(objectLayer){
-                _.each(_.where(objectLayer, {type: 'bloc'}), function(bloc){
+            _.each(objectsLayer, function(objectLayer)
+            {
+                _.each(_.where(objectLayer, {type: 'bloc'}), function(bloc)
+                {
                     _this.blocs.push(bloc);
                 });
             });
