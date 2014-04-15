@@ -19,7 +19,8 @@ define(function(require) {
         13: "direction_right",
         14: "direction_left",
         15: "fast",
-        16: "ice"
+        16: "ice",
+        17: "teleport"
     }
 
     var Map = function Map(map,line,column)

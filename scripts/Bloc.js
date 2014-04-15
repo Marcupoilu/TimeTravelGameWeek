@@ -9,6 +9,12 @@ define(function(require) {
         create : function(map)
         {
             this.blocs = [];
+            var objectsLayer = map.layer2;
+            _.each(objectsLayer, function(objectLayer){
+                _.each(_.where(objectLayer, {type: 'bloc'}), function(bloc){
+                    _this.blocs.push(bloc);
+                });
+            });
         }
     }
     var Bloc = function Bloc(x, y, case)
