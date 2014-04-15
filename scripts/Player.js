@@ -20,7 +20,7 @@ define(function(require){
 			this.sprite.body.bounce.x = 0;
 		    this.sprite.body.linearDamping = 1;
 		    this.sprite.body.collideWorldBounds = true;
-
+		    this.sprite.body.setSize(64,64,0,64);
 			this.initInputs();
 		    
 		    console.log('Player Create', this);
