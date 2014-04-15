@@ -34,46 +34,44 @@ define(function(require) {
 	return new Phaser.Game(1024, 768, Phaser.AUTO, 'game', {
 		preload: function(){
 			console.log('Game Preload');
-			this.load.tilemap('test', 'Assets/Levels/mapTest.json', null, Phaser.Tilemap.TILED_JSON);
+			this.game.load.tilemap('test', 'Assets/Levels/mapTest.json', null, Phaser.Tilemap.TILED_JSON);
 
-    		//  Next we load the tileset. This is just an image, loaded in via the normal way we load images:
+    		//  Next we load the tileset. This.game is just an image, loaded in via the normal way we load images:
 
-    		this.load.image('tiles', 'Assets/typeOfCase.png');
+    		this.game.load.image('tiles', 'Assets/typeOfCase.png');
     		Player.preload();
 		},
 
 		create: function(){
 			var _this = this;
-			console.log('Game Create');
-			var _this = this;
+			console.log('Game Create', this.game);
 			//	Enable p2 physics
-			this.physics.startSystem(Phaser.Physics.ARCADE);
+			this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
-			this.stage.backgroundColor = '#787878';
+			this.game.stage.backgroundColor = '#787878';
 
 		    //  The 'mario' key here is the Loader key given in game.load.tilemap
-		    this.map = this.add.tilemap('test');
+		    this.game.map = this.game.add.tilemap('test');
 
 		    //  The first parameter is the tileset name, as specified in the Tiled map editor (and in the tilemap json file)
-		    //  The second parameter maps this name to the Phaser.Cache key 'tiles'
-		    this.map.addTilesetImage('typeOfCase', 'tiles');
+		    //  The second parameter maps this.game name to the Phaser.Cache key 'tiles'
+		    this.game.map.addTilesetImage('typeOfCase', 'tiles');
 		    
 		    //  Creates a layer from the World1 layer in the map data.
 		    //  A Layer is effectively like a Phaser.Sprite, so is added to the display list.
-		    this.layerTiles = this.map.createLayer('Tiles');
-		    var layerObject = this.map.createLayer('Objects');
+		    this.game.layerTiles = this.game.map.createLayer('Tiles');
+		    var layerObject = this.game.map.createLayer('Objects');
 
-		    this.layerTiles.debug = true;
+		    this.game.layerTiles.debug = true;
 
-		    var cases = parseTiles(this.map);
-		    console.log(this.map.layers[0]);
+		    var cases = parseTiles(this.game.map);
+		    console.log(this.game.map.layers[0]);
 
 		    // enable les collisions pour les wall
-		    this.map.setCollision(2);
+		    this.game.map.setCollision(2);
 		    /*_.each(cases, function(tiles){
-		    	_this.map.setCollision.p2.enable(_.where(tiles, {type: "wall"}));
-		    	//_this.physics.p2.enable(_.where(tiles, {type: "wall"}));
->>>>>>> d0fa13aa9239b625293b919ea26e98294d28ede6
+		    	_this.game.map.setCollision.p2.enable(_.where(tiles, {type: "wall"}));
+		    	//_this.game.physics.p2.enable(_.where(tiles, {type: "wall"}));
 		    });*/
 
 		    Player.create();
@@ -82,7 +80,8 @@ define(function(require) {
 		update: function(){
 			// console.log('Game Update');
 			Player.update();
-			this.physics.arcade.collide(Player.sprite, this.map.layers[0]);
+			console.log(this.game.map);
+			this.game.physics.arcade.collide(Player.sprite, this.game.map.layers[0]);
 		},
 
 		render: function(){
