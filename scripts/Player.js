@@ -45,7 +45,7 @@ define(function(require){
 			this.canMove = false;
 		    this.tween = Game.add.tween(this.sprite.body).to(target, 200, Phaser.Easing.Linear.None, true);
 		    this.tween.onUpdateCallback(function(){
-		    	if(Game.physics.arcade.collide(Player.sprite, Game.layerTiles)){
+		    	if(Game.physics.arcade.collide(_this.sprite, [Game.layerTiles, Game.layerObject])){
 		    		//console.log('colide');
 		    		_this.tween.stop();
 		    		_this.resetVelocity();

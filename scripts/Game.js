@@ -52,12 +52,12 @@ define(function(require) {
 
 		    this.game.map = this.game.add.tilemap('test');
 		    this.game.map.addTilesetImage('typeOfCase', 'tiles');
-		    this.game.map.setCollision(2);
+		    this.game.map.setCollision([2, 10]);
 		    
 		    this.game.layerTiles = this.game.map.createLayer('Tiles');
 		    this.game.layerObject = this.game.map.createLayer('Objects');
 
-		    this.game.map.setCollision(2, true, this.game.layerObject);
+		    //this.game.map.setCollision(2, true, this.game.layerObject);
 
 		    this.game.layerTiles.debug = true;
 		    //this.game.layerObject.debug = true;
@@ -71,6 +71,9 @@ define(function(require) {
 
 		update: function(){
 			// console.log('Game Update');
+			console.log(
+				this.game.physics.arcade.overlap(Player.sprite, this.game.layerObject)
+			);
 			Player.update();
 		},
 
