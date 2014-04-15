@@ -54,7 +54,7 @@ define(function(require) {
                     if(tile && tile.index != 0)
                         this.layer2[y][x] = new Case(tile.x, tile.y, typeCase[tile.index]);
                     else
-                        this.layer2[y][x] = 0;
+                        this.layer2[y][x] = new Case(x, y, "");
                 }
 
             }

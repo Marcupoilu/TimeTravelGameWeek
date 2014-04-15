@@ -69,31 +69,31 @@ define(function(require){
 			if(this.canMove){
 				if (this.cursors.up.isDown) {
 			    	//console.log('up');
-			    	target.y -= 64;
-			    	this.setTarget(target);
-			    	this.sprite.body.velocity.y = -1;
-			    	this.moveToCase(this.currCase.x, this.currCase.y - 1);
+			    	// target.y -= 64;
+			    	// this.setTarget(target);
+			    	// this.sprite.body.velocity.y = -1;
+			    	this.moveToCase(this.currCase.x, this.currCase.y - 1, target);
 
 			    } else if (this.cursors.down.isDown) {
 			    	//console.log('down');
-			    	target.y += 64;
-			    	this.setTarget(target);
-			    	this.sprite.body.velocity.y = 1;
-			    	this.moveToCase(this.currCase.x, this.currCase.y + 1);
+			    	// target.y += 64;
+			    	// this.setTarget(target);
+			    	// this.sprite.body.velocity.y = 1;
+			    	this.moveToCase(this.currCase.x, this.currCase.y + 1, target);
 
 			    } else if (this.cursors.left.isDown) {
 			    	//console.log('left');
-			    	target.x -= 64;
-			    	this.setTarget(target);
-			    	this.sprite.body.velocity.x = -1;
-			    	this.moveToCase(this.currCase.x - 1, this.currCase.y);
+			    	// target.x -= 64;
+			    	// this.setTarget(target);
+			    	// this.sprite.body.velocity.x = -1;
+			    	this.moveToCase(this.currCase.x - 1, this.currCase.y, target);
 
 			    } else if (this.cursors.right.isDown) {
 			    	//console.log('right');
-			    	target.x += 64;
-			    	this.setTarget(target);
-			    	this.sprite.body.velocity.x = 1;
-			    	this.moveToCase(this.currCase.x + 1, this.currCase.y);
+			    	// target.x += 64;
+			    	// this.setTarget(target);
+			    	// this.sprite.body.velocity.x = 1;
+			    	this.moveToCase(this.currCase.x + 1, this.currCase.y, target);
 
 			    }
 			}
@@ -109,10 +109,33 @@ define(function(require){
 
 		},
 
-		moveToCase: function(idX, idY){
-			console.log("case " + idY + ", " + idX + " = ", Game.mapCases.layer2[idY][idX]);
-			this.currCase.x = idX;
-			this.currCase.y = idY;
+		moveToCase: function(idX, idY, target){
+			
+			var future = Game.mapCases.layer2[idY][idX];
+			var move = false;
+
+			//s'il n'y a pas d'objets sur la case on check le layer1
+			if(future.type == "")
+			{
+				future = Game.mapCases.layer1[idY][idX];
+				if(future.type == "ground")
+					move = true;
+			}
+			else
+				move = true;
+			
+			if(move)
+			{
+				this.sprite.body.velocity.x = idX - this.currCase.x;
+				this.sprite.body.velocity.y = idY - this.currCase.y;
+
+				target.x += 64 * this.sprite.body.velocity.x;
+				target.y += 64 * this.sprite.body.velocity.y;
+				this.setTarget(target);
+
+				this.currCase.x = idX;
+				this.currCase.y = idY;
+			}
 		}
 	}
 
