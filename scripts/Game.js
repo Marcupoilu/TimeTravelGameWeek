@@ -47,6 +47,7 @@ define(function(require) {
 			var _this = this;
 			//	Enable p2 physics
 			this.physics.startSystem(Phaser.Physics.P2JS);
+			this.physics.startSystem(Phaser.Physics.ARCADE);
 			this.physics.p2.defaultRestitution = 0;
 
 			this.stage.backgroundColor = '#787878';
@@ -64,11 +65,14 @@ define(function(require) {
 		    var layerObject = this.map.createLayer('Objects');
 
 		    var cases = parseTiles(this.map);
+		    console.log(this.map.layers[0]);
 
 		    // enable les collisions pour les wall
-		    _.each(cases, function(tiles){
-		    	_this.physics.p2.enable(_.where(tiles, {type: "wall"}));
-		    });
+		    this.map.setCollision(2);
+		    /*_.each(cases, function(tiles){
+		    	_this.map.setCollision.p2.enable(_.where(tiles, {type: "wall"}));
+		    	//_this.physics.p2.enable(_.where(tiles, {type: "wall"}));
+		    });*/
 
 		    Player.create();
 		},
@@ -76,6 +80,7 @@ define(function(require) {
 		update: function(){
 			// console.log('Game Update');
 			Player.update();
+			this.physics.arcade.collide(Player, this.map.layers[0]);
 		},
 
 		render: function(){
