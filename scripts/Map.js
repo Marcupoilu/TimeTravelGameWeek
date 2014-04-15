@@ -8,14 +8,18 @@ define(function(require) {
         2: 'wall',
         3: 'bloc',
         4: 'vortex',
-        5: 'slow',
-        6: 'exit', 
-        7: 'console',
-        8: 'door_switch',
-        9: 'pod_switch',
-        10: 'direction',
-        11: 'ice',
-        12: 'switch'
+        5: 'pod',
+        6: 'slow', 
+        7: 'exit',
+        8: 'console',
+        9: 'switch',
+        10: 'door',
+        11: 'direction_up',
+        12: 'direction_bottom',
+        13: "direction_right",
+        14: "direction_left",
+        15: "fast",
+        16: "ice"
     }
 
     var Map = function Map(map,line,column)
