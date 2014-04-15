@@ -17,4 +17,5 @@ define(function(require) {
 			console.log('Game Render');
 		}
 	});
+	
 });
