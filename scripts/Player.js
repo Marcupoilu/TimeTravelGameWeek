@@ -3,6 +3,7 @@ define(function(require){
 	var DoorManager = require("./DoorManager");
 	var BlocsManager = require("./blocsManager");
 	var TPManager = require("./TeleporteurManager");
+	var SwitchManager = require("./SwitchManager");
 
 	var Player = {
 
@@ -122,6 +123,13 @@ define(function(require){
 					console.log(open)
 				else
 					return
+			}
+			if(future.type == "switch"){//console.log(future.x*64); console.log(future.y*64);
+				var switchToCheck = _.findWhere(SwitchManager.switchObjects, {x:future.x*64, y:future.y*64});
+				if(!switchToCheck.activated){
+					switchToCheck.activated = true;
+					switchToCheck.activate();
+				}
 			}
 			//gestion des blocs
 			if(future.type == "bloc"){//console.log(future.x*64); console.log(future.y*64);

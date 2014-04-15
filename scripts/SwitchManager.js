@@ -1,6 +1,6 @@
 define(function(require) {
 	var Switch = require("./Switch");
-	var Player = require("./Player");
+
 	var SwitchManager = {
 		preload: function(){
 			Game.load.image('switch', '../images/switch.png');
@@ -27,12 +27,12 @@ define(function(require) {
 		update: function(){
 			var _this = this;
 			_.each(this.switchObjects, function(swit){
-				Game.debug.body(swit.sprite);
+				// Game.debug.body(swit.sprite);
 		    	// if(Game.physics.arcade.collide(Player.sprite, door.sprite))
 		    	// 	console.log("de")
-		    	if(_this.checkOverlap(swit.sprite, Player.sprite)){
-					swit.activate();
-				}
+		  //   	if(_this.checkOverlap(swit.sprite, Player.sprite)){
+				// 	swit.activate();
+				// }
 			});
 		},
 

@@ -12,6 +12,7 @@ define(function(require) {
 
 		this.Open = function(){
 			this.opened = true;
+			this.sprite.visible = false;
 		};
 	};
 	return Door;

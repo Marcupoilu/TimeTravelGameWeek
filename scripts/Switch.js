@@ -7,9 +7,10 @@ define(function(require) {
 		this.id = id || 0;
 		this.type = type || "";
 		this.sprite = Game.add.sprite(this.x, this.y, 'switch');
+		this.activated = false;
 
 		this.activate = function(){
-			console.log(_.findWhere(DoorManager.doorsObject, {id:this.id}));
+			this.activated = true;
 			var doorToActivate = _.findWhere(DoorManager.doorsObject, {id:this.id});
 			doorToActivate.Open();
 		};

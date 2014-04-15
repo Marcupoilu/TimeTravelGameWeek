@@ -4,7 +4,7 @@ define(function(require) {
 
 	var DoorManager = {
 		preload: function(){
-			Game.load.image('door', '../images/spawn.png');
+			Game.load.image('door', '../images/door.png');
 		},
 
 		create : function(map){
@@ -29,7 +29,7 @@ define(function(require) {
 		update: function(){
 			var _this = this;
 			_.each(this.doorsObject, function(door){
-				Game.debug.body(door.sprite);
+				// Game.debug.body(door.sprite);
 		    	// if(Game.physics.arcade.collide(Player.sprite, door.sprite))
 		    	// 	console.log("de")
 		    						// if(_this.checkOverlap(door.sprite, Player.sprite)){
