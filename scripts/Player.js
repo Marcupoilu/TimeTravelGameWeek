@@ -1,7 +1,9 @@
 define(function(require){
 	var Case = require("./Case");
 	var DoorManager = require("./DoorManager");
-	var BlocsManager = require("./blocsManager")
+	var BlocsManager = require("./blocsManager");
+	var TPManager = require("./TeleporteurManager");
+
 	var Player = {
 
 		canMove : true,
@@ -163,6 +165,17 @@ define(function(require){
 
 			target.x += 64 * this.sprite.body.velocity.x;
 			target.y += 64 * this.sprite.body.velocity.y;
+
+			//si c'est un teleport on change la target pour la target du téléporteur
+			if(future.type == "teleport")
+			{
+				var tp = _.findWhere(TPManager.teleporteurs, {x: future.x, y: future.y});
+				target.x = tp.target.x * 64;
+				target.y = tp.target.y * 64;
+				idX = tp.target.x;
+				idY = tp.target.y;
+			}
+			
 			this.setTarget(target);
 
 			if(move)

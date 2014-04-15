@@ -4,6 +4,7 @@ define(function(require) {
 	var DoorManager = require("./DoorManager")
 	var podsManager = require('./podsManager');
 	var blocsManager = require('./blocsManager');
+	var TeleporteurManager = require('./TeleporteurManager');
 
 	return new Phaser.Game(1024, 768, Phaser.AUTO, 'game', {
 		preload: function(){
@@ -47,6 +48,7 @@ define(function(require) {
 			podsManager.create(this.game.mapCases);
 			blocsManager.create(this.game.mapCases);
 			DoorManager.create(this.game.mapCases);
+			TeleporteurManager.create(this.game.mapCases);
 		    Player.create();
 		},
 
