@@ -28,8 +28,6 @@ define(function(require) {
 		    var layerObject = this.map.createLayer('Objects');
 
 		    //  This resizes the game world to match the layer dimensions
-		    layer.resizeWorld();
-		    console.log("this.map  = ", this.map);
 
 		},
 
