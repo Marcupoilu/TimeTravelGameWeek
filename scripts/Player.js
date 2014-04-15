@@ -1,6 +1,6 @@
 define(function(require){
 	var Case = require("./Case");
-
+	var DoorManager = require("./DoorManager")
 	var Player = {
 
 		canMove : true,
@@ -47,8 +47,8 @@ define(function(require){
 			this.canMove = false;
 		    this.tween = Game.add.tween(this.sprite.body).to(target, 200, Phaser.Easing.Linear.None, true);
 		    this.tween.onUpdateCallback(function(){
-		    	if(Game.physics.arcade.collide(_this.sprite, [Game.layerTiles, Game.layerObject])){
-		    		//console.log('colide');
+		    	if(Game.physics.arcade.collide(_this.sprite, Game.layerTiles)){
+		    		console.log('colide');
 		    		_this.tween.stop();
 		    		_this.resetVelocity();
 		    		_this.canMove = true;
@@ -113,7 +113,13 @@ define(function(require){
 			
 			var future = Game.mapCases.layer2[idY][idX];
 			var move = false;
-
+			if(future.type == "door"){//console.log(future.x*64); console.log(future.y*64);
+				var doorToCheck = _.findWhere(DoorManager.doorsObject, {x:future.x*64, y:future.y*64});
+				if(doorToCheck.opened)
+					console.log(open)
+				else
+					return
+			}
 			//s'il n'y a pas d'objets sur la case on check le layer1
 			if(future.type == "")
 			{
