@@ -14,7 +14,7 @@ define(function(require){
 		    //  Enable if for physics. This creates a default rectangular body.
 			Game.physics.arcade.enable(this.sprite);
 
-			this.sprite.body.bounce.y = 0.2;
+			this.sprite.body.bounce.y = 0;
 		    this.sprite.body.linearDamping = 1;
 		    this.sprite.body.collideWorldBounds = true;
 
@@ -29,13 +29,14 @@ define(function(require){
 		},
 
 		setTarget: function(target){
-		    Game.add.tween(this.sprite.body).to(target, 1000, Phaser.Easing.Linear.None, true);
+		    Game.add.tween(this.sprite.body).to(target, 200, Phaser.Easing.Linear.None, true);
+
 		},
 
 		checkInputs: function(){
 			var target = {
-				x: this.sprite.x,
-				y: this.sprite.y
+				x: this.sprite.body.x,
+				y: this.sprite.body.y
 			}
 
 			if (this.cursors.up.isDown) {
