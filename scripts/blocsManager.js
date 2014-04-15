@@ -11,21 +11,38 @@ define(function(require) {
         create : function(map)
         {
             var _this = this;
-            this.blocs = [];
+            this.blocsTiles = [];
+            this.blocsTable = [];
             var objectsLayer = map.layer2;
             _.each(objectsLayer, function(objectLayer)
             {
                 _.each(_.where(objectLayer, {type: 'bloc'}), function(bloc)
                 {
-                    _this.blocs.push(bloc);
+                    _this.blocsTiles.push(bloc);
                 });
             });
 
-            _.each(this.pods, function(bloc){
-                new Bloc(bloc.x*64, bloc.y*64,{lineNb : x ,columnNb : y});
+            _.each(this.blocsTiles, function(bloc)
+            {
+                _this.blocsTable.push(new Bloc(bloc.x*64, bloc.y*64,{lineNb : bloc.x ,columnNb : bloc.y}));
             });
 
-            console.log(this.blocs);
+            console.log(this.blocsTable);
+        },
+
+        update: function()
+        {
+            var _this = this;
+            _.each(this.blocsTable, function(bloc)
+            {
+                Game.debug.body(bloc.sprite);   
+            });
+        },
+
+        checkOverlap :function(spriteA, spriteB){
+            var boundsA = spriteA.getBounds();
+            var boundsB = spriteB.getBounds();
+            return Phaser.Rectangle.intersects(boundsA, boundsB);
         }
     }
     return blocManager;

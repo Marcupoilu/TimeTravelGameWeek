@@ -1,6 +1,7 @@
 define(function(require){
 	var Case = require("./Case");
-	var DoorManager = require("./DoorManager")
+	var DoorManager = require("./DoorManager");
+	var BlocsManager = require("./blocsManager")
 	var Player = {
 
 		canMove : true,
@@ -117,6 +118,14 @@ define(function(require){
 				var doorToCheck = _.findWhere(DoorManager.doorsObject, {x:future.x*64, y:future.y*64});
 				if(doorToCheck.opened)
 					console.log(open)
+				else
+					return
+			}
+			//gestion des blocs
+			if(future.type == "bloc"){//console.log(future.x*64); console.log(future.y*64);
+				var blocToCheck = _.findWhere(BlocsManager.blocsTable, {x:future.x*64, y:future.y*64});
+				if(blocToCheck.isMoving)
+					console.log("move")
 				else
 					return
 			}
