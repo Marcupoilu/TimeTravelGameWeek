@@ -12,6 +12,8 @@ define(function(require) {
 		this.create = function(depart){
 			this.sprite = Game.add.sprite(depart.x * 64, depart.y * 64 - 64, 'projection');
 			Game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+
+			this.sprite.body.setSize(64,64,0,64);
 		}
 
 		this.addCase = function(proCase)
@@ -21,8 +23,8 @@ define(function(require) {
 
 		this.moveToNext = function()
 		{
-			console.log("currId = " + this.currId + ", this.trajet = ", this.trajet);
-			if(this.currId != this.trajet.length){
+			// console.log("currId = " + this.currId + ", this.trajet = ", this.trajet);
+			if(this.currId != this.trajet.length - 1){
 				this.currId++;
 				this.moveToCase(this.trajet[this.currId]);
 			}
@@ -30,7 +32,7 @@ define(function(require) {
 
 		this.moveToCase = function(proCase)
 		{
-			console.log("je bouge à la case ", proCase);
+			// console.log("je bouge à la case ", proCase);
 		}
 	}
 
