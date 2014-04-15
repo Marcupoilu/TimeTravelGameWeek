@@ -46,9 +46,8 @@ define(function(require) {
 			console.log('Game Create');
 			var _this = this;
 			//	Enable p2 physics
-			this.physics.startSystem(Phaser.Physics.P2JS);
 			this.physics.startSystem(Phaser.Physics.ARCADE);
-			this.physics.p2.defaultRestitution = 0;
+			// this.physics.p2.defaultRestitution = 0;
 
 			this.stage.backgroundColor = '#787878';
 
@@ -61,8 +60,10 @@ define(function(require) {
 		    
 		    //  Creates a layer from the World1 layer in the map data.
 		    //  A Layer is effectively like a Phaser.Sprite, so is added to the display list.
-		    var layerTiles = this.map.createLayer('Tiles');
+		    this.layerTiles = this.map.createLayer('Tiles');
 		    var layerObject = this.map.createLayer('Objects');
+
+		    this.layerTiles.debug = true;
 
 		    var cases = parseTiles(this.map);
 		    console.log(this.map.layers[0]);
@@ -80,7 +81,7 @@ define(function(require) {
 		update: function(){
 			// console.log('Game Update');
 			Player.update();
-			this.physics.arcade.collide(Player, this.map.layers[0]);
+			this.physics.arcade.collide(Player.sprite, this.map.layers[0]);
 		},
 
 		render: function(){
