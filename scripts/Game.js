@@ -46,9 +46,6 @@ define(function(require) {
 
 		update: function(){
 			// console.log('Game Update');
-			console.log(
-				this.game.physics.arcade.overlap(Player.sprite, this.game.layerObject)
-			);
 			Player.update();
 		},
 

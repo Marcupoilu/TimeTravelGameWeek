@@ -2,7 +2,21 @@ define(function(require) {
 
     var Case = require("./Case");
 
-    var typeCase = ["", "ground", "wall", "bloc", "vortex", "slow", "exit", "console", "door_switch", "pod_switch", "direction", "ice", "switch"];
+    var typeCase = {
+        0: '',
+        1: 'ground',
+        2: 'wall',
+        3: 'bloc',
+        4: 'vortex',
+        5: 'slow',
+        6: 'exit', 
+        7: 'console',
+        8: 'door_switch',
+        9: 'pod_switch',
+        10: 'direction',
+        11: 'ice',
+        12: 'switch'
+    }
 
     function parseTiles(map,line,column){
         var cases = [line];
