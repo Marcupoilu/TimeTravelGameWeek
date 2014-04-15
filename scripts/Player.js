@@ -29,7 +29,7 @@ define(function(require){
 		},
 
 		setTarget: function(target){
-		    Game.add.tween(this.sprite.body).to(target, 5000, Phaser.Easing.Linear.None, true);
+		    Game.add.tween(this.sprite.body).to(target, 1000, Phaser.Easing.Linear.None, true);
 		},
 
 		checkInputs: function(){

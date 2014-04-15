@@ -60,14 +60,20 @@ define(function(require) {
 		    
 		    //  Creates a layer from the World1 layer in the map data.
 		    //  A Layer is effectively like a Phaser.Sprite, so is added to the display list.
-		    var layerTiles = this.map.createLayer('Tiles');
+		    this.layerTiles = this.map.createLayer('Tiles');
 		    var layerObject = this.map.createLayer('Objects');
 
-		    //var cases = parseTiles(this.map);
+		    this.layerTiles.debug = true;
+
+		    var cases = parseTiles(this.map);
+		    console.log(this.map.layers[0]);
 
 		    // enable les collisions pour les wall
+		    this.map.setCollision(2);
 		    /*_.each(cases, function(tiles){
-		    	_this.physics.p2.enable(_.where(tiles, {type: "wall"}));
+		    	_this.map.setCollision.p2.enable(_.where(tiles, {type: "wall"}));
+		    	//_this.physics.p2.enable(_.where(tiles, {type: "wall"}));
+>>>>>>> d0fa13aa9239b625293b919ea26e98294d28ede6
 		    });*/
 
 		    Player.create();
@@ -76,6 +82,7 @@ define(function(require) {
 		update: function(){
 			// console.log('Game Update');
 			Player.update();
+			this.physics.arcade.collide(Player.sprite, this.map.layers[0]);
 		},
 
 		render: function(){
