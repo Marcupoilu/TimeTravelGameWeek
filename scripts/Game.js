@@ -50,38 +50,33 @@ define(function(require) {
 
 			this.game.stage.backgroundColor = '#787878';
 
-		    //  The 'mario' key here is the Loader key given in game.load.tilemap
 		    this.game.map = this.game.add.tilemap('test');
-
-		    //  The first parameter is the tileset name, as specified in the Tiled map editor (and in the tilemap json file)
-		    //  The second parameter maps this.game name to the Phaser.Cache key 'tiles'
 		    this.game.map.addTilesetImage('typeOfCase', 'tiles');
+		    this.game.map.setCollision(2);
 		    
-		    //  Creates a layer from the World1 layer in the map data.
-		    //  A Layer is effectively like a Phaser.Sprite, so is added to the display list.
 		    this.game.layerTiles = this.game.map.createLayer('Tiles');
-		    var layerObject = this.game.map.createLayer('Objects');
+		    this.game.layerObject = this.game.map.createLayer('Objects');
+
+		    this.game.map.setCollision(2, true, this.game.layerObject);
 
 		    this.game.layerTiles.debug = true;
+		    //this.game.layerObject.debug = true;
 
 		    var cases = parseTiles(this.game.map);
-		    console.log(this.game.map.layers[0]);
 
-		    // enable les collisions pour les wall
-		    this.game.map.setCollision(2);
-		    /*_.each(cases, function(tiles){
-		    	_this.game.map.setCollision.p2.enable(_.where(tiles, {type: "wall"}));
-		    	//_this.game.physics.p2.enable(_.where(tiles, {type: "wall"}));
-		    });*/
-
+		    console.log('Map Create', this.game.map);
+			
 		    Player.create();
 		},
 
 		update: function(){
 			// console.log('Game Update');
 			Player.update();
-			console.log(this.game.map);
-			this.game.physics.arcade.collide(Player.sprite, this.game.map.layers[0]);
+			//console.log(this.game.map);
+			//console.log(Player.sprite);
+			this.game.physics.arcade.collide(Player.sprite, this.game.layerTiles, function(object1, object2){
+				console.log('Collide', object1, object2);
+			}, null, this);
 		},
 
 		render: function(){
