@@ -2,6 +2,8 @@ define(function(require){
 
 	var Player = {
 
+		canMove : true,
+
 		preload: function(){
 			Game.load.spritesheet('character', '../images/gabarit_chara.png', 64, 128, 1);
 		},
@@ -29,8 +31,11 @@ define(function(require){
 		},
 
 		setTarget: function(target){
-		    Game.add.tween(this.sprite.body).to(target, 200, Phaser.Easing.Linear.None, true);
-
+			this.canMove = false;
+		    this.tween = Game.add.tween(this.sprite.body).to(target, 200, Phaser.Easing.Linear.None, true);
+		    this.tween.onComplete.add(function(){
+		    	this.canMove = true;
+		    }, this);
 		},
 
 		checkInputs: function(){
@@ -39,26 +44,28 @@ define(function(require){
 				y: this.sprite.body.y
 			}
 
-			if (this.cursors.up.isDown) {
-		    	//console.log('up');
-		    	target.y -= 64;
-		    	this.setTarget(target);
+			if(this.canMove){
+				if (this.cursors.up.isDown) {
+			    	//console.log('up');
+			    	target.y -= 64;
+			    	this.setTarget(target);
 
-		    } else if (this.cursors.down.isDown) {
-		    	//console.log('down');
-		    	target.y += 64;
-		    	this.setTarget(target);
+			    } else if (this.cursors.down.isDown) {
+			    	//console.log('down');
+			    	target.y += 64;
+			    	this.setTarget(target);
 
-		    } else if (this.cursors.left.isDown) {
-		    	//console.log('left');
-		    	target.x -= 64;
-		    	this.setTarget(target);
+			    } else if (this.cursors.left.isDown) {
+			    	//console.log('left');
+			    	target.x -= 64;
+			    	this.setTarget(target);
 
-		    } else if (this.cursors.right.isDown) {
-		    	//console.log('right');
-		    	target.x += 64;
-		    	this.setTarget(target);
-		    }
+			    } else if (this.cursors.right.isDown) {
+			    	//console.log('right');
+			    	target.x += 64;
+			    	this.setTarget(target);
+			    }
+			}
 
 		},
 
