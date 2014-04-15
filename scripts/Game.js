@@ -1,6 +1,7 @@
 define(function(require) {
 	var Map = require("./Map");
 	var Player = require('./Player');
+	var DoorManager = require("./DoorManager")
 	var podsManager = require('./podsManager');
 	var blocsManager = require('./blocsManager');
 
@@ -14,6 +15,7 @@ define(function(require) {
     		this.game.load.image('tiles', 'Assets/typeOfCase.png');
     		this.game.load.image('linksImg', 'Assets/links.png');
     		podsManager.preload();
+    		DoorManager.preload();
     		Player.preload();
 		},
 
@@ -44,6 +46,7 @@ define(function(require) {
 			
 			podsManager.create(this.game.mapCases);
 			blocsManager.create(this.game.mapCases);
+			DoorManager.create(this.game.mapCases);
 		    Player.create();
 		},
 
