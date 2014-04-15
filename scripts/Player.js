@@ -1,6 +1,9 @@
 define(function(require){
 	var Case = require("./Case");
-	var DoorManager = require("./DoorManager")
+	var DoorManager = require("./DoorManager");
+	var BlocsManager = require("./blocsManager");
+	var TPManager = require("./TeleporteurManager");
+
 	var Player = {
 
 		canMove : true,
@@ -120,6 +123,32 @@ define(function(require){
 				else
 					return
 			}
+			//gestion des blocs
+			if(future.type == "bloc"){//console.log(future.x*64); console.log(future.y*64);
+				var blocToCheck = _.findWhere(BlocsManager.blocsTable, {x:future.x*64, y:future.y*64});
+				if(blocToCheck.canMove)
+				{
+					//make the bloc move
+					if (this.cursors.up.isDown) 
+					{
+			    		blocToCheck.moveToCase(blocToCheck.caseX, blocToCheck.caseY - 1, target);
+			    	} 
+			    	else if (this.cursors.down.isDown) 
+			    	{
+			    		blocToCheck.moveToCase(blocToCheck.caseX, blocToCheck.caseY + 1, target);
+			   		} 
+			   		else if (this.cursors.left.isDown) 
+			   		{
+			    		blocToCheck.moveToCase(blocToCheck.caseX - 1, blocToCheck.caseY, target);
+			    	} 
+			    	else if (this.cursors.right.isDown) 
+			    	{				    	
+			    		blocToCheck.moveToCase(blocToCheck.caseX + 1, blocToCheck.caseY, target);
+			    	}
+				}
+				else
+					return
+			}
 			//s'il n'y a pas d'objets sur la case on check le layer1
 			if(future.type == "")
 			{
@@ -136,6 +165,17 @@ define(function(require){
 
 			target.x += 64 * this.sprite.body.velocity.x;
 			target.y += 64 * this.sprite.body.velocity.y;
+
+			//si c'est un teleport on change la target pour la target du téléporteur
+			if(future.type == "teleport")
+			{
+				var tp = _.findWhere(TPManager.teleporteurs, {x: future.x, y: future.y});
+				target.x = tp.target.x * 64;
+				target.y = tp.target.y * 64;
+				idX = tp.target.x;
+				idY = tp.target.y;
+			}
+			
 			this.setTarget(target);
 
 			if(move)
