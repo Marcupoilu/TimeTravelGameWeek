@@ -144,23 +144,14 @@ define(function(require){
 				var blocToCheck = _.findWhere(BlocsManager.blocsTable, {x:future.x*64, y:future.y*64});
 				if(blocToCheck.canMove)
 				{
-					//make the bloc move
-					if (this.cursors.up.isDown) 
-					{
-			    		blocToCheck.moveToCase(blocToCheck.caseX, blocToCheck.caseY - 1, target);
-			    	} 
-			    	else if (this.cursors.down.isDown) 
-			    	{
-			    		blocToCheck.moveToCase(blocToCheck.caseX, blocToCheck.caseY + 1, target);
-			   		} 
-			   		else if (this.cursors.left.isDown) 
-			   		{
-			    		blocToCheck.moveToCase(blocToCheck.caseX - 1, blocToCheck.caseY, target);
-			    	} 
-			    	else if (this.cursors.right.isDown) 
-			    	{				    	
-			    		blocToCheck.moveToCase(blocToCheck.caseX + 1, blocToCheck.caseY, target);
-			    	}
+					if(blocToCheck.moveDirection({
+						x : this.sprite.body.velocity.x,
+						y : this.sprite.body.velocity.y
+					})){
+						return true;
+					}
+					else
+						return false;
 				}
 				else
 					return
