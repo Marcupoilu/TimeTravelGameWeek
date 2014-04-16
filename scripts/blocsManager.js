@@ -38,12 +38,6 @@ define(function(require) {
                 Game.debug.body(bloc.sprite);   
             });
         },
-
-        checkOverlap :function(spriteA, spriteB){
-            var boundsA = spriteA.getBounds();
-            var boundsB = spriteB.getBounds();
-            return Phaser.Rectangle.intersects(boundsA, boundsB);
-        }
     }
     return blocManager;
 });

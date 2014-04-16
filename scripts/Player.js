@@ -1,9 +1,10 @@
 define(function(require){
-	var Case = require("./Case");
-	var DoorManager = require("./DoorManager");
-	var BlocsManager = require("./blocsManager");
-	var TPManager = require("./TeleporteurManager");
-	var SwitchManager = require("./SwitchManager");
+	var Case = require("./Case"),
+		DoorManager = require("./DoorManager"),
+	    BlocsManager = require("./blocsManager"),
+	    TPManager = require("./TeleporteurManager"),
+	    SwitchManager = require("./SwitchManager"),
+	    lookUtils = require('./playersLookUtil');
 
 	var Player = {
 
@@ -64,7 +65,7 @@ define(function(require){
 		    this.tween.onComplete.add(function(){
 		    	this.resetVelocity();
 		    	this.canMove = true;
-
+		    	//lookUtils.checkLook(this.currCase);
 		    	if(onComplete) onComplete.apply();
 		    }, this);
 		},
@@ -136,31 +137,20 @@ define(function(require){
 					switchToCheck.activate();
 				}
 			}
-			if(future.type == "vortex"){//console.log(future.x*64); console.log(future.y*64);
-				this.sprite.destroy();
-			}
+			
 			//gestion des blocs
 			if(future.type == "bloc"){//console.log(future.x*64); console.log(future.y*64);
 				var blocToCheck = _.findWhere(BlocsManager.blocsTable, {x:future.x*64, y:future.y*64});
 				if(blocToCheck.canMove)
 				{
-					//make the bloc move
-					if (this.cursors.up.isDown) 
-					{
-			    		blocToCheck.moveToCase(blocToCheck.caseX, blocToCheck.caseY - 1, target);
-			    	} 
-			    	else if (this.cursors.down.isDown) 
-			    	{
-			    		blocToCheck.moveToCase(blocToCheck.caseX, blocToCheck.caseY + 1, target);
-			   		} 
-			   		else if (this.cursors.left.isDown) 
-			   		{
-			    		blocToCheck.moveToCase(blocToCheck.caseX - 1, blocToCheck.caseY, target);
-			    	} 
-			    	else if (this.cursors.right.isDown) 
-			    	{				    	
-			    		blocToCheck.moveToCase(blocToCheck.caseX + 1, blocToCheck.caseY, target);
-			    	}
+					if(blocToCheck.moveDirection({
+						x : this.sprite.body.velocity.x,
+						y : this.sprite.body.velocity.y
+					})){
+						return true;
+					}
+					else
+						return false;
 				}
 				else
 					return
@@ -199,10 +189,23 @@ define(function(require){
 				return;
 			}
 
-			if (future.type == "direction_right"){
-				this.canMove = false;
+			//si c'est un vortex on se destroy
+			if(future.type == "vortex"){//console.log(future.x*64); console.log(future.y*64);
+				//this.sprite.destroy();
+				this.setTarget(target, function(){
+					_this.sprite.destroy();
+				});
+				return;
+			}
+
+			if(move)
+			{
 				this.currCase.x = idX;
 				this.currCase.y = idY;
+			}
+
+			if (future.type == "direction_right"){
+				this.canMove = false;
 				this.setTarget(target, function(){
 					_this.canMove = false;
 					_this.moveToCase(idX+1, idY, target);
@@ -211,8 +214,6 @@ define(function(require){
 			}
 			else if (future.type == "direction_bottom"){
 				this.canMove = false;
-				this.currCase.x = idX;
-				this.currCase.y = idY;
 				this.setTarget(target, function(){
 					_this.canMove = false;
 					_this.moveToCase(idX, idY+1, target);
@@ -221,8 +222,6 @@ define(function(require){
 			}
 			else if (future.type == "direction_left"){
 				this.canMove = false;
-				this.currCase.x = idX;
-				this.currCase.y = idY;
 				this.setTarget(target, function(){
 					_this.canMove = false;
 					_this.moveToCase(idX-1, idY, target);
@@ -231,8 +230,6 @@ define(function(require){
 			}
 			else if (future.type == "direction_up"){
 				this.canMove = false;
-				this.currCase.x = idX;
-				this.currCase.y = idY;
 				this.setTarget(target, function(){
 					_this.canMove = false;
 					_this.moveToCase(idX, idY-1, target);
@@ -242,11 +239,9 @@ define(function(require){
 				this.canMove = true;
 
 			this.setTarget(target);
-			if(move)
-			{
-				this.currCase.x = idX;
-				this.currCase.y = idY;
-			}
+			
+
+
 		}
 	}
 
