@@ -3,29 +3,52 @@ define(function(require) {
 	//Player = require('./Player');
 	
 	var util = {
-		getLook: function(object, dircetion){
-			var startLook = object || Player.currCase;
-			var direction = {
-				x: 0,
-				y: 1
-			}
-			var lookAxe = 'y' || 'x';
+		getLook: function(object, direction){
+			var startLook = object;
+			var otherAxe = '';
+			var lookAxe = (function(){
+				if(direction.x != 0){
+					otherAxe = 'y';
+					return 'x';
+				}
+				if(direction.y != 0){
+					otherAxe = 'x';
+					return 'y';
+				}
+			})()
+
 			var look = []; // array de case
 
-			console.log(Game.mapCase.layer1);
-			_.each(Game.mapCase.layer1, function(currCases){
+			_.each(Game.mapCases.layer1, function(currCases){
 				_.each(currCases, function(currCase){
-					if(currCase[lookAxe] == startLook[lookAxe]){
-						look.push(currCase);
+					if(currCase[otherAxe] == startLook[otherAxe]){
+						if(direction[lookAxe] > 0 && currCase[lookAxe] > startLook[lookAxe]){
+							look.push(currCase);
+						}
+						if(direction[lookAxe] < 0 && currCase[lookAxe] < startLook[lookAxe]){
+							look.push(currCase);
+						}
 					}
 				});
 			});
 
-			console.log('getLook', look);
+			look = _.sortBy(look, function(currCase){
+				return currCase[lookAxe]*direction[lookAxe];
+			});
+			var finalLook = [];
+			for(var i = 0; i < look.length; i++){
+				if(look[i].type != 'wall'){
+					finalLook.push(look[i]);
+				} else {
+					break;
+				}
+			}
+
+			console.log('getLook', finalLook);
 		},
 
-		checkLook: function(){
-			this.getLook();
+		checkLook: function(object, direction){
+			this.getLook(object, direction);
 		}
 	}
 

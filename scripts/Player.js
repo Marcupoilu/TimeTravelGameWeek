@@ -63,9 +63,9 @@ define(function(require){
 				}
 		    });
 		    this.tween.onComplete.add(function(){
+		    	lookUtils.checkLook(this.currCase, this.sprite.body.velocity);
 		    	this.resetVelocity();
 		    	this.canMove = true;
-		    	//lookUtils.checkLook(this.currCase);
 		    	if(onComplete) onComplete.apply();
 		    }, this);
 		},
