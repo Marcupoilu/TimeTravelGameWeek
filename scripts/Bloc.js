@@ -16,7 +16,7 @@ define(function(require)
         this.sprite.body.bounce.y = 0;
         this.sprite.body.bounce.x = 0;
         this.sprite.body.velocity = 0;
-        this.sprite.body.setSize(64,64,0,64);
+        this.sprite.body.setSize(64,64);
         this.canMove = true;
         this.moveDirection = function(velocity)
         {
@@ -26,35 +26,24 @@ define(function(require)
             var goingToMove = false;
             var target = {x : this.caseX, y : this.caseY};
             console.log("velo",velocity);
-            if(velX > 0)
+            if(velX!=0 || velY!=0)
             {
-                target.x += 1;
-                goingToMove = true;
-            }
-            if(velX < 0)
-            {
-                target.x -= 1;
-                goingToMove = true;
-            }
-            if(velY > 0)
-            {
-                target.y -= 1;
-                goingToMove = true;
-            }
-            if(velY < 0)
-            {
-                target.y += 1;
+                target.x += velX;
+                target.y += velY;
                 goingToMove = true;
             }
             if(goingToMove == true && this.moveToCase(this.caseX,this.caseY,target))
             {
-                Game.mapCases.layer2[this.caseX][this.caseY] = new Case(this.caseX, this.caseY, ""); 
-                console.log("case", Game.mapCases.layer2[this.caseX][this.caseY]);
+                Game.mapCases.layer3[this.caseY][this.caseX] = new Case(this.caseX, this.caseY, ""); 
+                //console.log("case", Game.mapCases.layer2[this.caseX][this.caseY]);
                 this.caseX = target.x;
                 this.caseY = target.y;
+                Game.mapCases.layer3[this.caseY][this.caseX] = new Case(this.caseX, this.caseY, "bloc"); 
                 console.log('target',target);
                 target.x *= 64;
                 target.y *= 64;
+                this.x = target.x;
+                this.y = target.y;
                 this.setTarget(target);
                 return true;
             }
@@ -77,7 +66,7 @@ define(function(require)
             console.log("youpi", target);
             this.canMove = false;
             this.tween = Game.add.tween(this.sprite.body).to(target, 200, Phaser.Easing.Linear.None, true);
-            this.tween.onUpdateCallback(function()
+            /*this.tween.onUpdateCallback(function()
             {
                if(Game.physics.arcade.collide(_this.sprite, Game.layerTiles))
                 {
@@ -86,7 +75,7 @@ define(function(require)
                     _this.resetVelocity();
                     _this.canMove = true;
                 }
-            });
+            });*/
             this.tween.onComplete.add(function()
             {
                 this.resetVelocity();
