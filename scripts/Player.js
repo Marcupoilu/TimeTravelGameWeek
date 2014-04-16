@@ -4,7 +4,9 @@ define(function(require){
 	    BlocsManager = require("./blocsManager"),
 	    TPManager = require("./TeleporteurManager"),
 	    SwitchManager = require("./SwitchManager"),
-	    lookUtils = require('./playersLookUtil');
+	    lookUtils = require('./playersLookUtil'),
+	    ConsoleManager = require("./ConsoleManager"),
+	    ExitManager = require("./ExitManager");
 
 	var Player = {
 
@@ -155,6 +157,28 @@ define(function(require){
 				else
 					return
 			}
+			if (future.type == "console"){
+				var consoleToCheck = _.findWhere(ConsoleManager.consoleObjects, {x:future.x*64, y:future.y*64});
+				this.setTarget(target, function(){
+					if (!consoleToCheck.activated){
+						ConsoleManager.consolesON++;
+						console.log(ConsoleManager.consolesON);
+						consoleToCheck.Activate();
+						if (ConsoleManager.consolesON == ConsoleManager.maxConsolesON){
+							ExitManager.exitObjects[0].Activate();
+						}
+					}
+				});
+			}
+
+			if (future.type == "exit"){
+				var exitToCheck = ExitManager.exitObjects[0];
+				if(exitToCheck.opened)
+					console.log("finish level");
+				else
+					return;
+			}
+
 			//s'il n'y a pas d'objets sur la case on check le layer1
 			if(future.type == "")
 			{
