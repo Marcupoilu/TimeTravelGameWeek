@@ -14,9 +14,9 @@ define(function(require) {
 		},
 
 		addProjection: function(proj){
-			currentId ++;
+			this.currentId ++;
 			proj.create(proj.trajet[0]);
-			projs.push(proj);
+			this.projs.push(proj);
 		},
 
 		addCaseToCurrentProjection: function(proCase){
@@ -24,13 +24,13 @@ define(function(require) {
 			{
 				this.addProjection(new Projection(proCase));
 			}
-			projs[this.currentId].addCase(proCase);
+			this.projs[this.currentId].addCase(proCase);
 		},
 
 		moveAllProj: function(){
-			for(var i = 0; i < projs.length; ++i)
+			for(var i = 0; i < this.projs.length; ++i)
 			{
-				if(i != this.currentId) projs[i].moveToNext();
+				if(i != this.currentId) this.projs[i].moveToNext();
 			}
 		}
 	}

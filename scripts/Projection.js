@@ -1,4 +1,5 @@
 define(function(require) {
+	var Case = require("./Case");
 
 	var Projection = function(trajet){
 		this.trajet = trajet || [];
@@ -17,11 +18,11 @@ define(function(require) {
 			Game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 
 			this.sprite.body.setSize(64,64,0,64);
-		}
+		};
 
 		this.addCase = function(proCase)
 		{
-			this.trajet.push(proCase);
+			// this.trajet.push(proCase);
 		};
 
 		this.moveToNext = function()
