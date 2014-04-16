@@ -1,11 +1,18 @@
 define(function(require) {
-	var Case = require("./Case");
+	var Case = require("./Case"),
+		DoorManager = require("./DoorManager"),
+	    BlocsManager = require("./blocsManager"),
+	    TPManager = require("./TeleporteurManager"),
+	    SwitchManager = require("./SwitchManager"),
+	    ConsoleManager = require("./ConsoleManager"),
+	    ExitManager = require("./ExitManager");
 
-	var Projection = function(trajet){
-		this.trajet = trajet || [];
-		this.currId = 0;
+	var Projection = function(depart){
+		this.trajet = [depart];
+		this.currId = -1;
 		this.finish = false;
 		this.full = false;
+		this.currCase = depart;
 
 		this.preload = function()
 		{
@@ -16,18 +23,20 @@ define(function(require) {
 			this.depart = depart || new Case(1,1);
 			this.sprite = Game.add.sprite(this.depart.x * 64, this.depart.y * 64 - 64, 'projection');
 			Game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+			this.sprite.visible = false;
 
 			this.sprite.body.setSize(64,64,0,64);
 		};
 
 		this.addCase = function(proCase)
 		{
-			// this.trajet.push(proCase);
+			this.trajet.push(proCase);
 		};
 
 		this.moveToNext = function()
 		{
 			// console.log("currId = " + this.currId + ", this.trajet = ", this.trajet);
+			if(this.currId == -1) this.sprite.visible = true;
 			if(!this.finish){
 				this.currId++;
 				var pro = this.trajet[this.currId];
@@ -38,7 +47,7 @@ define(function(require) {
 				this.moveToCase(pro.x, pro.y, target);
 			}
 
-			this.finish = (this.currId == this.trajet.length);
+			this.finish = (this.currId >= this.trajet.length - 1);
 		};
 
 		this.moveToCase = function(idX, idY, target){
@@ -124,7 +133,6 @@ define(function(require) {
 			{
 				this.currCase.x = idX;
 				this.currCase.y = idY;
-				ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
 			}
 
 			if (future.type == "direction_right"){
@@ -166,8 +174,30 @@ define(function(require) {
 
 
 		};
-			
-		};
+		
+		this.setTarget = function(target, onComplete){
+			// console.log("setTarget target = ", target, ", onComplete = ", onComplete);
+			var _this = this;
+			var lastPos = {
+				x: this.sprite.body.x,
+				y: this.sprite.body.y
+			}
+			this.canMove = false;
+		    this.tween = Game.add.tween(this.sprite.body).to(target, 200, Phaser.Easing.Linear.None, true);
+		    this.tween.onUpdateCallback(function(){
+		    	if(Game.physics.arcade.collide(_this.sprite, Game.layerTiles)){
+		    		console.log('colide');
+		    		_this.tween.stop();
+		    		_this.canMove = true;
+				}
+		    });
+		    this.tween.onComplete.add(function(){
+		    	this.canMove = true;
+		    	//lookUtils.checkLook(this.currCase);
+		    	if(onComplete) onComplete.apply();
+		    }, this);
+		};		
+	};
 
     return Projection;
 });
