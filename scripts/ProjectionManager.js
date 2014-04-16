@@ -29,6 +29,10 @@ define(function(require) {
 		},
 
 		closeCurrentProjection: function(){
+			for(var i=0; i < this.projs.length; ++i)
+			{
+				this.projs[i].reset();
+			}
 			this.projs[this.currentId].full = true;
 		},
 

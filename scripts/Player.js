@@ -31,10 +31,6 @@ define(function(require){
 			    //  Enable if for physics. This creates a default rectangular body.
 				Game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 
-				// this.sprite.body.bounce.y = 0;
-				// this.sprite.body.bounce.x = 0;
-			    // this.sprite.body.linearDamping = 1;
-			    // this.sprite.body.collideWorldBounds = true;
 			    this.sprite.body.setSize(64,64,0,64);
 				this.initInputs();
 		    }
@@ -47,6 +43,8 @@ define(function(require){
 			}
 		    console.log('Player Create', this);
 		    Game.gameState = 'play';
+		    ProjectionManager.addCaseToCurrentProjection(this.currCase);
+		    ProjectionManager.moveAllProj();
 		    this.isReady = true;
 		},
 

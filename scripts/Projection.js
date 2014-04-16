@@ -8,12 +8,12 @@ define(function(require) {
 	    ExitManager = require("./ExitManager");
 
 	var Projection = function(depart){
-		this.trajet = [depart];
+		this.trajet = [_(depart).clone()];
 		this.currId = -1;
 		this.finish = false;
 		this.full = false;
 		this.active = false;
-		this.currCase = depart;
+		this.currCase = _(this.trajet[0]).clone();
 
 		this.preload = function()
 		{
@@ -25,20 +25,23 @@ define(function(require) {
 			this.sprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64 - 64, 'projection');
         	Game.sprites.push(this.sprite);
 			Game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-			this.sprite.visible = false;
+			this.sprite.alpha = 0;
 
 			this.sprite.body.setSize(64,64,0,64);
 		};
 
 		this.addCase = function(proCase)
 		{
-			this.trajet.push(proCase);
+			this.trajet.push(_(proCase).clone());
 		};
 
 		this.moveToNext = function()
 		{
 			// console.log("currId = " + this.currId + ", this.trajet = ", this.trajet);
-			if(this.currId == -1) this.active = this.sprite.visible = true;
+			if(this.currId == -1){
+				this.active = true;
+				this.sprite.alpha = 1;
+			}
 			if(!this.finish){
 				this.currId++;
 				var pro = this.trajet[this.currId];
@@ -56,6 +59,16 @@ define(function(require) {
 		this.resetVelocity = function(){
 			this.sprite.body.velocity.x = 0;
 		    this.sprite.body.velocity.y = 0;
+		};
+
+		this.reset = function(){
+			this.currId = -1;
+			this.sprite.alpha = 0;
+			this.active = false;
+			this.currCase = _(this.trajet[0]).clone();
+			console.log("projection = ", this, ", ");
+			this.sprite.body.x = this.currCase.x * 64;
+			this.sprite.body.y = this.currCase.y * 64;
 		};
 
 		this.moveToCase = function(idX, idY, target){
@@ -178,9 +191,6 @@ define(function(require) {
 				this.canMove = true;
 
 			this.setTarget(target);
-			
-
-
 		};
 		
 		this.setTarget = function(target, onComplete){
@@ -193,11 +203,10 @@ define(function(require) {
 			this.canMove = false;
 		    this.tween = Game.add.tween(this.sprite.body).to(target, 200, Phaser.Easing.Linear.None, true);
 		    this.tween.onUpdateCallback(function(){
-		    	if(Game.physics.arcade.collide(_this.sprite, Game.layerTiles)){
-		    		console.log('colide');
+		    	/*if(Game.physics.arcade.collide(_this.sprite, Game.layerTiles)){
 		    		_this.tween.stop();
 		    		_this.resetVelocity();
-				}
+				}*/
 		    });
 		    this.tween.onComplete.add(function(){
 		    	this.resetVelocity();
