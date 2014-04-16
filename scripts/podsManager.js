@@ -15,15 +15,18 @@ define(function(require){
 
 			_.each(objectsLayer, function(objectLayer){
 				_.each(_.where(objectLayer, {type: 'pod'}), function(pod){
+					console.log(pod);
 					pods.push(pod);
 				});
 			});
 
-			_.each(this.pods, function(pod){
-				_this.pods = new Pod(pod.x*64, pod.y*64);
+			console.log(pods);
+
+			_.each(pods, function(pod){
+				_this.pods.push(new Pod(pod.x*64, pod.y*64));
 			});
 
-			console.log(this.pods);
+			console.log('Pods Create', this.pods);
 		},
 
 		update: function(){

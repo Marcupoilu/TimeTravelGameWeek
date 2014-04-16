@@ -48,7 +48,6 @@ define(function(require) {
 		    //this.game.layerObject.debug = true;
 			
 			podsManager.create(this.game.mapCases);
-
 			blocsManager.create(this.game.mapCases);
 			SwitchManager.create(this.game.mapCases);
 			DoorManager.create(this.game.mapCases);
