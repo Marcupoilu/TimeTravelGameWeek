@@ -21,30 +21,41 @@ define(function(require){
 		create: function(caseDepart){
 			
 			this.currCase = caseDepart || new Case(1,1);
-			this.sprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64 - 64, 'character');
-        	Game.sprites.push(this.sprite);
-			this.created = false;
-			//sprite.animations.add('walk');
-		    //sprite.animations.play('walk', 50, true);
+			if(!this.created)
+			{
+				this.sprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64 - 64, 'character');
+	        	Game.sprites.push(this.sprite);
+				this.created = true;
+				//sprite.animations.add('walk');
+			    //sprite.animations.play('walk', 50, true);
 
-		    //  Enable if for physics. This creates a default rectangular body.
-			Game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+			    //  Enable if for physics. This creates a default rectangular body.
+				Game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 
-			this.sprite.body.bounce.y = 0;
-			this.sprite.body.bounce.x = 0;
-		    this.sprite.body.linearDamping = 1;
-		    this.sprite.body.collideWorldBounds = true;
-		    this.sprite.body.setSize(64,64,0,64);
-			this.initInputs();
-		    
+				this.sprite.body.bounce.y = 0;
+				this.sprite.body.bounce.x = 0;
+			    this.sprite.body.linearDamping = 1;
+			    this.sprite.body.collideWorldBounds = true;
+			    this.sprite.body.setSize(64,64,0,64);
+				this.initInputs();
+		    }
+			else
+			{
+				this.sprite.body.x = this.currCase.x * 64;
+				this.sprite.body.y = this.currCase.y * 64;
+				this.sprite.visible = true;
+				this.canMove = true;
+			}
 		    console.log('Player Create', this);
 		    Game.gameState = 'play';
 		    this.isReady = true;
 		},
 
 		disappear: function(){
+			console.log("Player disappear");
 			this.isReady = false;
 			this.sprite.visible = false;
+			this.canMove = false;
 		},
 
 		initInputs: function(){
@@ -155,6 +166,8 @@ define(function(require){
 						ConsoleManager.consolesON++;
 						console.log(ConsoleManager.consolesON);
 						consoleToCheck.Activate();
+
+						_this.disappear();
 						ProjectionManager.projs[ProjectionManager.currentId].full = true;
 						if (ConsoleManager.consolesON == ConsoleManager.maxConsolesON){
 							ExitManager.exitObjects[0].Activate();

@@ -20,9 +20,9 @@ define(function(require) {
 			//Game.load.spritesheet('projection', '../images/gabarit_chara.png', 64, 128, 1);
 		};
 
-		this.create = function(depart){
-			this.depart = depart || new Case(1,1);
-			this.sprite = Game.add.sprite(this.depart.x * 64, this.depart.y * 64 - 64, 'projection');
+		this.create = function(){
+			// this.depart = depart || new Case(1,1);
+			this.sprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64 - 64, 'projection');
         	Game.sprites.push(this.sprite);
 			Game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 			this.sprite.visible = false;
