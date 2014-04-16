@@ -147,23 +147,6 @@ define(function(require){
 				}
 			}
 			
-			//gestion des blocs
-			if(future.type == "bloc"){//console.log(future.x*64); console.log(future.y*64);
-				var blocToCheck = _.findWhere(BlocsManager.blocsTable, {x:future.x*64, y:future.y*64});
-				if(blocToCheck.canMove)
-				{
-					if(blocToCheck.moveDirection({
-						x : this.sprite.body.velocity.x,
-						y : this.sprite.body.velocity.y
-					})){
-						return true;
-					}
-					else
-						return false;
-				}
-				else
-					return
-			}
 			if (future.type == "console"){
 				var consoleToCheck = _.findWhere(ConsoleManager.consoleObjects, {x:future.x*64, y:future.y*64});
 				this.setTarget(target, function(){
@@ -217,7 +200,7 @@ define(function(require){
 					}	
 				}
 				else
-					return
+					return;
 			}
 
 			//si c'est un teleport on passe une fonction onComplete au setTarget pour qu'il se tp après être passé sur le téléporteur

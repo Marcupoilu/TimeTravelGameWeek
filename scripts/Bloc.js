@@ -48,7 +48,11 @@ define(function(require)
                 return true;
             }
             else
+            {
+                Game.mapCases.layer3[this.caseY][this.caseX] = new Case(this.caseX, this.caseY, "bloc"); 
+                goingToMove = false;
                 return false;
+            }
         }
         this.resetVelocity = function()
         {
@@ -63,19 +67,17 @@ define(function(require)
                 x: this.sprite.body.x,
                 y: this.sprite.body.y
             }
-            console.log("youpi", target);
             this.canMove = false;
             this.tween = Game.add.tween(this.sprite.body).to(target, 200, Phaser.Easing.Linear.None, true);
-            /*this.tween.onUpdateCallback(function()
+            this.tween.onUpdateCallback(function()
             {
                if(Game.physics.arcade.collide(_this.sprite, Game.layerTiles))
                 {
-                    console.log('colide');
                     _this.tween.stop();
                     _this.resetVelocity();
-                    _this.canMove = true;
+                    _this.canMove = false;
                 }
-            });*/
+            });
             this.tween.onComplete.add(function()
             {
                 this.resetVelocity();
@@ -84,27 +86,42 @@ define(function(require)
         },
         this.moveToCase = function(idX, idY, target)
         {
-            
             var future = Game.mapCases.layer2[idY][idX];
+            var futureBloc = Game.mapCases.layer3[idY][idX];
             //Game.mapCases.layer2[idX][idY] = new Case(idX,idY,"bloc");
             var move = false;
             if(future.type == "door")
             {
                 var doorToCheck = _.findWhere(DoorManager.doorsObject, {x:future.x*64, y:future.y*64});
                 if(doorToCheck.opened)
-                    console.log(open)
+                {
+                    console.log(open);
+                    move = true;
+                }
                 else
-                    return;
+                    move = false;
             }
             //gestion des blocs
-            /*if(future.type == "bloc")
+            if(futureBloc.type == "bloc")
             {
-                var blocToCheck = _.findWhere(BlocsManager.blocsTable, {x:future.x*64, y:future.y*64});
-                if(blocToCheck.isMoving)
-                    console.log("move")
-                else
-                    return
-            }*/
+                move = false;
+            }
+            if (future.type == "direction_right"){
+                this.setTarget({x : (idX+1)*64 , y : idY*64 });
+                return;
+            }
+            else if (future.type == "direction_bottom"){
+                this.setTarget({x : idX*64 , y : (idY+1) *64});
+                return;
+            }
+            else if (future.type == "direction_left"){
+                this.setTarget({x : (idX-1)*64 , y : idY *64});
+                return;
+            }
+            else if (future.type == "direction_up"){
+                this.setTarget({x : idX *64, y : (idY-1)*64 });
+                return;
+            }
             //s'il n'y a pas d'objets sur la case on check le layer1
             if(future.type == "")
             {
@@ -113,14 +130,9 @@ define(function(require)
                     move = true;
             }
             else
-                move = true;
-            
-            //pour que le check des collisions se fasse quand même
-            /*this.sprite.body.velocity.x = idX - this.caseX;
-            this.sprite.body.velocity.y = idY - this.caseY;*/
-
-            /*target.x += 64 * this.sprite.body.velocity.x;
-            target.y += 64 * this.sprite.body.velocity.y;*/
+            {
+                move = false;
+            }
             
             return move;
         }
