@@ -23,26 +23,33 @@ define(function(require)
             console.log('toto', this, this.caseX);
             var velX = velocity.x;
             var velY = velocity.y;
-            var move = false;
+            var goingToMove = false;
             var target = {x : this.caseX, y : this.caseY};
+            console.log("velo",velocity);
             if(velX > 0)
             {
                 target.x += 1;
+                goingToMove = true;
             }
             if(velX < 0)
             {
                 target.x -= 1;
+                goingToMove = true;
             }
             if(velY > 0)
             {
                 target.y -= 1;
+                goingToMove = true;
             }
             if(velY < 0)
             {
                 target.y += 1;
+                goingToMove = true;
             }
-            if(this.moveToCase(this.caseX,this.caseY,target))
+            if(goingToMove == true && this.moveToCase(this.caseX,this.caseY,target))
             {
+                Game.mapCases.layer2[this.caseX][this.caseY] = new Case(this.caseX, this.caseY, ""); 
+                console.log("case", Game.mapCases.layer2[this.caseX][this.caseY]);
                 this.caseX = target.x;
                 this.caseY = target.y;
                 console.log('target',target);
@@ -72,13 +79,13 @@ define(function(require)
             this.tween = Game.add.tween(this.sprite.body).to(target, 200, Phaser.Easing.Linear.None, true);
             this.tween.onUpdateCallback(function()
             {
-               /* if(Game.physics.arcade.collide(_this.sprite, Game.layerTiles))
+               if(Game.physics.arcade.collide(_this.sprite, Game.layerTiles))
                 {
                     console.log('colide');
                     _this.tween.stop();
                     _this.resetVelocity();
                     _this.canMove = true;
-                }*/
+                }
             });
             this.tween.onComplete.add(function()
             {
@@ -90,6 +97,7 @@ define(function(require)
         {
             
             var future = Game.mapCases.layer2[idY][idX];
+            //Game.mapCases.layer2[idX][idY] = new Case(idX,idY,"bloc");
             var move = false;
             if(future.type == "door")
             {
