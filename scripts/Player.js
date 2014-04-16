@@ -1,5 +1,4 @@
 define(function(require){
-
 	var Case = require("./Case"),
 		DoorManager = require("./DoorManager"),
 	    BlocsManager = require("./blocsManager"),
