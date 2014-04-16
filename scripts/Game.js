@@ -7,7 +7,7 @@ define(function(require) {
 	var blocsManager = require('./blocsManager');
 	var TeleporteurManager = require('./TeleporteurManager');
 
-	return new Phaser.Game(1024, 768, Phaser.AUTO, 'game', {
+	return _.extend(new Phaser.Game(1024, 768, Phaser.AUTO, 'game', {
 		preload: function(){
 			console.log('Game Preload');
 			this.game.load.tilemap('test', 'Assets/Levels/mapTest.json', null, Phaser.Tilemap.TILED_JSON);
@@ -77,6 +77,10 @@ define(function(require) {
 			if(Player.isReady){
 				Player.render();
 			}
+		}
+	}), new function(){
+		this.loadLevel = function(){
+			console.log('loadLevel');
 		}
 	});
 	

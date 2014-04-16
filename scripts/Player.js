@@ -4,6 +4,7 @@ define(function(require){
 	var BlocsManager = require("./blocsManager");
 	var TPManager = require("./TeleporteurManager");
 	var SwitchManager = require("./SwitchManager");
+	var lookUtils = require('./playersLookUtil');
 
 	var Player = {
 
@@ -64,7 +65,7 @@ define(function(require){
 		    this.tween.onComplete.add(function(){
 		    	this.resetVelocity();
 		    	this.canMove = true;
-
+		    	//lookUtils.checkLook(this.currCase);
 		    	if(onComplete) onComplete.apply();
 		    }, this);
 		},
