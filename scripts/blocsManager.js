@@ -13,7 +13,7 @@ define(function(require) {
             var _this = this;
             this.blocsTiles = [];
             this.blocsTable = [];
-            var objectsLayer = map.layer2;
+            var objectsLayer = map.layer3;
             _.each(objectsLayer, function(objectLayer)
             {
                 _.each(_.where(objectLayer, {type: 'bloc'}), function(bloc)

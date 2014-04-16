@@ -30,6 +30,7 @@ define(function(require) {
         this.columnNumber = column || 16;
         this.layer1 = [this.lineNumber];
         this.layer2 = [this.lineNumber];
+        this.layer3 = [this.lineNumber];
 
         this.init = function()
         {
@@ -56,6 +57,20 @@ define(function(require) {
                         this.layer2[y][x] = new Case(tile.x, tile.y, typeCase[tile.index]);
                     else
                         this.layer2[y][x] = new Case(x, y, "");
+                }
+
+            }
+
+            for(var y = 0; y < this.lineNumber; ++y)
+            {
+                this.layer3[y] = [this.columnNumber];
+                for(var x = 0; x < this.columnNumber; ++x)
+                {
+                    tile = map.layers[3].data[y][x];
+                    if(tile && tile.index != 0)
+                        this.layer3[y][x] = new Case(tile.x, tile.y, typeCase[tile.index]);
+                    else
+                        this.layer3[y][x] = new Case(x, y, "");
                 }
 
             }
