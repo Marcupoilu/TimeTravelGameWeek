@@ -13,11 +13,13 @@ define(function(require) {
 
 		create: function(){
 			this.sprite = Game.add.sprite(Game.world.centerX/2,0, 'win');
-  			buttonMainMenu = Game.add.button(50, 450, 'button', this.onClickMainMenu, this);
-    		buttonNextLevel = Game.add.button(550, 450, 'button', this.onClickResetLevel, this);
-		  	var t = Game.add.text(Game.world.centerX/2 + 110, 280, this.labelOver, this.style);
-		  	var tMainMenu = Game.add.text(Game.world.centerX/2 - 80, 490, this.labelMainMenu, this.style);
-		  	var tResetLevel = Game.add.text(Game.world.centerX/2 + 420, 490, this.labelResetLevel, this.style);
+  			this.buttonMainMenu = Game.add.button(50, 450, 'button', this.onClickMainMenu, this);
+    		this.buttonResetLevel = Game.add.button(550, 450, 'button', this.onClickResetLevel, this);
+		  	this.t = Game.add.text(Game.world.centerX/2 + 110, 280, this.labelOver, this.style);
+		  	this.tMainMenu = Game.add.text(Game.world.centerX/2 - 80, 490, this.labelMainMenu, this.style);
+		  	this.tResetLevel = Game.add.text(Game.world.centerX/2 + 420, 490, this.labelResetLevel, this.style);
+		 	Game.sprites.push(this.sprite, this.buttonResetLevel, this.buttonMainMenu, this.t, this.tMainMenu, this.tResetLevel)
+
 		},
 
 		update: function(){

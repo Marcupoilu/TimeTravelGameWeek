@@ -4,6 +4,7 @@ define(function(require) {
 		this.y = y;
 		this.activated = false;
 		this.sprite = Game.add.sprite(this.x, this.y, 'consoleOFF');
+        Game.sprites.push(this.sprite);
 
 		this.Activate = function(){
 			this.activated = true;

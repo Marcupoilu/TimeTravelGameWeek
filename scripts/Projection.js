@@ -20,9 +20,10 @@ define(function(require) {
 			//Game.load.spritesheet('projection', '../images/gabarit_chara.png', 64, 128, 1);
 		};
 
-		this.create = function(depart){
-			this.depart = depart || new Case(1,1);
-			this.sprite = Game.add.sprite(this.depart.x * 64, this.depart.y * 64 - 64, 'projection');
+		this.create = function(){
+			// this.depart = depart || new Case(1,1);
+			this.sprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64 - 64, 'projection');
+        	Game.sprites.push(this.sprite);
 			Game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 			this.sprite.visible = false;
 
@@ -47,8 +48,14 @@ define(function(require) {
 				}
 				this.moveToCase(pro.x, pro.y, target);
 			}
-
+			// console.log("moveToNext this.currID = " + this.currId + ", this.trajet = ", this.trajet.length - 1);
 			this.finish = (this.currId >= this.trajet.length - 1);
+			// console.log(this.finish);
+		};
+
+		this.resetVelocity = function(){
+			this.sprite.body.velocity.x = 0;
+		    this.sprite.body.velocity.y = 0;
 		};
 
 		this.moveToCase = function(idX, idY, target){
@@ -189,11 +196,11 @@ define(function(require) {
 		    	if(Game.physics.arcade.collide(_this.sprite, Game.layerTiles)){
 		    		console.log('colide');
 		    		_this.tween.stop();
-		    		_this.canMove = true;
+		    		_this.resetVelocity();
 				}
 		    });
 		    this.tween.onComplete.add(function(){
-		    	this.canMove = true;
+		    	this.resetVelocity();
 		    	//lookUtils.checkLook(this.currCase);
 		    	if(onComplete) onComplete.apply();
 		    }, this);

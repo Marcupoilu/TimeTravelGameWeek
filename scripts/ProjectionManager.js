@@ -24,7 +24,8 @@ define(function(require) {
 			{
 				this.addProjection(new Projection(proCase));
 			}
-			this.projs[this.currentId].addCase(proCase);
+			else
+				this.projs[this.currentId].addCase(proCase);
 		},
 
 		moveAllProj: function(){

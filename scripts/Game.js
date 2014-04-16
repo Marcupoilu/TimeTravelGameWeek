@@ -22,6 +22,7 @@ define(function(require) {
 			_this = this;
 			this.game.levels = [];
 			this.game.currentLevel = 0;
+			this.game.sprites = [];
 
 			for(var i = 0; i < 10; i++){
 				this.game.levels.push(i);	
@@ -105,6 +106,9 @@ define(function(require) {
 		}
 	}), new function(){
 		this.loadLevel = function(int){
+			_.each(_this.game.sprites, function(sprite){
+				sprite.destroy();
+			});
 			_this.game.layerTiles.destroy();
 			_this.game.map.destroy();
 			_this.game.layerObject.destroy();

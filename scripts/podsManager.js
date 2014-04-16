@@ -16,7 +16,7 @@ define(function(require){
 
 			_.each(objectsLayer, function(objectLayer){
 				_.each(_.where(objectLayer, {type: 'pod'}), function(pod){
-					console.log(pod);
+					// console.log(pod);
 					pods.push(pod);
 				});
 			});
@@ -24,6 +24,7 @@ define(function(require){
 			console.log(pods);
 
 			_.each(pods, function(pod){
+				console.log("this.pods push = ", pod);
 				_this.pods.push(new Pod(pod.x*64, pod.y*64, pod));
 			});
 

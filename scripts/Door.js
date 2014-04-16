@@ -9,6 +9,7 @@ define(function(require) {
 		this.sprite.body.bounce.y = 0;
 		this.sprite.body.bounce.x = 0;
 	    this.sprite.body.velocity = 0;
+        Game.sprites.push(this.sprite);
 
 		this.Open = function(){
 			this.opened = true;
