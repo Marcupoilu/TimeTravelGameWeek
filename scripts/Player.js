@@ -264,7 +264,17 @@ define(function(require){
 				ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
 				ProjectionManager.moveAllProj();
 			}
-
+			if (future.type == "ice")
+			{
+				this.canMove = false;
+		
+				this.setTarget(target, function(){
+					_this.canMove = false;
+					_this.moveToCase(idX+this.sprite.body.velocity.x, idY+this.sprite.body.velocity.y, target);
+				});
+				
+				return;
+			}
 			if (future.type == "direction_right"){
 				this.canMove = false;
 				this.setTarget(target, function(){
