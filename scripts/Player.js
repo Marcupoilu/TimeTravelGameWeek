@@ -175,7 +175,7 @@ define(function(require){
 			if (future.type == "exit"){
 				var exitToCheck = ExitManager.exitObjects[0];
 				if(exitToCheck.opened)
-					console.log("finish level");
+					Game.Win();
 				else
 					return;
 			}

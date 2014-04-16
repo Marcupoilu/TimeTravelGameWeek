@@ -10,13 +10,24 @@ define(function(require) {
 	    blocsManager = require('./blocsManager'),
 	    TeleporteurManager = require('./TeleporteurManager'),
 	    ConsoleManager = require("./ConsoleManager"),
-	    ExitManager = require("./ExitManager");
+	    ExitManager = require("./ExitManager"),
+	    WinMenu = require("./WinMenu"),
+	    GameOverMenu = require("./GameOverMenu");
 
 	return _.extend(new Phaser.Game(1024, 768, Phaser.AUTO, 'game', {
 		preload: function(){
 			console.log('Game Preload');
-			this.game.load.tilemap('test', 'Assets/Levels/mapTest.json', null, Phaser.Tilemap.TILED_JSON);
+			_this = this;
+			this.game.levels = [];
+			this.game.currentLevel = 0;
 
+			for(var i = 0; i < 10; i++){
+				this.game.levels.push(i);	
+			}
+
+			_.each(this.game.levels, function(int){
+				_this.game.load.tilemap('level'+int, 'Assets/Levels/level'+int+'.json', null, Phaser.Tilemap.TILED_JSON);
+			});
     		//  Next we load the tileset. This.game is just an image, loaded in via the normal way we load images:
 
     		this.game.load.image('tiles', 'Assets/typeOfCase.png');
@@ -27,6 +38,8 @@ define(function(require) {
     		ConsoleManager.preload();
     		ProjectionManager.preload();
     		ExitManager.preload();
+    		WinMenu.preload();
+    		GameOverMenu.preload();
     		Player.preload();
 		},
 
@@ -38,7 +51,7 @@ define(function(require) {
 
 			this.game.stage.backgroundColor = '#787878';
 
-		    this.game.map = this.game.add.tilemap('test');
+		    this.game.map = this.game.add.tilemap('level0');
 		    this.game.map.addTilesetImage('typeOfCase', 'tiles');
 		    this.game.map.addTilesetImage('links', 'linksImg');
 		    this.game.map.setCollision([2, 10]);
@@ -80,7 +93,6 @@ define(function(require) {
 					Player.update();
 				}
 			}
-
 		},
 
 		render: function(){
@@ -90,9 +102,57 @@ define(function(require) {
 			}
 		}
 	}), new function(){
-		this.loadLevel = function(){
-			console.log('loadLevel');
-		}
+		this.loadLevel = function(int){
+			_this.game.layerTiles.destroy();
+			_this.game.map.destroy();
+			_this.game.layerObject.destroy();
+			_this.game.layerLinks.destroy();
+
+			//	Enable p2 physics
+			_this.game.physics.startSystem(Phaser.Physics.ARCADE);
+
+			_this.game.stage.backgroundColor = '#787878';
+
+		    _this.game.map = _this.game.add.tilemap('level'+int);
+		    _this.game.map.addTilesetImage('typeOfCase', 'tiles');
+		    _this.game.map.addTilesetImage('links', 'linksImg');
+		    _this.game.map.setCollision([2, 10]);
+		    
+		    _this.game.layerTiles = _this.game.map.createLayer('Tiles');
+		    _this.game.layerObject = _this.game.map.createLayer('Objects');
+		    _this.game.layerLinks = _this.game.map.createLayer('Links');
+
+		    //_this.game.map.setCollision(2, true, _this.game.layerObject);
+
+		    _this.game.layerTiles.debug = true;
+
+		    _this.game.mapCases = new Map(_this.game.map,12,16);
+		    _this.game.mapCases.init();
+		    //_this.game.layerObject.debug = true;
+			
+			podsManager.create(_this.game.mapCases);
+			blocsManager.create(_this.game.mapCases);
+			SwitchManager.create(_this.game.mapCases);
+			DoorManager.create(_this.game.mapCases);
+			TeleporteurManager.create(_this.game.mapCases);
+		    ConsoleManager.create(_this.game.mapCases);
+			ProjectionManager.create();
+			ExitManager.create(_this.game.mapCases);
+		    // Faire ça au click sur un pod
+		    //Player.create();
+
+		    _this.game.gameState = 'readyToPlay';
+		};
+
+		this.GameOver = function(){
+			GameOverMenu.create();
+			_this.game.gameState = "GameOver";
+		};
+
+		this.Win = function(){
+			WinMenu.create();
+			_this.game.gameState = "win";
+		};
 	});
 	
 });
