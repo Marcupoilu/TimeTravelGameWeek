@@ -51,10 +51,7 @@ define(function(require){
 		setTarget: function(target, onComplete){
 			// console.log("setTarget target = ", target, ", onComplete = ", onComplete);
 			var _this = this;
-			var lastPos = {
-				x: this.sprite.body.x,
-				y: this.sprite.body.y
-			}
+
 			this.canMove = false;
 		    this.tween = Game.add.tween(this.sprite.body).to(target, 200, Phaser.Easing.Linear.None, true);
 		    this.tween.onUpdateCallback(function(){
@@ -66,7 +63,7 @@ define(function(require){
 				}
 		    });
 		    this.tween.onComplete.add(function(){
-		    	lookUtils.checkLook(this.currCase, this.sprite.body.velocity);
+		    	Game.manageAllLook();
 		    	this.resetVelocity();
 		    	this.canMove = true;
 		    	if(onComplete) onComplete.apply();

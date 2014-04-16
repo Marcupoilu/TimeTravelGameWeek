@@ -12,6 +12,8 @@ define(function(require) {
 	    ConsoleManager = require("./ConsoleManager"),
 	    ExitManager = require("./ExitManager");
 
+	var lookUtil = require('./playersLookUtil');
+
 	return _.extend(new Phaser.Game(1024, 768, Phaser.AUTO, 'game', {
 		preload: function(){
 			console.log('Game Preload');
@@ -92,6 +94,11 @@ define(function(require) {
 	}), new function(){
 		this.loadLevel = function(){
 			console.log('loadLevel');
+		}
+
+		this.manageAllLook = function(){
+			lookUtil.getLook(Player.currCase, Player.sprite.body.velocity);
+			console.log(ProjectionManager);
 		}
 	});
 	
