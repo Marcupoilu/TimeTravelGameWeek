@@ -1,19 +1,11 @@
 define(function(require){
-<<<<<<< HEAD
-	var Case = require("./Case");
-	var DoorManager = require("./DoorManager");
-	var BlocsManager = require("./blocsManager");
-	var TPManager = require("./TeleporteurManager");
-	var SwitchManager = require("./SwitchManager");
-	var lookUtils = require('./playersLookUtil');
-=======
+
 	var Case = require("./Case"),
 		DoorManager = require("./DoorManager"),
 	    BlocsManager = require("./blocsManager"),
 	    TPManager = require("./TeleporteurManager"),
 	    SwitchManager = require("./SwitchManager"),
 	    lookUtils = require('./playersLookUtil');
->>>>>>> a97894bbbb42ac242cf6857696a1ddc4b60f4826
 
 	var Player = {
 
