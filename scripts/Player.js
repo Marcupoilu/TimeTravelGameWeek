@@ -229,19 +229,14 @@ define(function(require){
 				return;
 			}
 
-			if(move)
-			{
-				this.currCase.x = idX;
-				this.currCase.y = idY;
-				ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
+			if(move){
 				Game.playerMove();
-				ProjectionManager.moveAllProj();
 			}
 
 			//gestion des blocs
 			if(futureBloc.type == "bloc"){//console.log(future.x*64); console.log(future.y*64);
 				var blocToCheck = _.findWhere(BlocsManager.blocsTable, {x:futureBloc.x*64, y:futureBloc.y*64});
-				if(blocToCheck.canMove)
+				if(blocToCheck && blocToCheck.canMove)
 				{
 					if(!blocToCheck.moveDirection({
 						x : this.sprite.body.velocity.x,
@@ -252,6 +247,13 @@ define(function(require){
 				}
 				else
 					return;
+			}
+
+			if(move){
+				this.currCase.x = idX;
+				this.currCase.y = idY;
+				ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
+				ProjectionManager.moveAllProj();
 			}
 
 			if (future.type == "direction_right"){

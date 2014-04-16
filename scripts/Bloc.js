@@ -58,10 +58,6 @@ define(function(require)
         this.setTarget = function(target)
         {
             var _this = this;
-            var lastPos = {
-                x: this.sprite.body.x,
-                y: this.sprite.body.y
-            }
             this.canMove = false;
             this.tween = Game.add.tween(this.sprite.body).to(target, 200, Phaser.Easing.Linear.None, true);
             this.tween.onUpdateCallback(function()
