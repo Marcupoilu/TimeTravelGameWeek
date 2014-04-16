@@ -40,17 +40,21 @@ define(function(require) {
 		    //this.game.layerObject.debug = true;
 			
 			podsManager.create(this.game.mapCases);
-		    Player.create();
+		    //Player.create();
 		},
 
 		update: function(){
 			// console.log('Game Update');
-			Player.update();
+			if(Player.isReady){
+				Player.update();
+			}
 		},
 
 		render: function(){
 			// console.log('Game Render');
-			Player.render();
+			if(Player.isReady){
+				Player.render();
+			}
 		}
 	});
 	

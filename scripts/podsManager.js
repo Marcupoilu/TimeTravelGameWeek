@@ -10,19 +10,29 @@ define(function(require){
 		create : function(map){
 			var _this = this;
 			this.pods = [];
+			var pods = [];
 			var objectsLayer = map.layer2;
 
 			_.each(objectsLayer, function(objectLayer){
 				_.each(_.where(objectLayer, {type: 'pod'}), function(pod){
-					_this.pods.push(pod);
+					pods.push(pod);
 				});
 			});
 
 			_.each(this.pods, function(pod){
-				new Pod(pod.x*64, pod.y*64);
+				_this.pods = new Pod(pod.x*64, pod.y*64);
 			});
 
 			console.log(this.pods);
+		},
+
+		update: function(){
+			var _this = this;
+			_.each(this.pods, function(pod){
+				if(pod.sprite.input.pointerDown()){
+
+				}
+			});
 		}
 	}
 

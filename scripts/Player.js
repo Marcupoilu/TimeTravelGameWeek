@@ -26,6 +26,7 @@ define(function(require){
 			this.initInputs();
 		    
 		    console.log('Player Create', this);
+		    this.isReady = true;
 		},
 
 		initInputs: function(){
