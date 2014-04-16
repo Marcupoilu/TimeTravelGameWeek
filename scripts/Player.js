@@ -1,9 +1,10 @@
 define(function(require){
-	var Case = require("./Case");
-	var DoorManager = require("./DoorManager");
-	var BlocsManager = require("./blocsManager");
-	var TPManager = require("./TeleporteurManager");
-	var SwitchManager = require("./SwitchManager");
+	var Case = require("./Case"),
+		DoorManager = require("./DoorManager"),
+	    BlocsManager = require("./blocsManager"),
+	    TPManager = require("./TeleporteurManager"),
+	    SwitchManager = require("./SwitchManager"),
+	    lookUtils = require('./playersLookUtil');
 
 	var Player = {
 
@@ -64,7 +65,7 @@ define(function(require){
 		    this.tween.onComplete.add(function(){
 		    	this.resetVelocity();
 		    	this.canMove = true;
-
+		    	//lookUtils.checkLook(this.currCase);
 		    	if(onComplete) onComplete.apply();
 		    }, this);
 		},
@@ -119,7 +120,7 @@ define(function(require){
 		},
 
 		moveToCase: function(idX, idY, target){
-			
+			var _this = this;			
 			var future = Game.mapCases.layer2[idY][idX];
 			var move = false;
 			if(future.type == "door"){//console.log(future.x*64); console.log(future.y*64);
@@ -136,9 +137,7 @@ define(function(require){
 					switchToCheck.activate();
 				}
 			}
-			if(future.type == "vortex"){//console.log(future.x*64); console.log(future.y*64);
-				this.sprite.destroy();
-			}
+			
 			//gestion des blocs
 			if(future.type == "bloc"){//console.log(future.x*64); console.log(future.y*64);
 				var blocToCheck = _.findWhere(BlocsManager.blocsTable, {x:future.x*64, y:future.y*64});
@@ -176,7 +175,6 @@ define(function(require){
 			//si c'est un teleport on passe une fonction onComplete au setTarget pour qu'il se tp après être passé sur le téléporteur
 			if(future.type == "teleport")
 			{
-				var _this = this;
 				
 				this.setTarget(target, function(){
 					var tp = _.findWhere(TPManager.teleporteurs, {x: future.x, y: future.y});
@@ -188,15 +186,62 @@ define(function(require){
 					_this.currCase.y = idY;
 					_this.setTarget(target);
 				});
+				return;
 			}
-			else
-				this.setTarget(target);
+
+			//si c'est un vortex on se destroy
+			if(future.type == "vortex"){//console.log(future.x*64); console.log(future.y*64);
+				//this.sprite.destroy();
+				this.setTarget(target, function(){
+					_this.sprite.destroy();
+				});
+				return;
+			}
 
 			if(move)
 			{
 				this.currCase.x = idX;
 				this.currCase.y = idY;
 			}
+
+			if (future.type == "direction_right"){
+				this.canMove = false;
+				this.setTarget(target, function(){
+					_this.canMove = false;
+					_this.moveToCase(idX+1, idY, target);
+				});
+				return;
+			}
+			else if (future.type == "direction_bottom"){
+				this.canMove = false;
+				this.setTarget(target, function(){
+					_this.canMove = false;
+					_this.moveToCase(idX, idY+1, target);
+				});
+				return;
+			}
+			else if (future.type == "direction_left"){
+				this.canMove = false;
+				this.setTarget(target, function(){
+					_this.canMove = false;
+					_this.moveToCase(idX-1, idY, target);
+				});
+				return;
+			}
+			else if (future.type == "direction_up"){
+				this.canMove = false;
+				this.setTarget(target, function(){
+					_this.canMove = false;
+					_this.moveToCase(idX, idY-1, target);
+				});
+				return;
+			}
+				this.canMove = true;
+
+			this.setTarget(target);
+			
+
+
 		}
 	}
 
