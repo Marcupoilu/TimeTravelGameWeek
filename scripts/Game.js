@@ -25,9 +25,9 @@ define(function(require) {
     		DoorManager.preload();
     		SwitchManager.preload();
     		ConsoleManager.preload();
-    		ProjectionManager.preload();
     		ExitManager.preload();
     		Player.preload();
+    		ProjectionManager.preload();
 		},
 
 		create: function(){

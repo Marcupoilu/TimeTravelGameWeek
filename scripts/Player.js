@@ -5,6 +5,7 @@ define(function(require){
 	    TPManager = require("./TeleporteurManager"),
 	    SwitchManager = require("./SwitchManager"),
 	    lookUtils = require('./playersLookUtil'),
+	    ProjectionManager = require("./ProjectionManager"),
 	    ConsoleManager = require("./ConsoleManager"),
 	    ExitManager = require("./ExitManager");
 
@@ -243,6 +244,7 @@ define(function(require){
 			{
 				this.currCase.x = idX;
 				this.currCase.y = idY;
+				ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
 			}
 
 			if (future.type == "direction_right"){
