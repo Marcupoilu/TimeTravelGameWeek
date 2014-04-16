@@ -12,14 +12,18 @@ define(function(require){
 	var Player = {
 
 		canMove : true,
+		nbActions : 0,
+		noMoreActions : false,
 
 		preload: function(){
 			Game.load.spritesheet('character', '../images/gabarit_chara.png', 64, 128, 1);
 			this.created = false;
 		},
 
-		create: function(caseDepart){
+		create: function(caseDepart, maxActions){
 			this.currCase = _(caseDepart).clone() || new Case(1,1);
+			this.maxActions = maxActions || -1;
+
 			if(!this.created)
 			{
 				this.sprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64 - 64, 'character');
@@ -41,6 +45,7 @@ define(function(require){
 				this.sprite.alpha = 1;
 				this.canMove = true;
 			}
+
 		    console.log('Player Create', this);
 		    Game.gameState = 'play';
 		    this.resetManagers();
@@ -52,7 +57,8 @@ define(function(require){
 			this.isReady = false;
 			this.sprite.alpha = 0;
 			this.canMove = false;
-
+			this.nbActions = 0;
+			this.noMoreActions = false;
 		},
 
 		resetManagers: function()
@@ -104,7 +110,7 @@ define(function(require){
 				y: this.sprite.body.y
 			}
 
-			if(this.canMove){
+			if(this.canMove && !this.noMoreActions){
 				if (this.cursors.up.isDown) {
 			    	// target.y -= 64; // this.setTarget(target); // this.sprite.body.velocity.y = -1;
 			    	this.moveToCase(this.currCase.x, this.currCase.y - 1, target);
@@ -122,15 +128,14 @@ define(function(require){
 			    	this.moveToCase(this.currCase.x + 1, this.currCase.y, target);
 
 			    }
-
-			    if(this.endButton.isDown)
-			    {
-			    	this.canMove = false;
-			    	ProjectionManager.closeCurrentProjection();
-					this.disappear();
-			    }
 			}
 
+			if(this.endButton.isDown)
+		    {
+		    	this.canMove = false;
+		    	ProjectionManager.closeCurrentProjection();
+				this.disappear();
+		    }
 		},
 
 		update: function(){
@@ -139,6 +144,19 @@ define(function(require){
 
 		render: function(){
 
+		},
+
+		whenMoved: function(idX, idY){
+			//var _this = scope || this;
+
+			ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
+			ProjectionManager.moveAllProj();
+
+			if(this.maxActions == -1) return;
+
+			this.nbActions ++;
+			this.noMoreActions = (this.nbActions >= this.maxActions);
+			console.log("whenMoved = " + this.nbActions + ", this.maxActions = " + this.maxActions + ", this.noMoreActions = " + this.noMoreActions);
 		},
 
 		moveToCase: function(idX, idY, target){
@@ -193,7 +211,9 @@ define(function(require){
 			//si c'est un teleport on passe une fonction onComplete au setTarget pour qu'il se tp après être passé sur le téléporteur
 			if(future.type == "teleport")
 			{
-				ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
+				// ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
+				// ProjectionManager.moveAllProj();
+				this.whenMoved(idX, idY);
 				this.setTarget(target, function(){
 					var tp = _.findWhere(TPManager.teleporteurs, {x: future.x, y: future.y});
 					target.x = tp.target.x * 64;
@@ -211,8 +231,9 @@ define(function(require){
 
 			if (future.type == "console"){
 				var consoleToCheck = _.findWhere(ConsoleManager.consoleObjects, {x:future.x*64, y:future.y*64});
-				ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
-				ProjectionManager.moveAllProj();
+				// ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
+				// ProjectionManager.moveAllProj();
+				this.whenMoved(idX, idY);
 				this.setTarget(target, function(){
 					if (!consoleToCheck.activated){
 						ConsoleManager.consolesON++;
@@ -262,12 +283,17 @@ define(function(require){
 			if(move){
 				this.currCase.x = idX;
 				this.currCase.y = idY;
-				ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
-				ProjectionManager.moveAllProj();
+				this.whenMoved(idX, idY);
+				// ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
+				// ProjectionManager.moveAllProj();
 			}
+
 			if (future.type == "ice")
 			{
 				this.canMove = false;
+				//beurk
+				this.nbActions --;
+				
 				direction = _(this.sprite.body.velocity).clone();
 		
 				this.setTarget(target, function(){
@@ -279,6 +305,9 @@ define(function(require){
 			}
 			if (future.type == "direction_right"){
 				this.canMove = false;
+				//beurk
+				this.nbActions --;
+
 				this.setTarget(target, function(){
 					_this.canMove = false;
 					_this.moveToCase(idX+1, idY, target);
@@ -287,6 +316,9 @@ define(function(require){
 			}
 			else if (future.type == "direction_bottom"){
 				this.canMove = false;
+				//beurk
+				this.nbActions --;
+
 				this.setTarget(target, function(){
 					_this.canMove = false;
 					_this.moveToCase(idX, idY+1, target);
@@ -295,6 +327,9 @@ define(function(require){
 			}
 			else if (future.type == "direction_left"){
 				this.canMove = false;
+				//beurk
+				this.nbActions --;
+				
 				this.setTarget(target, function(){
 					_this.canMove = false;
 					_this.moveToCase(idX-1, idY, target);
@@ -303,13 +338,16 @@ define(function(require){
 			}
 			else if (future.type == "direction_up"){
 				this.canMove = false;
+				//beurk
+				this.nbActions --;
+				
 				this.setTarget(target, function(){
 					_this.canMove = false;
 					_this.moveToCase(idX, idY-1, target);
 				});
 				return;
 			}
-				this.canMove = true;
+			this.canMove = true;
 
 			this.setTarget(target);
 			

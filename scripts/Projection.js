@@ -66,7 +66,7 @@ define(function(require) {
 			this.sprite.alpha = 0;
 			this.active = false;
 			this.currCase = _(this.trajet[0]).clone();
-			console.log("projection = ", this, ", ");
+			
 			this.sprite.body.x = this.currCase.x * 64;
 			this.sprite.body.y = this.currCase.y * 64;
 		};
