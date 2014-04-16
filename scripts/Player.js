@@ -198,7 +198,9 @@ define(function(require){
 					idY = tp.target.y;
 					_this.currCase.x = idX;
 					_this.currCase.y = idY;
-					_this.setTarget(target);
+					//_this.setTarget(target);
+					_this.sprite.body.x = target.x;
+					_this.sprite.body.y = target.y;
 				});
 				return;
 			}
@@ -227,7 +229,8 @@ define(function(require){
 			if(future.type == "vortex"){//console.log(future.x*64); console.log(future.y*64);
 				//this.sprite.destroy();
 				this.setTarget(target, function(){
-					_this.sprite.destroy();
+					//_this.sprite.destroy();
+					_this.disappear();
 				});
 				return;
 			}

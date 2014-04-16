@@ -136,7 +136,9 @@ define(function(require) {
 					idY = tp.target.y;
 					_this.currCase.x = idX;
 					_this.currCase.y = idY;
-					_this.setTarget(target);
+					//_this.setTarget(target);
+					_this.sprite.body.x = target.x;
+					_this.sprite.body.y = target.y;
 				});
 				return;
 			}
