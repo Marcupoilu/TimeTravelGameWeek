@@ -1,8 +1,11 @@
 define(function(require) {
 	var Map = require("./Map");
 	var Player = require('./Player');
+	var DoorManager = require("./DoorManager");
 	var podsManager = require('./podsManager');
-	
+	var SwitchManager = require("./SwitchManager");
+	var blocsManager = require('./blocsManager');
+	var TeleporteurManager = require('./TeleporteurManager');
 
 	return new Phaser.Game(1024, 768, Phaser.AUTO, 'game', {
 		preload: function(){
@@ -12,7 +15,10 @@ define(function(require) {
     		//  Next we load the tileset. This.game is just an image, loaded in via the normal way we load images:
 
     		this.game.load.image('tiles', 'Assets/typeOfCase.png');
+    		this.game.load.image('linksImg', 'Assets/links.png');
     		podsManager.preload();
+    		DoorManager.preload();
+    		SwitchManager.preload();
     		Player.preload();
 		},
 
@@ -26,10 +32,12 @@ define(function(require) {
 
 		    this.game.map = this.game.add.tilemap('test');
 		    this.game.map.addTilesetImage('typeOfCase', 'tiles');
+		    this.game.map.addTilesetImage('links', 'linksImg');
 		    this.game.map.setCollision([2, 10]);
 		    
 		    this.game.layerTiles = this.game.map.createLayer('Tiles');
 		    this.game.layerObject = this.game.map.createLayer('Objects');
+		    this.game.layerLinks = this.game.map.createLayer('Links');
 
 		    //this.game.map.setCollision(2, true, this.game.layerObject);
 
@@ -40,14 +48,25 @@ define(function(require) {
 		    //this.game.layerObject.debug = true;
 			
 			podsManager.create(this.game.mapCases);
-		    //Player.create();
+
+			blocsManager.create(this.game.mapCases);
+			SwitchManager.create(this.game.mapCases);
+			DoorManager.create(this.game.mapCases);
+			TeleporteurManager.create(this.game.mapCases);
+		    Player.create();
 		},
 
 		update: function(){
 			// console.log('Game Update');
-			if(Player.isReady){
+
+			/*if(Player.isReady){
 				Player.update();
-			}
+			}*/
+
+			DoorManager.update();
+			SwitchManager.update();
+			Player.update();
+
 		},
 
 		render: function(){

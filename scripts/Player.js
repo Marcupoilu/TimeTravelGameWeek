@@ -1,5 +1,9 @@
 define(function(require){
 	var Case = require("./Case");
+	var DoorManager = require("./DoorManager");
+	var BlocsManager = require("./blocsManager");
+	var TPManager = require("./TeleporteurManager");
+	var SwitchManager = require("./SwitchManager");
 
 	var Player = {
 
@@ -39,7 +43,9 @@ define(function(require){
 		    this.sprite.body.velocity.y = 0;
 		},
 
-		setTarget: function(target){
+		setTarget: function(target, onComplete){
+
+			console.log("setTarget target = ", target, ", onComplete = ", onComplete);
 			var _this = this;
 			var lastPos = {
 				x: this.sprite.body.x,
@@ -48,8 +54,8 @@ define(function(require){
 			this.canMove = false;
 		    this.tween = Game.add.tween(this.sprite.body).to(target, 200, Phaser.Easing.Linear.None, true);
 		    this.tween.onUpdateCallback(function(){
-		    	if(Game.physics.arcade.collide(_this.sprite, [Game.layerTiles, Game.layerObject])){
-		    		//console.log('colide');
+		    	if(Game.physics.arcade.collide(_this.sprite, Game.layerTiles)){
+		    		console.log('colide');
 		    		_this.tween.stop();
 		    		_this.resetVelocity();
 		    		_this.canMove = true;
@@ -58,6 +64,8 @@ define(function(require){
 		    this.tween.onComplete.add(function(){
 		    	this.resetVelocity();
 		    	this.canMove = true;
+
+		    	if(onComplete) onComplete.apply();
 		    }, this);
 		},
 
@@ -114,7 +122,46 @@ define(function(require){
 			
 			var future = Game.mapCases.layer2[idY][idX];
 			var move = false;
-
+			if(future.type == "door"){//console.log(future.x*64); console.log(future.y*64);
+				var doorToCheck = _.findWhere(DoorManager.doorsObject, {x:future.x*64, y:future.y*64});
+				if(doorToCheck.opened)
+					console.log(open)
+				else
+					return
+			}
+			if(future.type == "switch"){//console.log(future.x*64); console.log(future.y*64);
+				var switchToCheck = _.findWhere(SwitchManager.switchObjects, {x:future.x*64, y:future.y*64});
+				if(!switchToCheck.activated){
+					switchToCheck.activated = true;
+					switchToCheck.activate();
+				}
+			}
+			//gestion des blocs
+			if(future.type == "bloc"){//console.log(future.x*64); console.log(future.y*64);
+				var blocToCheck = _.findWhere(BlocsManager.blocsTable, {x:future.x*64, y:future.y*64});
+				if(blocToCheck.canMove)
+				{
+					//make the bloc move
+					if (this.cursors.up.isDown) 
+					{
+			    		blocToCheck.moveToCase(blocToCheck.caseX, blocToCheck.caseY - 1, target);
+			    	} 
+			    	else if (this.cursors.down.isDown) 
+			    	{
+			    		blocToCheck.moveToCase(blocToCheck.caseX, blocToCheck.caseY + 1, target);
+			   		} 
+			   		else if (this.cursors.left.isDown) 
+			   		{
+			    		blocToCheck.moveToCase(blocToCheck.caseX - 1, blocToCheck.caseY, target);
+			    	} 
+			    	else if (this.cursors.right.isDown) 
+			    	{				    	
+			    		blocToCheck.moveToCase(blocToCheck.caseX + 1, blocToCheck.caseY, target);
+			    	}
+				}
+				else
+					return
+			}
 			//s'il n'y a pas d'objets sur la case on check le layer1
 			if(future.type == "")
 			{
@@ -131,7 +178,27 @@ define(function(require){
 
 			target.x += 64 * this.sprite.body.velocity.x;
 			target.y += 64 * this.sprite.body.velocity.y;
-			this.setTarget(target);
+
+			//si c'est un teleport on passe une fonction onComplete au setTarget pour qu'il se tp après être passé sur le téléporteur
+			if(future.type == "teleport")
+			{
+				var _this = this;
+				var _future = future;
+				var _target = target;
+				
+				this.setTarget(target, function(){
+					var tp = _.findWhere(TPManager.teleporteurs, {x: _future.x, y: _future.y});
+					_target.x = tp.target.x * 64;
+					_target.y = tp.target.y * 64;
+					idX = tp.target.x;
+					idY = tp.target.y;
+					_this.currCase.x = idX;
+					_this.currCase.y = idY;
+					_this.setTarget(_target);
+				});
+			}
+			else
+				this.setTarget(target);
 
 			if(move)
 			{
