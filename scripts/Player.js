@@ -268,10 +268,11 @@ define(function(require){
 			if (future.type == "ice")
 			{
 				this.canMove = false;
+				direction = _(this.sprite.body.velocity).clone();
 		
 				this.setTarget(target, function(){
 					_this.canMove = false;
-					_this.moveToCase(idX+this.sprite.body.velocity.x, idY+this.sprite.body.velocity.y, target);
+					_this.moveToCase(idX+direction.x, idY+direction.y, target);
 				});
 				
 				return;
