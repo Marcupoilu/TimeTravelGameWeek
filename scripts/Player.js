@@ -43,10 +43,7 @@ define(function(require){
 			}
 		    console.log('Player Create', this);
 		    Game.gameState = 'play';
-		    ConsoleManager.resetAll();
-		    ExitManager.exitObjects[0].Deactivate();
-		    ProjectionManager.addCaseToCurrentProjection(this.currCase);
-		    ProjectionManager.moveAllProj();
+		    this.resetManagers();
 		    this.isReady = true;
 		},
 
@@ -58,9 +55,18 @@ define(function(require){
 
 		},
 
+		resetManagers: function()
+		{
+			ConsoleManager.resetAll();
+		    ExitManager.exitObjects[0].Deactivate();
+		    ProjectionManager.addCaseToCurrentProjection(this.currCase);
+		    ProjectionManager.moveAllProj();
+		},
+
 		initInputs: function(){
 			//console.log('Player Init Inputs');
 			this.cursors = Game.input.keyboard.createCursorKeys();
+			this.endButton = Game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		},
 
 		resetVelocity: function(){
@@ -77,7 +83,6 @@ define(function(require){
 		    this.tween = Game.add.tween(this.sprite.body).to(target, 200, Phaser.Easing.Linear.None, true);
 		    this.tween.onUpdateCallback(function(){
 		    	if(Game.physics.arcade.collide(_this.sprite, Game.layerTiles)){
-		    		console.log("collide player");
 		    		_this.tween.stop();
 		    		_this.resetVelocity();
 		    		_this.canMove = true;
@@ -101,33 +106,28 @@ define(function(require){
 
 			if(this.canMove){
 				if (this.cursors.up.isDown) {
-			    	//console.log('up');
-			    	// target.y -= 64;
-			    	// this.setTarget(target);
-			    	// this.sprite.body.velocity.y = -1;
+			    	// target.y -= 64; // this.setTarget(target); // this.sprite.body.velocity.y = -1;
 			    	this.moveToCase(this.currCase.x, this.currCase.y - 1, target);
 
 			    } else if (this.cursors.down.isDown) {
-			    	//console.log('down');
-			    	// target.y += 64;
-			    	// this.setTarget(target);
-			    	// this.sprite.body.velocity.y = 1;
+			    	// target.y += 64; // this.setTarget(target); // this.sprite.body.velocity.y = 1;
 			    	this.moveToCase(this.currCase.x, this.currCase.y + 1, target);
 
 			    } else if (this.cursors.left.isDown) {
-			    	//console.log('left');
-			    	// target.x -= 64;
-			    	// this.setTarget(target);
-			    	// this.sprite.body.velocity.x = -1;
+			    	// target.x -= 64; // this.setTarget(target); // this.sprite.body.velocity.x = -1;
 			    	this.moveToCase(this.currCase.x - 1, this.currCase.y, target);
 
 			    } else if (this.cursors.right.isDown) {
-			    	//console.log('right');
-			    	// target.x += 64;
-			    	// this.setTarget(target);
-			    	// this.sprite.body.velocity.x = 1;
+			    	// target.x += 64; // this.setTarget(target); // this.sprite.body.velocity.x = 1;
 			    	this.moveToCase(this.currCase.x + 1, this.currCase.y, target);
 
+			    }
+
+			    if(this.endButton.isDown)
+			    {
+			    	this.canMove = false;
+			    	ProjectionManager.closeCurrentProjection();
+					this.disappear();
 			    }
 			}
 
@@ -135,7 +135,6 @@ define(function(require){
 
 		update: function(){
 			this.checkInputs();
-			//console.log(Game.physics.arcade.overlap(this.sprite, this.sprite2))
 		},
 
 		render: function(){
@@ -147,6 +146,7 @@ define(function(require){
 			var future = Game.mapCases.layer2[idY][idX];
 			var futureBloc = Game.mapCases.layer3[idY][idX];
 			var move = false;
+
 			if(future.type == "door"){//console.log(future.x*64); console.log(future.y*64);
 				var doorToCheck = _.findWhere(DoorManager.doorsObject, {x:future.x*64, y:future.y*64});
 				if(doorToCheck.opened)
@@ -154,6 +154,7 @@ define(function(require){
 				else
 					return
 			}
+
 			if(future.type == "switch"){//console.log(future.x*64); console.log(future.y*64);
 				var switchToCheck = _.findWhere(SwitchManager.switchObjects, {x:future.x*64, y:future.y*64});
 				if(!switchToCheck.activated){
