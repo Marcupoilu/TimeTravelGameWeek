@@ -135,6 +135,9 @@ define(function(require){
 					switchToCheck.activate();
 				}
 			}
+			if(future.type == "vortex"){//console.log(future.x*64); console.log(future.y*64);
+				this.sprite.destroy();
+			}
 			//gestion des blocs
 			if(future.type == "bloc"){//console.log(future.x*64); console.log(future.y*64);
 				var blocToCheck = _.findWhere(BlocsManager.blocsTable, {x:future.x*64, y:future.y*64});
