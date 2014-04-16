@@ -19,7 +19,7 @@ define(function(require){
 		},
 
 		create: function(caseDepart){
-			
+			console.log("caseDepart = ", caseDepart);
 			this.currCase = caseDepart || new Case(1,1);
 			if(!this.created)
 			{
@@ -32,10 +32,10 @@ define(function(require){
 			    //  Enable if for physics. This creates a default rectangular body.
 				Game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 
-				this.sprite.body.bounce.y = 0;
-				this.sprite.body.bounce.x = 0;
-			    this.sprite.body.linearDamping = 1;
-			    this.sprite.body.collideWorldBounds = true;
+				// this.sprite.body.bounce.y = 0;
+				// this.sprite.body.bounce.x = 0;
+			    // this.sprite.body.linearDamping = 1;
+			    // this.sprite.body.collideWorldBounds = true;
 			    this.sprite.body.setSize(64,64,0,64);
 				this.initInputs();
 		    }
@@ -52,7 +52,8 @@ define(function(require){
 		},
 
 		disappear: function(){
-			console.log("Player disappear");
+			console.log("Player disappear ", Game);
+			this.resetVelocity();
 			this.isReady = false;
 			this.sprite.visible = false;
 			this.canMove = false;
@@ -76,7 +77,6 @@ define(function(require){
 		    this.tween = Game.add.tween(this.sprite.body).to(target, 200, Phaser.Easing.Linear.None, true);
 		    this.tween.onUpdateCallback(function(){
 		    	if(Game.physics.arcade.collide(_this.sprite, Game.layerTiles)){
-		    		console.log('colide');
 		    		_this.tween.stop();
 		    		_this.resetVelocity();
 		    		_this.canMove = true;
@@ -168,6 +168,8 @@ define(function(require){
 						consoleToCheck.Activate();
 
 						_this.disappear();
+						_this.tween.stop();
+		    			_this.resetVelocity();
 						ProjectionManager.projs[ProjectionManager.currentId].full = true;
 						if (ConsoleManager.consolesON == ConsoleManager.maxConsolesON){
 							ExitManager.exitObjects[0].Activate();

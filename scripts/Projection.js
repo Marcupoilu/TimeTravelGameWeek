@@ -48,8 +48,14 @@ define(function(require) {
 				}
 				this.moveToCase(pro.x, pro.y, target);
 			}
-
+			// console.log("moveToNext this.currID = " + this.currId + ", this.trajet = ", this.trajet.length - 1);
 			this.finish = (this.currId >= this.trajet.length - 1);
+			// console.log(this.finish);
+		};
+
+		this.resetVelocity = function(){
+			this.sprite.body.velocity.x = 0;
+		    this.sprite.body.velocity.y = 0;
 		};
 
 		this.moveToCase = function(idX, idY, target){
@@ -190,11 +196,11 @@ define(function(require) {
 		    	if(Game.physics.arcade.collide(_this.sprite, Game.layerTiles)){
 		    		console.log('colide');
 		    		_this.tween.stop();
-		    		_this.canMove = true;
+		    		_this.resetVelocity();
 				}
 		    });
 		    this.tween.onComplete.add(function(){
-		    	this.canMove = true;
+		    	this.resetVelocity();
 		    	//lookUtils.checkLook(this.currCase);
 		    	if(onComplete) onComplete.apply();
 		    }, this);
