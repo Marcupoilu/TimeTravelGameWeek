@@ -39,7 +39,8 @@ define(function(require) {
 		},
 
 		onDestroy: function(){
-			_.each(this.	destroyArray, function(toDestroy){
+			Player.isReady = false;
+			_.each(this.destroyArray, function(toDestroy){
 				toDestroy.destroy();
 			});
 		}
