@@ -42,7 +42,7 @@ define(function(require){
 			{
 				this.sprite.body.x = this.currCase.x * 64;
 				this.sprite.body.y = this.currCase.y * 64;
-				this.sprite.visible = true;
+				this.sprite.alpha = 1;
 				this.canMove = true;
 			}
 		    console.log('Player Create', this);
@@ -51,10 +51,9 @@ define(function(require){
 		},
 
 		disappear: function(){
-			console.log("Player disappear ", Game);
 			this.resetVelocity();
 			this.isReady = false;
-			this.sprite.visible = false;
+			this.sprite.alpha = 0;
 			this.canMove = false;
 		},
 
@@ -71,11 +70,13 @@ define(function(require){
 		setTarget: function(target, onComplete){
 			// console.log("setTarget target = ", target, ", onComplete = ", onComplete);
 			var _this = this;
+			var _target = target;
 
 			this.canMove = false;
 		    this.tween = Game.add.tween(this.sprite.body).to(target, 200, Phaser.Easing.Linear.None, true);
 		    this.tween.onUpdateCallback(function(){
 		    	if(Game.physics.arcade.collide(_this.sprite, Game.layerTiles)){
+		    		console.log("collide player");
 		    		_this.tween.stop();
 		    		_this.resetVelocity();
 		    		_this.canMove = true;
@@ -85,6 +86,8 @@ define(function(require){
 		    	Game.manageAllLook();
 		    	this.resetVelocity();
 		    	this.canMove = true;
+		    	this.sprite.body.x = _target.x;
+				this.sprite.body.y = _target.y;
 		    	if(onComplete) onComplete.apply();
 		    }, this);
 		},
@@ -158,24 +161,7 @@ define(function(require){
 				}
 			}
 			
-			if (future.type == "console"){
-				var consoleToCheck = _.findWhere(ConsoleManager.consoleObjects, {x:future.x*64, y:future.y*64});
-				this.setTarget(target, function(){
-					if (!consoleToCheck.activated){
-						ConsoleManager.consolesON++;
-						console.log(ConsoleManager.consolesON);
-						consoleToCheck.Activate();
 
-						_this.disappear();
-						_this.tween.stop();
-		    			_this.resetVelocity();
-						ProjectionManager.projs[ProjectionManager.currentId].full = true;
-						if (ConsoleManager.consolesON == ConsoleManager.maxConsolesON){
-							ExitManager.exitObjects[0].Activate();
-						}
-					}
-				});
-			}
 
 			if (future.type == "exit"){
 				var exitToCheck = ExitManager.exitObjects[0];
@@ -215,6 +201,25 @@ define(function(require){
 					_this.currCase.x = idX;
 					_this.currCase.y = idY;
 					_this.setTarget(target);
+				});
+				return;
+			}
+
+			if (future.type == "console"){
+				var consoleToCheck = _.findWhere(ConsoleManager.consoleObjects, {x:future.x*64, y:future.y*64});
+
+				this.setTarget(target, function(){
+					if (!consoleToCheck.activated){
+						ConsoleManager.consolesON++;
+						console.log(ConsoleManager.consolesON);
+						consoleToCheck.Activate();
+
+						ProjectionManager.projs[ProjectionManager.currentId].full = true;
+						if (ConsoleManager.consolesON == ConsoleManager.maxConsolesON){
+							ExitManager.exitObjects[0].Activate();
+						}
+						_this.disappear();
+					}
 				});
 				return;
 			}

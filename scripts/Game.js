@@ -92,7 +92,7 @@ define(function(require) {
 				DoorManager.update();
 				SwitchManager.update();
 				ConsoleManager.update();
-				if(Player.isReady){
+				if(Player.created){
 					Player.update();
 				}
 			}
@@ -102,6 +102,7 @@ define(function(require) {
 			// console.log('Game Render');
 			if(Player.isReady){
 				Player.render();
+				this.game.debug.body(Player.sprite);
 			}
 		}
 	}), new function(){
