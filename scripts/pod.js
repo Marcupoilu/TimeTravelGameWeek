@@ -12,9 +12,6 @@ define(function(require) {
 		this.sprite.update = function(){
 			//console.log(_this.sprite.input.pointerDown());
 			if(!Player.isReady && _this.sprite.input.pointerDown()){
-				console.log("clic sur pod = ", this);
-				_this.startCase.x = Math.floor(this.x / 64);
-				_this.startCase.y = Math.floor(this.y / 64);
 				if (Player.created)
 					Player.resetVelocity();
 

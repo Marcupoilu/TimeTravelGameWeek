@@ -19,8 +19,7 @@ define(function(require){
 		},
 
 		create: function(caseDepart){
-			console.log("caseDepart = ", caseDepart);
-			this.currCase = caseDepart || new Case(1,1);
+			this.currCase = _(caseDepart).clone() || new Case(1,1);
 			if(!this.created)
 			{
 				this.sprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64 - 64, 'character');
