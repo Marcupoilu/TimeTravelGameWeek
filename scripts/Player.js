@@ -191,7 +191,7 @@ define(function(require){
 			//si c'est un teleport on passe une fonction onComplete au setTarget pour qu'il se tp après être passé sur le téléporteur
 			if(future.type == "teleport")
 			{
-				
+				ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
 				this.setTarget(target, function(){
 					var tp = _.findWhere(TPManager.teleporteurs, {x: future.x, y: future.y});
 					target.x = tp.target.x * 64;
@@ -207,14 +207,15 @@ define(function(require){
 
 			if (future.type == "console"){
 				var consoleToCheck = _.findWhere(ConsoleManager.consoleObjects, {x:future.x*64, y:future.y*64});
-
+				ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
+				ProjectionManager.moveAllProj();
 				this.setTarget(target, function(){
 					if (!consoleToCheck.activated){
 						ConsoleManager.consolesON++;
 						console.log(ConsoleManager.consolesON);
 						consoleToCheck.Activate();
 
-						ProjectionManager.projs[ProjectionManager.currentId].full = true;
+						ProjectionManager.closeCurrentProjection();
 						if (ConsoleManager.consolesON == ConsoleManager.maxConsolesON){
 							ExitManager.exitObjects[0].Activate();
 						}

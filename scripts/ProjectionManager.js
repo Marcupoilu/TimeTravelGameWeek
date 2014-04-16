@@ -28,6 +28,10 @@ define(function(require) {
 				this.projs[this.currentId].addCase(proCase);
 		},
 
+		closeCurrentProjection: function(){
+			this.projs[this.currentId].full = true;
+		},
+
 		moveAllProj: function(){
 			for(var i = 0; i < this.projs.length; ++i)
 			{
