@@ -22,6 +22,7 @@ define(function(require){
 			
 			this.currCase = caseDepart || new Case(1,1);
 			this.sprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64 - 64, 'character');
+        	Game.sprites.push(this.sprite);
 			this.created = false;
 			//sprite.animations.add('walk');
 		    //sprite.animations.play('walk', 50, true);

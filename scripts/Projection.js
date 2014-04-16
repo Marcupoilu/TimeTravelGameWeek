@@ -23,6 +23,7 @@ define(function(require) {
 		this.create = function(depart){
 			this.depart = depart || new Case(1,1);
 			this.sprite = Game.add.sprite(this.depart.x * 64, this.depart.y * 64 - 64, 'projection');
+        	Game.sprites.push(this.sprite);
 			Game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 			this.sprite.visible = false;
 

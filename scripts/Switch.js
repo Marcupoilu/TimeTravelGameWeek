@@ -8,6 +8,7 @@ define(function(require) {
 		this.type = type || "";
 		this.sprite = Game.add.sprite(this.x, this.y, 'switch');
 		this.activated = false;
+        Game.sprites.push(this.sprite);
 
 		this.activate = function(){
 			this.activated = true;

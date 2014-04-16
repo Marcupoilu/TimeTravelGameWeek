@@ -7,6 +7,7 @@ define(function(require) {
 		this.startCase = startCase;
 		this.sprite.inputEnabled = true;
 		//console.log(this.sprite.input);
+        Game.sprites.push(this.sprite);
 
 		this.sprite.update = function(){
 			//console.log(_this.sprite.input.pointerDown());

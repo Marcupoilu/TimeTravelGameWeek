@@ -11,6 +11,7 @@ define(function(require)
         this.caseX = parent.lineNb || 0;
         this.caseY = parent.columnNb || 0;
         this.sprite = Game.add.sprite(this.x, this.y, 'bloc');
+        Game.sprites.push(this.sprite);
         //add the physics
         Game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
         this.sprite.body.bounce.y = 0;
