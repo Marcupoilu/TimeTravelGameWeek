@@ -42,7 +42,8 @@ define(function(require){
 		    this.sprite.body.velocity.y = 0;
 		},
 
-		setTarget: function(target){
+		setTarget: function(target, onComplete){
+			// console.log("setTarget target = ", target, ", onComplete = ", onComplete);
 			var _this = this;
 			var lastPos = {
 				x: this.sprite.body.x,
@@ -61,6 +62,8 @@ define(function(require){
 		    this.tween.onComplete.add(function(){
 		    	this.resetVelocity();
 		    	this.canMove = true;
+
+		    	if(onComplete) onComplete.apply();
 		    }, this);
 		},
 
@@ -177,17 +180,24 @@ define(function(require){
 			target.x += 64 * this.sprite.body.velocity.x;
 			target.y += 64 * this.sprite.body.velocity.y;
 
-			//si c'est un teleport on change la target pour la target du téléporteur
+			//si c'est un teleport on passe une fonction onComplete au setTarget pour qu'il se tp après être passé sur le téléporteur
 			if(future.type == "teleport")
 			{
-				var tp = _.findWhere(TPManager.teleporteurs, {x: future.x, y: future.y});
-				target.x = tp.target.x * 64;
-				target.y = tp.target.y * 64;
-				idX = tp.target.x;
-				idY = tp.target.y;
+				var _this = this;
+				
+				this.setTarget(target, function(){
+					var tp = _.findWhere(TPManager.teleporteurs, {x: future.x, y: future.y});
+					target.x = tp.target.x * 64;
+					target.y = tp.target.y * 64;
+					idX = tp.target.x;
+					idY = tp.target.y;
+					_this.currCase.x = idX;
+					_this.currCase.y = idY;
+					_this.setTarget(target);
+				});
 			}
-			
-			this.setTarget(target);
+			else
+				this.setTarget(target);
 
 			if(move)
 			{
