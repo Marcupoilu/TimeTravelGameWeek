@@ -1,13 +1,13 @@
 define(function(require) {
-	var ExitManager = {
-		this.opened = false;
+	var Exit = require("./Exit");
+	var ConsoleManager = require("./ConsoleManager");
 
+	var ExitManager = {
 		preload: function(){
 			Game.load.image('exit', '../images/exit.png');
 		},
 
 		create : function(map){
-			this.sprite = Game.add.sprite(this.x, this.y, 'exit');
 			var _this = this;
 			this.exitTiles = [];
 			this.exitObjects = [];
@@ -20,21 +20,16 @@ define(function(require) {
 			});
 
 			_.each(this.exitTiles, function(exit){
-				maxConsolesOn++;
-				_this.exitObjects.push(new Console(exit.x*64, exit.y*64));
+				_this.exitObjects.push(new Exit(exit.x*64, exit.y*64));
 			});
 
 		},
 
 		update: function(){
-			var _this = this;
-			_.each(this.exitObjects, function(cons){
-		    	// if(Game.physics.arcade.collide(Player.sprite, door.sprite))
-		    	// 	console.log("de")
-		    						// if(_this.checkOverlap(door.sprite, Player.sprite)){
-					// 	console.log("overlapDoor")
-					// }		
-			});
+			// var _this = this;
+			// _.each(this.exitObjects, function(exit){
+		 //    	if()	
+			// });
 		}
 	}
 
