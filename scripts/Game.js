@@ -6,6 +6,7 @@ define(function(require) {
 	var SwitchManager = require("./SwitchManager");
 	var blocsManager = require('./blocsManager');
 	var TeleporteurManager = require('./TeleporteurManager');
+	var ConsoleManager = require("./ConsoleManager");
 
 	return new Phaser.Game(1024, 768, Phaser.AUTO, 'game', {
 		preload: function(){
@@ -19,6 +20,7 @@ define(function(require) {
     		podsManager.preload();
     		DoorManager.preload();
     		SwitchManager.preload();
+    		ConsoleManager.preload();
     		Player.preload();
 		},
 
@@ -52,7 +54,7 @@ define(function(require) {
 			SwitchManager.create(this.game.mapCases);
 			DoorManager.create(this.game.mapCases);
 			TeleporteurManager.create(this.game.mapCases);
-		    
+		    ConsoleManager.create(this.game.mapCases);
 		    // Faire ça au click sur un pod
 		    //Player.create();
 
@@ -65,6 +67,7 @@ define(function(require) {
 			if(this.game.gameState == "play"){
 				DoorManager.update();
 				SwitchManager.update();
+				ConsoleManager.update();
 				if(Player.isReady){
 					Player.update();
 				}
