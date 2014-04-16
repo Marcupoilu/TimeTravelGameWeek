@@ -1,6 +1,7 @@
 define(function(require){
 
-	var Pod = require('./pod');
+	var Pod = require('./pod'),
+		Player = require('./Player');
 
 	var podManager = {
 		preload : function(){
@@ -23,20 +24,21 @@ define(function(require){
 			console.log(pods);
 
 			_.each(pods, function(pod){
-				_this.pods.push(new Pod(pod.x*64, pod.y*64));
+				_this.pods.push(new Pod(pod.x*64, pod.y*64, pod));
 			});
 
 			console.log('Pods Create', this.pods);
 		},
 
-		update: function(){
+		/*update: function(){
 			var _this = this;
 			_.each(this.pods, function(pod){
 				if(pod.sprite.input.pointerDown()){
-
+					console.log('toto');
+					Player.create(pod.startCase);
 				}
 			});
-		}
+		}*/
 	}
 
 	return podManager;

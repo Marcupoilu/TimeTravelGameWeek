@@ -52,19 +52,23 @@ define(function(require) {
 			SwitchManager.create(this.game.mapCases);
 			DoorManager.create(this.game.mapCases);
 			TeleporteurManager.create(this.game.mapCases);
-		    Player.create();
+		    
+		    // Faire ça au click sur un pod
+		    //Player.create();
+
+		    this.game.gameState = 'readyToPlay';
 		},
 
 		update: function(){
 			// console.log('Game Update');
 
-			/*if(Player.isReady){
-				Player.update();
-			}*/
-
-			DoorManager.update();
-			SwitchManager.update();
-			Player.update();
+			if(this.game.gameState == "play"){
+				DoorManager.update();
+				SwitchManager.update();
+				if(Player.isReady){
+					Player.update();
+				}
+			}
 
 		},
 

@@ -30,6 +30,7 @@ define(function(require){
 			this.initInputs();
 		    
 		    console.log('Player Create', this);
+		    Game.gameState = 'play';
 		    this.isReady = true;
 		},
 
