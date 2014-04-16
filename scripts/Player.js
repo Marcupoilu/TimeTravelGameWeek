@@ -4,7 +4,8 @@ define(function(require){
 	    BlocsManager = require("./blocsManager"),
 	    TPManager = require("./TeleporteurManager"),
 	    SwitchManager = require("./SwitchManager"),
-	    lookUtils = require('./playersLookUtil');
+	    lookUtils = require('./playersLookUtil'),
+	    ProjectionManager = require("./ProjectionManager");
 
 	var Player = {
 
@@ -202,6 +203,7 @@ define(function(require){
 			{
 				this.currCase.x = idX;
 				this.currCase.y = idY;
+				ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
 			}
 
 			if (future.type == "direction_right"){

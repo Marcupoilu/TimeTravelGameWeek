@@ -1,9 +1,10 @@
 define(function(require) {
-	var Player = require("./Player");
 
-	var Projection = _.extend( function(trajet){
+	var Projection = function(trajet){
 		this.trajet = trajet || [];
 		this.currId = 0;
+		this.finish = false;
+		this.full = false;
 
 		this.preload = function()
 		{
@@ -26,7 +27,7 @@ define(function(require) {
 		this.moveToNext = function()
 		{
 			// console.log("currId = " + this.currId + ", this.trajet = ", this.trajet);
-			if(this.currId != this.trajet.length - 1){
+			if(!this.finish){
 				this.currId++;
 				var pro = this.trajet[this.currId];
 				var target = {
@@ -35,16 +36,11 @@ define(function(require) {
 				}
 				this.moveToCase(pro.x, pro.y, target);
 			}
-		}
 
-		/*this.moveToCase = function(proCase){
-			idX = proCase.x;
-			idY = proCase.y;
-			target = {
-				x: this.sprite.body.x,
-				y: this.sprite.body.y
-			};
+			this.finish = (this.currId == this.trajet.length);
+		};
 
+		this.moveToCase = function(idX, idY, target){
 			var _this = this;			
 			var future = Game.mapCases.layer2[idY][idX];
 			var move = false;
@@ -62,31 +58,20 @@ define(function(require) {
 					switchToCheck.activate();
 				}
 			}
-			if(future.type == "vortex"){//console.log(future.x*64); console.log(future.y*64);
-				this.sprite.destroy();
-			}
+			
 			//gestion des blocs
 			if(future.type == "bloc"){//console.log(future.x*64); console.log(future.y*64);
 				var blocToCheck = _.findWhere(BlocsManager.blocsTable, {x:future.x*64, y:future.y*64});
 				if(blocToCheck.canMove)
 				{
-					//make the bloc move
-					if (this.cursors.up.isDown) 
-					{
-			    		blocToCheck.moveToCase(blocToCheck.caseX, blocToCheck.caseY - 1, target);
-			    	} 
-			    	else if (this.cursors.down.isDown) 
-			    	{
-			    		blocToCheck.moveToCase(blocToCheck.caseX, blocToCheck.caseY + 1, target);
-			   		} 
-			   		else if (this.cursors.left.isDown) 
-			   		{
-			    		blocToCheck.moveToCase(blocToCheck.caseX - 1, blocToCheck.caseY, target);
-			    	} 
-			    	else if (this.cursors.right.isDown) 
-			    	{				    	
-			    		blocToCheck.moveToCase(blocToCheck.caseX + 1, blocToCheck.caseY, target);
-			    	}
+					if(blocToCheck.moveDirection({
+						x : this.sprite.body.velocity.x,
+						y : this.sprite.body.velocity.y
+					})){
+						return true;
+					}
+					else
+						return false;
 				}
 				else
 					return
@@ -125,10 +110,24 @@ define(function(require) {
 				return;
 			}
 
-			if (future.type == "direction_right"){
-				this.canMove = false;
+			//si c'est un vortex on se destroy
+			if(future.type == "vortex"){//console.log(future.x*64); console.log(future.y*64);
+				//this.sprite.destroy();
+				this.setTarget(target, function(){
+					_this.sprite.destroy();
+				});
+				return;
+			}
+
+			if(move)
+			{
 				this.currCase.x = idX;
 				this.currCase.y = idY;
+				ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
+			}
+
+			if (future.type == "direction_right"){
+				this.canMove = false;
 				this.setTarget(target, function(){
 					_this.canMove = false;
 					_this.moveToCase(idX+1, idY, target);
@@ -137,8 +136,6 @@ define(function(require) {
 			}
 			else if (future.type == "direction_bottom"){
 				this.canMove = false;
-				this.currCase.x = idX;
-				this.currCase.y = idY;
 				this.setTarget(target, function(){
 					_this.canMove = false;
 					_this.moveToCase(idX, idY+1, target);
@@ -147,8 +144,6 @@ define(function(require) {
 			}
 			else if (future.type == "direction_left"){
 				this.canMove = false;
-				this.currCase.x = idX;
-				this.currCase.y = idY;
 				this.setTarget(target, function(){
 					_this.canMove = false;
 					_this.moveToCase(idX-1, idY, target);
@@ -157,8 +152,6 @@ define(function(require) {
 			}
 			else if (future.type == "direction_up"){
 				this.canMove = false;
-				this.currCase.x = idX;
-				this.currCase.y = idY;
 				this.setTarget(target, function(){
 					_this.canMove = false;
 					_this.moveToCase(idX, idY-1, target);
@@ -168,14 +161,12 @@ define(function(require) {
 				this.canMove = true;
 
 			this.setTarget(target);
-			if(move)
-			{
-				this.currCase.x = idX;
-				this.currCase.y = idY;
-			}
-		}
-		}*/
-	}, Player),
+			
+
+
+		};
+			
+		};
 
     return Projection;
 });
