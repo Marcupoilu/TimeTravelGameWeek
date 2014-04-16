@@ -166,6 +166,7 @@ define(function(require){
 						ConsoleManager.consolesON++;
 						console.log(ConsoleManager.consolesON);
 						consoleToCheck.Activate();
+						ProjectionManager.projs[ProjectionManager.currentId].full = true;
 						if (ConsoleManager.consolesON == ConsoleManager.maxConsolesON){
 							ExitManager.exitObjects[0].Activate();
 						}
@@ -245,6 +246,7 @@ define(function(require){
 				this.currCase.x = idX;
 				this.currCase.y = idY;
 				ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
+				ProjectionManager.moveAllProj();
 			}
 
 			if (future.type == "direction_right"){
