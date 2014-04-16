@@ -44,8 +44,7 @@ define(function(require){
 		},
 
 		setTarget: function(target, onComplete){
-
-			console.log("setTarget target = ", target, ", onComplete = ", onComplete);
+			// console.log("setTarget target = ", target, ", onComplete = ", onComplete);
 			var _this = this;
 			var lastPos = {
 				x: this.sprite.body.x,
@@ -183,18 +182,16 @@ define(function(require){
 			if(future.type == "teleport")
 			{
 				var _this = this;
-				var _future = future;
-				var _target = target;
 				
 				this.setTarget(target, function(){
-					var tp = _.findWhere(TPManager.teleporteurs, {x: _future.x, y: _future.y});
-					_target.x = tp.target.x * 64;
-					_target.y = tp.target.y * 64;
+					var tp = _.findWhere(TPManager.teleporteurs, {x: future.x, y: future.y});
+					target.x = tp.target.x * 64;
+					target.y = tp.target.y * 64;
 					idX = tp.target.x;
 					idY = tp.target.y;
 					_this.currCase.x = idX;
 					_this.currCase.y = idY;
-					_this.setTarget(_target);
+					_this.setTarget(target);
 				});
 			}
 			else
