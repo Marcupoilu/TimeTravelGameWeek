@@ -148,7 +148,7 @@ define(function(require) {
 				this.setTarget(target, function(){
 					if (!consoleToCheck.activated){
 						ConsoleManager.consolesON++;
-						
+
 						consoleToCheck.Activate();
 						if (ConsoleManager.consolesON == ConsoleManager.maxConsolesON){
 							ExitManager.exitObjects[0].Activate();
@@ -165,42 +165,6 @@ define(function(require) {
 				this.currCase.y = idY;
 			}
 
-
-
-			if (future.type == "direction_right"){
-				this.canMove = false;
-				this.setTarget(target, function(){
-					_this.canMove = false;
-					_this.moveToCase(idX+1, idY, target);
-				});
-				return;
-			}
-			else if (future.type == "direction_bottom"){
-				this.canMove = false;
-				this.setTarget(target, function(){
-					_this.canMove = false;
-					_this.moveToCase(idX, idY+1, target);
-				});
-				return;
-			}
-			else if (future.type == "direction_left"){
-				this.canMove = false;
-				this.setTarget(target, function(){
-					_this.canMove = false;
-					_this.moveToCase(idX-1, idY, target);
-				});
-				return;
-			}
-			else if (future.type == "direction_up"){
-				this.canMove = false;
-				this.setTarget(target, function(){
-					_this.canMove = false;
-					_this.moveToCase(idX, idY-1, target);
-				});
-				return;
-			}
-				this.canMove = true;
-
 			this.setTarget(target);
 		};
 		
@@ -213,12 +177,6 @@ define(function(require) {
 			}
 			this.canMove = false;
 		    this.tween = Game.add.tween(this.sprite.body).to(target, 200, Phaser.Easing.Linear.None, true);
-		    this.tween.onUpdateCallback(function(){
-		    	/*if(Game.physics.arcade.collide(_this.sprite, Game.layerTiles)){
-		    		_this.tween.stop();
-		    		_this.resetVelocity();
-				}*/
-		    });
 		    this.tween.onComplete.add(function(){
 		    	this.resetVelocity();
 		    	//lookUtils.checkLook(this.currCase);

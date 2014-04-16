@@ -54,7 +54,7 @@ define(function(require) {
 
 			this.game.stage.backgroundColor = '#787878';
 
-		    this.game.map = this.game.add.tilemap('level0');
+		    this.game.map = this.game.add.tilemap('level1');
 		    this.game.map.addTilesetImage('typeOfCase', 'tiles');
 		    this.game.map.addTilesetImage('links', 'linksImg');
 		    this.game.map.setCollision([2, 10]);

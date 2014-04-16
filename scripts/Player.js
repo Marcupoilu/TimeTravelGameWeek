@@ -215,7 +215,7 @@ define(function(require){
 				this.setTarget(target, function(){
 					if (!consoleToCheck.activated){
 						ConsoleManager.consolesON++;
-						
+
 						consoleToCheck.Activate();
 
 						ProjectionManager.closeCurrentProjection();
