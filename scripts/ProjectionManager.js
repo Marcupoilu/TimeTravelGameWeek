@@ -1,7 +1,10 @@
 define(function(require) {
+	var Projection = require("./Projection");
 	
 	var ProjectionManager = {
 		projs: [],
+		currentId: -1,
+
 		preload: function(){
 			Game.load.spritesheet('projection', '../images/gabarit_chara.png', 64, 128, 1);
 		},
@@ -11,14 +14,23 @@ define(function(require) {
 		},
 
 		addProjection: function(proj){
+			this.currentId ++;
 			proj.create(proj.trajet[0]);
-			projs.push(proj);
+			this.projs.push(proj);
+		},
+
+		addCaseToCurrentProjection: function(proCase){
+			if(this.currentId == -1 || this.projs[this.currentId].full)
+			{
+				this.addProjection(new Projection(proCase));
+			}
+			this.projs[this.currentId].addCase(proCase);
 		},
 
 		moveAllProj: function(){
-			for(var i = 0; i < projs.length; ++i)
+			for(var i = 0; i < this.projs.length; ++i)
 			{
-				projs[i].moveToNext();
+				if(i != this.currentId) this.projs[i].moveToNext();
 			}
 		}
 	}

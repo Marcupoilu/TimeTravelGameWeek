@@ -5,6 +5,7 @@ define(function(require){
 	    TPManager = require("./TeleporteurManager"),
 	    SwitchManager = require("./SwitchManager"),
 	    lookUtils = require('./playersLookUtil'),
+	    ProjectionManager = require("./ProjectionManager"),
 	    ConsoleManager = require("./ConsoleManager"),
 	    ExitManager = require("./ExitManager");
 
@@ -14,11 +15,14 @@ define(function(require){
 
 		preload: function(){
 			Game.load.spritesheet('character', '../images/gabarit_chara.png', 64, 128, 1);
+			this.created = false;
 		},
 
 		create: function(caseDepart){
+			
 			this.currCase = caseDepart || new Case(1,1);
 			this.sprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64 - 64, 'character');
+			this.created = false;
 			//sprite.animations.add('walk');
 		    //sprite.animations.play('walk', 50, true);
 
@@ -37,6 +41,11 @@ define(function(require){
 		    this.isReady = true;
 		},
 
+		disappear: function(){
+			this.isReady = false;
+			this.sprite.visible = false;
+		},
+
 		initInputs: function(){
 			//console.log('Player Init Inputs');
 			this.cursors = Game.input.keyboard.createCursorKeys();
@@ -50,10 +59,7 @@ define(function(require){
 		setTarget: function(target, onComplete){
 			// console.log("setTarget target = ", target, ", onComplete = ", onComplete);
 			var _this = this;
-			var lastPos = {
-				x: this.sprite.body.x,
-				y: this.sprite.body.y
-			}
+
 			this.canMove = false;
 		    this.tween = Game.add.tween(this.sprite.body).to(target, 200, Phaser.Easing.Linear.None, true);
 		    this.tween.onUpdateCallback(function(){
@@ -65,9 +71,9 @@ define(function(require){
 				}
 		    });
 		    this.tween.onComplete.add(function(){
+		    	Game.manageAllLook();
 		    	this.resetVelocity();
 		    	this.canMove = true;
-		    	//lookUtils.checkLook(this.currCase);
 		    	if(onComplete) onComplete.apply();
 		    }, this);
 		},
@@ -141,23 +147,6 @@ define(function(require){
 				}
 			}
 			
-			//gestion des blocs
-			if(future.type == "bloc"){//console.log(future.x*64); console.log(future.y*64);
-				var blocToCheck = _.findWhere(BlocsManager.blocsTable, {x:future.x*64, y:future.y*64});
-				if(blocToCheck.canMove)
-				{
-					if(blocToCheck.moveDirection({
-						x : this.sprite.body.velocity.x,
-						y : this.sprite.body.velocity.y
-					})){
-						return true;
-					}
-					else
-						return false;
-				}
-				else
-					return
-			}
 			if (future.type == "console"){
 				var consoleToCheck = _.findWhere(ConsoleManager.consoleObjects, {x:future.x*64, y:future.y*64});
 				this.setTarget(target, function(){
@@ -165,6 +154,7 @@ define(function(require){
 						ConsoleManager.consolesON++;
 						console.log(ConsoleManager.consolesON);
 						consoleToCheck.Activate();
+						ProjectionManager.projs[ProjectionManager.currentId].full = true;
 						if (ConsoleManager.consolesON == ConsoleManager.maxConsolesON){
 							ExitManager.exitObjects[0].Activate();
 						}
@@ -210,7 +200,7 @@ define(function(require){
 					}	
 				}
 				else
-					return
+					return;
 			}
 
 			//si c'est un teleport on passe une fonction onComplete au setTarget pour qu'il se tp après être passé sur le téléporteur
@@ -243,6 +233,8 @@ define(function(require){
 			{
 				this.currCase.x = idX;
 				this.currCase.y = idY;
+				ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
+				ProjectionManager.moveAllProj();
 			}
 
 			if (future.type == "direction_right"){

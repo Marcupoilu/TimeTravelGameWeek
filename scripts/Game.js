@@ -14,6 +14,8 @@ define(function(require) {
 	    WinMenu = require("./WinMenu"),
 	    GameOverMenu = require("./GameOverMenu");
 
+	var lookUtil = require('./playersLookUtil');
+
 	return _.extend(new Phaser.Game(1024, 768, Phaser.AUTO, 'game', {
 		preload: function(){
 			console.log('Game Preload');
@@ -36,11 +38,11 @@ define(function(require) {
     		DoorManager.preload();
     		SwitchManager.preload();
     		ConsoleManager.preload();
-    		ProjectionManager.preload();
     		ExitManager.preload();
     		WinMenu.preload();
     		GameOverMenu.preload();
     		Player.preload();
+    		ProjectionManager.preload();
 		},
 
 		create: function(){
@@ -153,6 +155,33 @@ define(function(require) {
 			WinMenu.create();
 			_this.game.gameState = "win";
 		};
+
+		this.manageAllLook = function(){
+			var playerLook = lookUtil.getLook(Player.currCase, Player.sprite.body.velocity);
+			//console.log(ProjectionManager, 'playerLook', playerLook);
+			_.each(playerLook, function(lookCase){
+				_.each(ProjectionManager.projs, function(proj){
+					//console.log(proj);
+					if(proj.active){
+						if(lookCase.x == proj.currCase.x && lookCase.y == proj.currCase.y){
+							console.log('player see projection', lookCase);
+							//break;
+						}
+					}
+				});
+			});
+
+			_.each(ProjectionManager.projs, function(proj){
+				if(proj.active){
+					projLook = lookUtil.getLook(proj.currCase, proj.sprite.body.velocity);
+					if(lookUtil.checkLook(projLook, _.reject(ProjectionManager.projs, proj)) || 
+						lookUtil.checkLook(projLook, [Player])){
+						console.log('proj see something');
+					}
+				}
+			});
+			//console.log(ProjectionManager);
+		}
 	});
 	
 });
