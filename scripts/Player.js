@@ -15,11 +15,14 @@ define(function(require){
 
 		preload: function(){
 			Game.load.spritesheet('character', '../images/gabarit_chara.png', 64, 128, 1);
+			this.created = false;
 		},
 
 		create: function(caseDepart){
+			
 			this.currCase = caseDepart || new Case(1,1);
 			this.sprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64 - 64, 'character');
+			this.created = false;
 			//sprite.animations.add('walk');
 		    //sprite.animations.play('walk', 50, true);
 
@@ -36,6 +39,11 @@ define(function(require){
 		    console.log('Player Create', this);
 		    Game.gameState = 'play';
 		    this.isReady = true;
+		},
+
+		disappear: function(){
+			this.isReady = false;
+			this.sprite.visible = false;
 		},
 
 		initInputs: function(){
