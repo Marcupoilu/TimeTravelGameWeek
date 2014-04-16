@@ -97,8 +97,16 @@ define(function(require) {
 		}
 
 		this.manageAllLook = function(){
-			lookUtil.getLook(Player.currCase, Player.sprite.body.velocity);
-			console.log(ProjectionManager);
+			var playerLook = lookUtil.getLook(Player.currCase, Player.sprite.body.velocity);
+			console.log(ProjectionManager, 'playerLook', playerLook);
+			_.each(playerLook, function(lookCase){
+				_.each(ProjectionManager.projs, function(proj){
+					if(lookCase.x == proj.currCase.x && lookCase.y == proj.currCase.y){
+						console.log('player see projection', lookCase);
+					}
+				});
+			});
+			//console.log(ProjectionManager);
 		}
 	});
 	

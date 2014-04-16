@@ -44,7 +44,8 @@ define(function(require) {
 				}
 			}
 
-			console.log('getLook', finalLook);
+			//console.log('getLook', finalLook);
+			return finalLook;
 		},
 
 		checkLook: function(object, direction){
