@@ -43,6 +43,8 @@ define(function(require){
 			}
 		    console.log('Player Create', this);
 		    Game.gameState = 'play';
+		    ConsoleManager.resetAll();
+		    ExitManager.exitObjects[0].Deactivate();
 		    ProjectionManager.addCaseToCurrentProjection(this.currCase);
 		    ProjectionManager.moveAllProj();
 		    this.isReady = true;
@@ -53,6 +55,7 @@ define(function(require){
 			this.isReady = false;
 			this.sprite.alpha = 0;
 			this.canMove = false;
+
 		},
 
 		initInputs: function(){
@@ -198,7 +201,7 @@ define(function(require){
 					idY = tp.target.y;
 					_this.currCase.x = idX;
 					_this.currCase.y = idY;
-					//_this.setTarget(target);
+					
 					_this.sprite.body.x = target.x;
 					_this.sprite.body.y = target.y;
 				});
@@ -212,7 +215,7 @@ define(function(require){
 				this.setTarget(target, function(){
 					if (!consoleToCheck.activated){
 						ConsoleManager.consolesON++;
-						console.log(ConsoleManager.consolesON);
+						
 						consoleToCheck.Activate();
 
 						ProjectionManager.closeCurrentProjection();

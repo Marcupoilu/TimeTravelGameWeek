@@ -10,6 +10,11 @@ define(function(require) {
 			this.opened = true;
 			this.sprite.visible = false;
 		};
+
+		this.Deactivate = function(){
+			this.opened = false;
+			this.sprite.visible = true;
+		};
 	};
 	return Exit;
 });

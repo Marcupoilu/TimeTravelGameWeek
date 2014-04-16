@@ -30,8 +30,17 @@ define(function(require) {
 
 		},
 
+		resetAll: function()
+		{
+			this.consolesON = 0;
+			for(var i = 0; i < this.consoleObjects.length; ++i)
+			{
+				this.consoleObjects[i].Deactivate();
+			}
+		},
+
 		update: function(){
-			var _this = this;
+			/*var _this = this;
 			_.each(this.consoleObjects, function(cons){
 				Game.debug.body(cons.sprite);
 		    	// if(Game.physics.arcade.collide(Player.sprite, door.sprite))
@@ -39,7 +48,7 @@ define(function(require) {
 		    						// if(_this.checkOverlap(door.sprite, Player.sprite)){
 					// 	console.log("overlapDoor")
 					// }		
-			});
+			});*/
 		}
 	}
 

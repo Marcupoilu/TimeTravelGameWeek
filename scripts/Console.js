@@ -10,6 +10,11 @@ define(function(require) {
 			this.activated = true;
 			this.sprite.loadTexture("consoleON");
 		};
+
+		this.Deactivate = function(){
+			this.activated = false;
+			this.sprite.loadTexture("consoleOFF");
+		};
 	};
 	return Console;
 });
