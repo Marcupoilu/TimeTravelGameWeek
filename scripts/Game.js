@@ -181,7 +181,11 @@ define(function(require) {
 				}
 			});
 			//console.log(ProjectionManager);
-		}
+		};
+
+		this.playerMove = function(){
+			blocsManager.moveBlocs();
+		};
 	});
 	
 });

@@ -38,6 +38,13 @@ define(function(require) {
                 Game.debug.body(bloc.sprite);   
             });
         },
+
+        moveBlocs: function(){
+            _.each(this.blocsTable, function(bloc){
+
+                bloc.autoMove();
+            });
+        }
     }
     return blocManager;
 });

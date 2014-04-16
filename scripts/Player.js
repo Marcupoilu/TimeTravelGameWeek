@@ -187,22 +187,6 @@ define(function(require){
 			target.x += 64 * this.sprite.body.velocity.x;
 			target.y += 64 * this.sprite.body.velocity.y;
 
-			//gestion des blocs
-			if(futureBloc.type == "bloc"){//console.log(future.x*64); console.log(future.y*64);
-				var blocToCheck = _.findWhere(BlocsManager.blocsTable, {x:futureBloc.x*64, y:futureBloc.y*64});
-				if(blocToCheck.canMove)
-				{
-					if(!blocToCheck.moveDirection({
-						x : this.sprite.body.velocity.x,
-						y : this.sprite.body.velocity.y
-					})){
-						return false;
-					}	
-				}
-				else
-					return;
-			}
-
 			//si c'est un teleport on passe une fonction onComplete au setTarget pour qu'il se tp après être passé sur le téléporteur
 			if(future.type == "teleport")
 			{
@@ -234,7 +218,24 @@ define(function(require){
 				this.currCase.x = idX;
 				this.currCase.y = idY;
 				ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
+				Game.playerMove();
 				ProjectionManager.moveAllProj();
+			}
+
+			//gestion des blocs
+			if(futureBloc.type == "bloc"){//console.log(future.x*64); console.log(future.y*64);
+				var blocToCheck = _.findWhere(BlocsManager.blocsTable, {x:futureBloc.x*64, y:futureBloc.y*64});
+				if(blocToCheck.canMove)
+				{
+					if(!blocToCheck.moveDirection({
+						x : this.sprite.body.velocity.x,
+						y : this.sprite.body.velocity.y
+					})){
+						return false;
+					}	
+				}
+				else
+					return;
 			}
 
 			if (future.type == "direction_right"){
@@ -273,8 +274,6 @@ define(function(require){
 
 			this.setTarget(target);
 			
-
-
 		}
 	}
 

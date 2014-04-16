@@ -20,30 +20,23 @@ define(function(require)
         this.canMove = true;
         this.moveDirection = function(velocity)
         {
-            console.log('toto', this, this.caseX);
+            //console.log('toto', this, this.caseX);
             var velX = velocity.x;
             var velY = velocity.y;
             var goingToMove = false;
             var target = {x : this.caseX, y : this.caseY};
-            console.log("velo",velocity);
+            //console.log("velo",velocity);
             if(velX!=0 || velY!=0)
             {
                 target.x += velX;
                 target.y += velY;
                 goingToMove = true;
             }
-            if(goingToMove == true && this.moveToCase(this.caseX,this.caseY,target))
+            if(goingToMove && this.moveToCase(target.x, target.y, target))
             {
-                Game.mapCases.layer3[this.caseY][this.caseX] = new Case(this.caseX, this.caseY, ""); 
-                //console.log("case", Game.mapCases.layer2[this.caseX][this.caseY]);
-                this.caseX = target.x;
-                this.caseY = target.y;
-                Game.mapCases.layer3[this.caseY][this.caseX] = new Case(this.caseX, this.caseY, "bloc"); 
-                console.log('target',target);
+                this.setNewPosition(target);
                 target.x *= 64;
                 target.y *= 64;
-                this.x = target.x;
-                this.y = target.y;
                 this.setTarget(target);
                 return true;
             }
@@ -54,11 +47,12 @@ define(function(require)
                 return false;
             }
         }
+
         this.resetVelocity = function()
         {
             this.sprite.body.velocity.x = 0;
             this.sprite.body.velocity.y = 0;
-        },
+        }
 
         this.setTarget = function(target)
         {
@@ -83,7 +77,17 @@ define(function(require)
                 this.resetVelocity();
                 this.canMove = true;
             }, this);
-        },
+        }
+
+        this.setNewPosition = function(target){
+            Game.mapCases.layer3[this.caseY][this.caseX] = new Case(this.caseX, this.caseY, ""); 
+            this.caseX = target.x;
+            this.caseY = target.y;
+            Game.mapCases.layer3[this.caseY][this.caseX] = new Case(this.caseX, this.caseY, "bloc");
+            this.x = target.x*64;
+            this.y = target.y*64;
+        };
+
         this.moveToCase = function(idX, idY, target)
         {
             var future = Game.mapCases.layer2[idY][idX];
@@ -93,49 +97,69 @@ define(function(require)
             if(future.type == "door")
             {
                 var doorToCheck = _.findWhere(DoorManager.doorsObject, {x:future.x*64, y:future.y*64});
-                if(doorToCheck.opened)
-                {
-                    console.log(open);
+                if(doorToCheck.opened){
+                    //console.log(open);
                     move = true;
-                }
-                else
+                } else {
                     move = false;
+                }
+                return move;
             }
             //gestion des blocs
             if(futureBloc.type == "bloc")
             {
                 move = false;
+                return move;
             }
-            if (future.type == "direction_right"){
-                this.setTarget({x : (idX+1)*64 , y : idY*64 });
-                return;
-            }
-            else if (future.type == "direction_bottom"){
-                this.setTarget({x : idX*64 , y : (idY+1) *64});
-                return;
-            }
-            else if (future.type == "direction_left"){
-                this.setTarget({x : (idX-1)*64 , y : idY *64});
-                return;
-            }
-            else if (future.type == "direction_up"){
-                this.setTarget({x : idX *64, y : (idY-1)*64 });
-                return;
+            if (future.type.indexOf('direction')>= 0){
+                console.log('move on direction');
+                move = true;
+                return move;
             }
             //s'il n'y a pas d'objets sur la case on check le layer1
             if(future.type == "")
             {
                 future = Game.mapCases.layer1[idY][idX];
+                //console.log('block future', future);
                 if(future.type == "ground")
                     move = true;
             }
             else
             {
+                //console.log('block move false');
                 move = false;
             }
             
             return move;
-        }
+        };
+
+        this.autoMove = function(){
+            console.log('auto move');
+            var currCase = Game.mapCases.layer2[this.caseY][this.caseX];
+            var nextCase = undefined;
+            if (currCase.type == "direction_right"){
+                nextCase = Game.mapCases.layer1[this.caseY][this.caseX+1];
+            }
+            else if (currCase.type == "direction_bottom"){
+                nextCase = Game.mapCases.layer1[this.caseY+1][this.caseX];
+            }
+            else if (currCase.type == "direction_left"){
+                nextCase = Game.mapCases.layer1[this.caseY][this.caseX-1];
+            }
+            else if (currCase.type == "direction_up"){
+                nextCase = Game.mapCases.layer1[this.caseY-1][this.caseX];
+            }
+
+            if(nextCase && nextCase.type != 'wall'){
+                console.log('auto moveDirection');
+                this.setTarget({
+                    x: nextCase.x*64,
+                    y: nextCase.y*64
+                });
+
+                this.setNewPosition(nextCase);
+            }
+        };
     }
 
     return Bloc;
