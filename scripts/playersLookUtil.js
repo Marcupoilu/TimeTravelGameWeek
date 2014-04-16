@@ -48,8 +48,17 @@ define(function(require) {
 			return finalLook;
 		},
 
-		checkLook: function(object, direction){
-			this.getLook(object, direction);
+		checkLook: function(look, toChecks){
+			var seeOther = false;
+			_.each(look, function(lookCase){
+				_.each(toChecks, function(obj){
+					if(lookCase.x == obj.currCase.x && lookCase.y == obj.currCase.y){
+						//console.log('player see projection', lookCase);
+						seeOther = true;
+					}
+				});
+			});
+			return seeOther;
 		}
 	}
 

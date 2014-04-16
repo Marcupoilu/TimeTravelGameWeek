@@ -98,13 +98,27 @@ define(function(require) {
 
 		this.manageAllLook = function(){
 			var playerLook = lookUtil.getLook(Player.currCase, Player.sprite.body.velocity);
-			console.log(ProjectionManager, 'playerLook', playerLook);
+			//console.log(ProjectionManager, 'playerLook', playerLook);
 			_.each(playerLook, function(lookCase){
 				_.each(ProjectionManager.projs, function(proj){
-					if(lookCase.x == proj.currCase.x && lookCase.y == proj.currCase.y){
-						console.log('player see projection', lookCase);
+					//console.log(proj);
+					if(proj.active){
+						if(lookCase.x == proj.currCase.x && lookCase.y == proj.currCase.y){
+							console.log('player see projection', lookCase);
+							//break;
+						}
 					}
 				});
+			});
+
+			_.each(ProjectionManager.projs, function(proj){
+				if(proj.active){
+					projLook = lookUtil.getLook(proj.currCase, proj.sprite.body.velocity);
+					if(lookUtil.checkLook(projLook, _.reject(ProjectionManager.projs, proj)) || 
+						lookUtil.checkLook(projLook, [Player])){
+						console.log('proj see something');
+					}
+				}
 			});
 			//console.log(ProjectionManager);
 		}
