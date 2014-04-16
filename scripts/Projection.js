@@ -12,6 +12,7 @@ define(function(require) {
 		this.currId = -1;
 		this.finish = false;
 		this.full = false;
+		this.active = false;
 		this.currCase = depart;
 
 		this.preload = function()
@@ -36,7 +37,7 @@ define(function(require) {
 		this.moveToNext = function()
 		{
 			// console.log("currId = " + this.currId + ", this.trajet = ", this.trajet);
-			if(this.currId == -1) this.sprite.visible = true;
+			if(this.currId == -1) this.active = this.sprite.visible = true;
 			if(!this.finish){
 				this.currId++;
 				var pro = this.trajet[this.currId];
