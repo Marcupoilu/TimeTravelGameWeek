@@ -41,14 +41,9 @@ define(function(require){
 			this.idColor = id;
 			ProjectionManager.currColor = this.idColor;
 
-
 			if(!this.created)
 			{
 				this.sprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64 - 64, 'perso_' + color[this.idColor]);
-				this.sprite.animations.add('up', [0, 1]);
-				this.sprite.animations.add('down', [2, 3]);
-				this.sprite.animations.add('right', [4, 5, 6, 7]);
-				this.sprite.animations.add('left', [8, 9, 10, 11]);
 	        	Game.sprites.push(this.sprite);
 
 				this.created = true;
@@ -63,11 +58,16 @@ define(function(require){
 		    }
 			else
 			{
+				this.sprite.loadTexture('perso_' + color[this.idColor]);
 				this.sprite.body.x = this.currCase.x * 64;
 				this.sprite.body.y = this.currCase.y * 64;
 				this.sprite.alpha = 1;
 				this.canMove = true;
 			}
+			this.sprite.animations.add('up', [0, 1]);
+			this.sprite.animations.add('down', [2, 3]);
+			this.sprite.animations.add('right', [4, 5, 6, 7]);
+			this.sprite.animations.add('left', [8, 9, 10, 11]);
 
 		    console.log('Player Create', this);
 		    Game.gameState = 'play';

@@ -20,7 +20,7 @@ define(function(require) {
 			if(!Player.isReady && _this.sprite.input.pointerDown()){
 				if (Player.created)
 					Player.resetVelocity();
-
+				console.log('player id', _this.id);
 				Player.create(_this.startCase, -1, _this.id);
 			}
 		}
