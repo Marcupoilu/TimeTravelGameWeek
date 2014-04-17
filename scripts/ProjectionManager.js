@@ -44,9 +44,6 @@ define(function(require) {
 		addCaseToCurrentProjection: function(proCase){
 			if(this.currentId == -1 || this.projs[this.currentId].full)
 			{
-<<<<<<< HEAD
-				this.addProjection(new Projection(proCase, this.currColor));
-=======
 				var idProj = this.checkIfAlreadyProj(proCase);
 				if(idProj != -1)
 				{
@@ -54,8 +51,8 @@ define(function(require) {
 					this.reverseTimelines(idProj);
 				}
 				//else
-				this.addProjection(new Projection(proCase));
->>>>>>> 1f8d661e53cf73bb1c820187b3d9c4c2f39a881c
+				this.addProjection(new Projection(proCase, this.currColor));
+
 			}
 			else
 			{
