@@ -129,7 +129,7 @@ define(function(require) {
 				//return;
 			}
 
-			if(future.type == "door"){//console.log(future.x*64); console.log(future.y*64);
+			if(future.type.split("_")[0] == "door"){//console.log(future.x*64); console.log(future.y*64);
 				var doorToCheck = _.findWhere(DoorManager.doorsObject, {x:future.x*64, y:future.y*64});
 				if(doorToCheck.opened)
 					console.log(open)
