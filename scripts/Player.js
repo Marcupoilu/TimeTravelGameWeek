@@ -20,9 +20,10 @@ define(function(require){
 			this.created = false;
 		},
 
-		create: function(caseDepart, maxActions){
+		create: function(caseDepart, maxActions, id){
 			this.currCase = _(caseDepart).clone() || new Case(1,1);
 			this.maxActions = maxActions || -1;
+			this.idColor = id;
 
 			if(!this.created)
 			{
@@ -64,6 +65,7 @@ define(function(require){
 			this.canMove = false;
 			this.nbActions = 0;
 			this.noMoreActions = false;
+			Game.playerDisappear();
 		},
 
 		resetManagers: function()
@@ -172,6 +174,43 @@ define(function(require){
 			var futureBloc = Game.mapCases.layer3[idY][idX];
 			var move = false;
 
+			//pour que le check des collisions se fasse quand même
+			this.sprite.body.velocity.x = idX - this.currCase.x;
+			this.sprite.body.velocity.y = idY - this.currCase.y;
+
+			target.x += 64 * this.sprite.body.velocity.x;
+			target.y += 64 * this.sprite.body.velocity.y;
+
+			//si c'est un teleport on passe une fonction onComplete au setTarget pour qu'il se tp après être passé sur le téléporteur
+			if(future.type == "teleport")
+			{
+				// ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
+				// ProjectionManager.moveAllProj();
+				
+				var tp = _.findWhere(TPManager.teleporteurs, {x: future.x, y: future.y});
+				if(tp){
+					this.whenMoved(idX, idY);
+					var noOtherWhenMoved = true;
+
+					target.x = (tp.target.x + this.sprite.body.velocity.x) * 64;
+					target.y = (tp.target.y + this.sprite.body.velocity.y) * 64;
+
+					_this.sprite.body.x = tp.target.x * 64;
+					_this.sprite.body.y = tp.target.y * 64;
+
+					_this.currCase.x = tp.target.x;
+					_this.currCase.y = tp.target.y;
+
+					idX = tp.target.x + this.sprite.body.velocity.x;
+					idY = tp.target.y + this.sprite.body.velocity.y;
+
+					future = Game.mapCases.layer2[idY][idX];
+					futureBloc = Game.mapCases.layer3[idY][idX];
+				}
+
+				//return;
+			}
+
 			if(future.type == "door"){//console.log(future.x*64); console.log(future.y*64);
 				var doorToCheck = _.findWhere(DoorManager.doorsObject, {x:future.x*64, y:future.y*64});
 				if(doorToCheck.opened)
@@ -208,33 +247,6 @@ define(function(require){
 			else
 				move = true;
 			
-			//pour que le check des collisions se fasse quand même
-			this.sprite.body.velocity.x = idX - this.currCase.x;
-			this.sprite.body.velocity.y = idY - this.currCase.y;
-
-			target.x += 64 * this.sprite.body.velocity.x;
-			target.y += 64 * this.sprite.body.velocity.y;
-
-			//si c'est un teleport on passe une fonction onComplete au setTarget pour qu'il se tp après être passé sur le téléporteur
-			if(future.type == "teleport")
-			{
-				// ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
-				// ProjectionManager.moveAllProj();
-				this.whenMoved(idX, idY);
-				this.setTarget(target, function(){
-					var tp = _.findWhere(TPManager.teleporteurs, {x: future.x, y: future.y});
-					target.x = tp.target.x * 64;
-					target.y = tp.target.y * 64;
-					idX = tp.target.x;
-					idY = tp.target.y;
-					_this.currCase.x = idX;
-					_this.currCase.y = idY;
-					
-					_this.sprite.body.x = target.x;
-					_this.sprite.body.y = target.y;
-				});
-				return;
-			}
 
 			if (future.type == "console"){
 				var consoleToCheck = _.findWhere(ConsoleManager.consoleObjects, {x:future.x*64, y:future.y*64});
@@ -290,7 +302,9 @@ define(function(require){
 			if(move){
 				this.currCase.x = idX;
 				this.currCase.y = idY;
-				this.whenMoved(idX, idY);
+				if(!noOtherWhenMoved){
+					this.whenMoved(idX, idY);
+				}
 				// ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
 				// ProjectionManager.moveAllProj();
 			}
@@ -355,7 +369,6 @@ define(function(require){
 				return;
 			}
 			this.canMove = true;
-
 			this.setTarget(target);
 			
 		}

@@ -22,12 +22,22 @@
    <property name="" value=""/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYKAcsCKxWaA0JxofnY2sBx0I4MDIgAeLemL1g/TyEaEf3SwY4KWB/SxofEL+Z0BTjwtw4ZEjRj+pgAONz05AfqABAHwzAv4=
+   eJxjYKAcsCKxWaA0JxKfFU0OXQ86EMCBkQEPFvXE6gfp5SNCP7pZMMBLA/tZ0PiE/M+Aph4X4MIjR4x+UgEHGp+dgPxAAwCJPwMD
   </data>
  </layer>
  <layer name="Links" width="16" height="12">
   <data encoding="base64" compression="zlib">
    eJxjYKANEKKRuaOANDAaD/gBAEcQACU=
+  </data>
+ </layer>
+ <layer name="blocs" width="16" height="12">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2DkAgADAAAB
+  </data>
+ </layer>
+ <layer name="Render" width="16" height="12">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2DkAgADAAAB
   </data>
  </layer>
 </map>

@@ -54,6 +54,7 @@ define(function(require) {
 			// console.log("moveToNext this.currID = " + this.currId + ", this.trajet = ", this.trajet.length - 1);
 			this.finish = (this.currId >= this.trajet.length - 1);
 			// console.log(this.finish);
+			return !this.finish;
 		};
 
 		this.resetVelocity = function(){
@@ -71,10 +72,51 @@ define(function(require) {
 			this.sprite.body.y = this.currCase.y * 64;
 		};
 
+		this.clear = function(){
+			this.reset();
+			this.trajet.splice(0, this.trajet.length);
+			this.trajet = [this.currCase];
+		};
+
 		this.moveToCase = function(idX, idY, target){
 			var _this = this;			
 			var future = Game.mapCases.layer2[idY][idX];
+			var futureBloc = Game.mapCases.layer3[idY][idX];
 			var move = false;
+
+			//pour que le check des collisions se fasse quand même
+			this.sprite.body.velocity.x = idX - this.currCase.x;
+			this.sprite.body.velocity.y = idY - this.currCase.y;
+
+			target.x += 64 * this.sprite.body.velocity.x;
+			target.y += 64 * this.sprite.body.velocity.y;
+
+			//si c'est un teleport on passe une fonction onComplete au setTarget pour qu'il se tp après être passé sur le téléporteur
+			if(future.type == "teleport")
+			{
+				
+				//this.setTarget(target, function(){
+				var tp = _.findWhere(TPManager.teleporteurs, {x: future.x, y: future.y});
+				if(tp){
+					target.x = (tp.target.x + this.sprite.body.velocity.x) * 64;
+					target.y = (tp.target.y + this.sprite.body.velocity.y) * 64;
+
+					_this.sprite.body.x = tp.target.x * 64;
+					_this.sprite.body.y = tp.target.y * 64;
+
+					_this.currCase.x = tp.target.x;
+					_this.currCase.y = tp.target.y;
+
+					idX = tp.target.x + this.sprite.body.velocity.x;
+					idY = tp.target.y + this.sprite.body.velocity.y;
+
+					future = Game.mapCases.layer2[idY][idX];
+					futureBloc = Game.mapCases.layer3[idY][idX];
+				}
+				//});
+				//return;
+			}
+
 			if(future.type == "door"){//console.log(future.x*64); console.log(future.y*64);
 				var doorToCheck = _.findWhere(DoorManager.doorsObject, {x:future.x*64, y:future.y*64});
 				if(doorToCheck.opened)
@@ -89,24 +131,7 @@ define(function(require) {
 					switchToCheck.activate();
 				}
 			}
-			
-			//gestion des blocs
-			if(future.type == "bloc"){//console.log(future.x*64); console.log(future.y*64);
-				var blocToCheck = _.findWhere(BlocsManager.blocsTable, {x:future.x*64, y:future.y*64});
-				if(blocToCheck.canMove)
-				{
-					if(blocToCheck.moveDirection({
-						x : this.sprite.body.velocity.x,
-						y : this.sprite.body.velocity.y
-					})){
-						return true;
-					}
-					else
-						return false;
-				}
-				else
-					return
-			}
+
 			//s'il n'y a pas d'objets sur la case on check le layer1
 			if(future.type == "")
 			{
@@ -116,31 +141,21 @@ define(function(require) {
 			}
 			else
 				move = true;
-			
-			//pour que le check des collisions se fasse quand même
-			this.sprite.body.velocity.x = idX - this.currCase.x;
-			this.sprite.body.velocity.y = idY - this.currCase.y;
 
-			target.x += 64 * this.sprite.body.velocity.x;
-			target.y += 64 * this.sprite.body.velocity.y;
-
-			//si c'est un teleport on passe une fonction onComplete au setTarget pour qu'il se tp après être passé sur le téléporteur
-			if(future.type == "teleport")
-			{
-				
-				this.setTarget(target, function(){
-					var tp = _.findWhere(TPManager.teleporteurs, {x: future.x, y: future.y});
-					target.x = tp.target.x * 64;
-					target.y = tp.target.y * 64;
-					idX = tp.target.x;
-					idY = tp.target.y;
-					_this.currCase.x = idX;
-					_this.currCase.y = idY;
-					
-					_this.sprite.body.x = target.x;
-					_this.sprite.body.y = target.y;
-				});
-				return;
+			//gestion des blocs
+			if(futureBloc.type == "bloc"){//console.log(future.x*64); console.log(future.y*64);
+				var blocToCheck = _.findWhere(BlocsManager.blocsTable, {x:future.x*64, y:future.y*64});
+				if(blocToCheck && blocToCheck.canMove)
+				{
+					if(!blocToCheck.moveDirection({
+						x : this.sprite.body.velocity.x,
+						y : this.sprite.body.velocity.y
+					})){
+						return false;
+					}	
+				}
+				else
+					return;
 			}
 
 			if (future.type == "console"){

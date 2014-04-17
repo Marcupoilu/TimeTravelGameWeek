@@ -36,6 +36,8 @@ define(function(require) {
     		this.game.load.image('tiles', 'Assets/typeOfCase.png');
     		this.game.load.image('linksImg', 'Assets/links.png');
        		this.game.load.image('renderTileSet', 'Assets/renderTileSet.png');
+    		this.game.load.image('timelineOn', '../images/ui/time_on.png');
+    		this.game.load.image('timelineOff', '../images/ui/time_off.png');
     		podsManager.preload();
     		DoorManager.preload();
     		SwitchManager.preload();
@@ -200,6 +202,10 @@ define(function(require) {
 
 		this.playerMove = function(){
 			blocsManager.moveBlocs();
+		};
+
+		this.playerDisappear = function(){
+			blocsManager.resetPos();
 		};
 	});
 	

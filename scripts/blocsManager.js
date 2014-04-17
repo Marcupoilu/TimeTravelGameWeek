@@ -43,6 +43,12 @@ define(function(require) {
             _.each(this.blocsTable, function(bloc){
                 bloc.autoMove();
             });
+        },
+
+        resetPos: function(){
+            _.each(this.blocsTable, function(bloc){
+                bloc.resetToInitPos();
+            });
         }
     }
     return blocManager;

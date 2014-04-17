@@ -14,7 +14,7 @@
  </tileset>
  <layer name="Tiles" width="16" height="12" opacity="0.9">
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYKIQM6JhJiw0LnX49BMjhk0cm3pS9ROD6aEfnzwp4YdNjhz3U0s/vvSDKx3h0k8JBgCNWwEH
+   eJxjYmBgYKIQM5KJaamfGHOJ1Y9PDa7wQGfjU49LPzZziA1/St1PTFgSG3+U6icUf5RgAKGjARY=
   </data>
  </layer>
  <layer name="Objects" width="16" height="12">
@@ -22,12 +22,12 @@
    <property name="" value=""/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYKAN4ITSrDjkOQjoF0DDDEg0MXrw8Ym1ExdGB6xk6McWLrjUErIfXT8+t+AD5PidVDNAgAtND7a0wAKlsYUTOxHuIBYAAIdiBHM=
+   eJxjYKAcsKLxBXBgfHpI1Y8PCCDR5OgnBDhJUMtBgT3E6mVHYnNRYB8MYAs3UsOfFP3UTj+kAACIpQJP
   </data>
  </layer>
  <layer name="Links" width="16" height="12">
   <data encoding="base64" compression="zlib">
-   eJxjYKANEKKRuaNg6IPBlDYAPKgAJQ==
+   eJxjYBgFpAKhgXYAHjCY3TYYAQA4uAAl
   </data>
  </layer>
  <layer name="blocs" width="16" height="12">

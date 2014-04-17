@@ -1,7 +1,8 @@
 define(function(require) 
 {
-    var Case = require("./Case");
-    var DoorManager = require("./DoorManager");
+    var Case = require("./Case"),
+        TPManager = require("./TeleporteurManager"),
+        DoorManager = require("./DoorManager");
 
     var Bloc = function Bloc(x, y, parent)
     {
@@ -10,6 +11,11 @@ define(function(require)
         this.y = y || 0;
         this.caseX = parent.lineNb || 0;
         this.caseY = parent.columnNb || 0;
+        console.log('bloc init', parent.lineNb, parent.columnNb);
+        this.initPos = {
+            x: parent.lineNb,
+            y: parent.columnNb
+        }
         this.sprite = Game.add.sprite(this.x, this.y, 'bloc');
         Game.sprites.push(this.sprite);
         //add the physics
@@ -53,7 +59,14 @@ define(function(require)
         {
             this.sprite.body.velocity.x = 0;
             this.sprite.body.velocity.y = 0;
-        }
+        };
+
+        this.resetToInitPos = function(){
+            this.sprite.body.x = this.initPos.x * 64;
+            this.sprite.body.y = this.initPos.y * 64;
+            this.sprite.visible = true;
+            this.setNewPosition(this.initPos);
+        };
 
         this.setTarget = function(target, optionCallBack)
         {
@@ -100,6 +113,32 @@ define(function(require)
             var future = Game.mapCases.layer2[idY][idX];
             var futureBloc = Game.mapCases.layer3[idY][idX];
             //Game.mapCases.layer2[idX][idY] = new Case(idX,idY,"bloc");
+
+            if(future.type == "teleport")
+            {
+                
+                //this.setTarget(target, function(){
+                var tp = _.findWhere(TPManager.teleporteurs, {x: future.x, y: future.y});
+                if(tp){
+                    target.x = tp.target.x + velocity.x;
+                    target.y = tp.target.y + velocity.y;
+
+                    this.sprite.body.x = tp.target.x * 64;
+                    this.sprite.body.y = tp.target.y * 64;
+
+                    this.caseX = tp.target.x;
+                    this.caseY = tp.target.y;
+
+                    idX = tp.target.x + velocity.x;
+                    idY = tp.target.y + velocity.y;
+
+                    future = Game.mapCases.layer2[idY][idX];
+                    futureBloc = Game.mapCases.layer3[idY][idX];
+                }
+                //});
+                //return;
+            }
+
             var move = false;
             if(future.type == "door")
             {
@@ -119,9 +158,10 @@ define(function(require)
                 return move;
             }
 
-            if(future.type == "vortex"){
-                move = true;
-                return move;
+            if(future.type == 'vortex' ||
+               future.type == 'pod' ||
+               future.type == 'switch'){
+                return true;
             }
 
             if(futureBloc.type == "bloc")
@@ -130,7 +170,7 @@ define(function(require)
                 return move;
             }
             if (future.type.indexOf('direction')>= 0){
-                console.log('move on direction');
+                //console.log('move on direction');
                 move = true;
                 return move;
             }
