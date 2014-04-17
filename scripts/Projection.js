@@ -7,13 +7,21 @@ define(function(require) {
 	    ConsoleManager = require("./ConsoleManager"),
 	    ExitManager = require("./ExitManager");
 
-	var Projection = function(depart){
+	var color = {
+		0: 'vert',
+		1: 'orange',
+		2: 'violet',
+		3: 'bleu'
+	}
+
+	var Projection = function(depart, idColor){
 		this.trajet = [_(depart).clone()];
 		this.currId = -1;
 		this.finish = false;
 		this.full = false;
 		this.active = false;
 		this.currCase = _(this.trajet[0]).clone();
+		this.idColor = idColor;
 
 		this.preload = function()
 		{
@@ -22,7 +30,7 @@ define(function(require) {
 
 		this.create = function(){
 			// this.depart = depart || new Case(1,1);
-			this.sprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64 - 64, 'projection');
+			this.sprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64 - 64, 'perso_' + color[this.idColor]);
         	Game.sprites.push(this.sprite);
 			Game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 			this.sprite.alpha = 0;
