@@ -72,6 +72,17 @@ define(function(require) {
 			this.currentId = id - 1;
 		},
 
+		resetAll: function(){
+			for(var i = 0; i < this.projs.length; ++i)
+			{
+				this.projs[i].clear();
+				// this.timelines[i].clear();
+			}
+			this.projs.splice(0, this.projs.length);
+			this.timelines.splice(0, this.timelines.length);
+			this.currentId = -1;
+		},
+
 		checkIfAlreadyProj: function(onCase){
 			var id = -1;
 			for(var i = 0; i < this.projs.length; ++i)

@@ -55,7 +55,7 @@ define(function(require){
 
 			    this.sprite.body.setSize(64,64,0,64);
 				this.initInputs();
-				// ProjectionManager.resetAll();
+				ProjectionManager.resetAll();
 		    }
 			else
 			{
