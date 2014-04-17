@@ -74,6 +74,7 @@ define(function(require) {
 		this.moveToCase = function(idX, idY, target){
 			var _this = this;			
 			var future = Game.mapCases.layer2[idY][idX];
+			var futureBloc = Game.mapCases.layer3[idY][idX];
 			var move = false;
 			if(future.type == "door"){//console.log(future.x*64); console.log(future.y*64);
 				var doorToCheck = _.findWhere(DoorManager.doorsObject, {x:future.x*64, y:future.y*64});
@@ -89,24 +90,7 @@ define(function(require) {
 					switchToCheck.activate();
 				}
 			}
-			
-			//gestion des blocs
-			if(future.type == "bloc"){//console.log(future.x*64); console.log(future.y*64);
-				var blocToCheck = _.findWhere(BlocsManager.blocsTable, {x:future.x*64, y:future.y*64});
-				if(blocToCheck.canMove)
-				{
-					if(blocToCheck.moveDirection({
-						x : this.sprite.body.velocity.x,
-						y : this.sprite.body.velocity.y
-					})){
-						return true;
-					}
-					else
-						return false;
-				}
-				else
-					return
-			}
+
 			//s'il n'y a pas d'objets sur la case on check le layer1
 			if(future.type == "")
 			{
@@ -123,6 +107,22 @@ define(function(require) {
 
 			target.x += 64 * this.sprite.body.velocity.x;
 			target.y += 64 * this.sprite.body.velocity.y;
+
+			//gestion des blocs
+			if(futureBloc.type == "bloc"){//console.log(future.x*64); console.log(future.y*64);
+				var blocToCheck = _.findWhere(BlocsManager.blocsTable, {x:future.x*64, y:future.y*64});
+				if(blocToCheck && blocToCheck.canMove)
+				{
+					if(!blocToCheck.moveDirection({
+						x : this.sprite.body.velocity.x,
+						y : this.sprite.body.velocity.y
+					})){
+						return false;
+					}	
+				}
+				else
+					return;
+			}
 
 			//si c'est un teleport on passe une fonction onComplete au setTarget pour qu'il se tp après être passé sur le téléporteur
 			if(future.type == "teleport")
