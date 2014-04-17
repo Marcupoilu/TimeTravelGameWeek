@@ -21,7 +21,7 @@ define(function(require) {
 				if (Player.created)
 					Player.resetVelocity();
 
-				Player.create(_this.startCase);
+				Player.create(_this.startCase, -1, _this.id);
 			}
 		}
 	}
