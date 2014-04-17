@@ -13,14 +13,15 @@ define(function(require) {
         7: 'exit',
         8: 'console',
         9: 'switch',
-        10: 'door',
+        10: 'door_face',
         11: 'direction_up',
         12: 'direction_bottom',
         13: "direction_right",
         14: "direction_left",
         15: "fast",
         16: "ice",
-        17: "teleport"
+        17: "teleport",
+        18: "door_profil"
     }
 
     var Map = function Map(map,line,column)

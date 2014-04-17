@@ -4,7 +4,8 @@ define(function(require) {
 
 	var DoorManager = {
 		preload: function(){
-			Game.load.image('door', '../images/door.png');
+			Game.load.image('door_profil', '../images/GA/walls/door_profil.png');
+			Game.load.image('door_face', '../images/GA/walls/door_front.png');
 		},
 
 		create : function(map){
@@ -14,14 +15,22 @@ define(function(require) {
 			var objectsLayer = map.layer2;
 
 			_.each(objectsLayer, function(objectLayer){
-				_.each(_.where(objectLayer, {type: 'door'}), function(door){
+				/*_.each(_.where(objectLayer, {type: 'door'}), function(door){
 					_this.doorsTile.push(door);
+				});*/
+				_.each(objectLayer, function(obj){
+					if(obj.type.split("_")[0] == "door")
+						_this.doorsTile.push(obj);
 				});
+				console.log("objectLayer.type = ", objectLayer);
+				// if(objectLayer.type.split("_")[0] == "door")
+				// 	_this.doorsTile.push(door);
 			});
-
+			var door;
 			_.each(this.doorsTile, function(door){
 				// console.log(Game.map.layers[1].data[door.y][door.x].index);
-				_this.doorsObject.push(new Door(Game.map.layers[2].data[door.y][door.x].index,door.x*64, door.y*64));
+				door = new Door(Game.map.layers[2].data[door.y][door.x].index,door.x*64, door.y*64, door.type.split("_")[1]);
+				_this.doorsObject.push(door);
 			});
 
 		},
