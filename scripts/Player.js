@@ -20,9 +20,10 @@ define(function(require){
 			this.created = false;
 		},
 
-		create: function(caseDepart, maxActions){
+		create: function(caseDepart, maxActions, id){
 			this.currCase = _(caseDepart).clone() || new Case(1,1);
 			this.maxActions = maxActions || -1;
+			this.idColor = id;
 
 			if(!this.created)
 			{
