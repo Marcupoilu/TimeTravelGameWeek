@@ -19,8 +19,8 @@ define(function(require)
         this.sprite.body.velocity = 0;
         this.sprite.body.setSize(64,64);
         this.canMove = true;
-        this.moveDirection = function(velocity)
-        {
+        
+        this.moveDirection = function(velocity) {
             //console.log('toto', this, this.caseX);
             var velX = velocity.x;
             var velY = velocity.y;
@@ -33,7 +33,7 @@ define(function(require)
                 target.y += velY;
                 goingToMove = true;
             }
-            if(goingToMove && this.moveToCase(target.x, target.y, target))
+            if(goingToMove && this.moveToCase(target.x, target.y, target, velocity))
             {
                 this.setNewPosition(target);
                 target.x *= 64;
@@ -85,7 +85,7 @@ define(function(require)
             this.y = target.y*64;
         };
 
-        this.moveToCase = function(idX, idY, target)
+        this.moveToCase = function(idX, idY, target, velocity)
         {
             var future = Game.mapCases.layer2[idY][idX];
             var futureBloc = Game.mapCases.layer3[idY][idX];
@@ -102,7 +102,14 @@ define(function(require)
                 }
                 return move;
             }
-            //gestion des blocs
+
+            if(future.type == 'ice'){
+                this.iceVelocity = velocity;
+                move = true;
+                return move;
+            }
+
+
             if(futureBloc.type == "bloc")
             {
                 move = false;
@@ -131,24 +138,23 @@ define(function(require)
         };
 
         this.autoMove = function(){
-            console.log('auto move');
+            //console.log('auto move');
             var currCase = Game.mapCases.layer2[this.caseY][this.caseX];
             var nextCase = undefined;
-            if (currCase.type == "direction_right"){
+            if (currCase.type == 'direction_right'){
                 nextCase = Game.mapCases.layer1[this.caseY][this.caseX+1];
-            }
-            else if (currCase.type == "direction_bottom"){
+            } else if (currCase.type == 'direction_bottom'){
                 nextCase = Game.mapCases.layer1[this.caseY+1][this.caseX];
-            }
-            else if (currCase.type == "direction_left"){
+            } else if (currCase.type == 'direction_left'){
                 nextCase = Game.mapCases.layer1[this.caseY][this.caseX-1];
-            }
-            else if (currCase.type == "direction_up"){
+            } else if (currCase.type == 'direction_up'){
                 nextCase = Game.mapCases.layer1[this.caseY-1][this.caseX];
+            } else if (currCase.type == 'ice') {
+                nextCase = Game.mapCases.layer1[this.caseY + this.iceVelocity.y][this.caseX + this.iceVelocity.x];
             }
 
             if(nextCase && nextCase.type != 'wall'){
-                console.log('auto moveDirection');
+                //console.log('auto moveDirection');
                 this.setTarget({
                     x: nextCase.x*64,
                     y: nextCase.y*64
