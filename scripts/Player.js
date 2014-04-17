@@ -9,6 +9,13 @@ define(function(require){
 	    ConsoleManager = require("./ConsoleManager"),
 	    ExitManager = require("./ExitManager");
 
+	var color = {
+		0: 'vert',
+		1: 'orange',
+		2: 'violet',
+		3: 'bleu'
+	}
+
 	var Player = {
 
 		canMove : true,
@@ -16,18 +23,30 @@ define(function(require){
 		noMoreActions : false,
 
 		preload: function(){
-			Game.load.spritesheet('character', '../images/gabarit_chara.png', 64, 128, 1);
+			Game.load.spritesheet('perso_bleu', '../images/perso/perso_bleu.png', 64, 128, 12);
+			Game.load.spritesheet('perso_orange', '../images/perso/perso_orange.png', 64, 128, 12);
+			Game.load.spritesheet('perso_vert', '../images/perso/perso_vert.png', 64, 128, 12);
+			Game.load.spritesheet('perso_violet', '../images/perso/perso_violet.png', 64, 128, 12);
+
 			this.created = false;
 		},
+
+
 
 		create: function(caseDepart, maxActions, id){
 			this.currCase = _(caseDepart).clone() || new Case(1,1);
 			this.maxActions = maxActions || -1;
+			//console.log('id color', id);
+			console.log(color, id,  'perso_' + color[id]);
 			this.idColor = id;
 
 			if(!this.created)
 			{
-				this.sprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64 - 64, 'character');
+				this.sprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64 - 64, 'perso_' + color[this.idColor]);
+				this.sprite.animations.add('up', [0, 1]);
+				this.sprite.animations.add('down', [2, 3]);
+				this.sprite.animations.add('right', [4, 5, 6, 7]);
+				this.sprite.animations.add('left', [8, 9, 10, 11]);
 	        	Game.sprites.push(this.sprite);
 				this.created = true;
 				//sprite.animations.add('walk');
@@ -88,9 +107,9 @@ define(function(require){
 			// console.log("setTarget target = ", target, ", onComplete = ", onComplete);
 			var _this = this;
 			var _target = target;
-
+			this.sprite.animations.play('');
 			this.canMove = false;
-		    this.tween = Game.add.tween(this.sprite.body).to(target, 200, Phaser.Easing.Linear.None, true);
+		    this.tween = Game.add.tween(this.sprite.body).to(target, 500, Phaser.Easing.Linear.None, true);
 		    this.tween.onUpdateCallback(function(){
 		    	if(Game.physics.arcade.collide(_this.sprite, Game.layerTiles)){
 		    		_this.tween.stop();
@@ -105,6 +124,7 @@ define(function(require){
 		    	this.sprite.body.x = _target.x;
 				this.sprite.body.y = _target.y;
 		    	if(onComplete) onComplete.apply();
+		    	_this.sprite.animations.stop();
 		    }, this);
 		},
 
@@ -118,19 +138,19 @@ define(function(require){
 				if (this.cursors.up.isDown) {
 			    	// target.y -= 64; // this.setTarget(target); // this.sprite.body.velocity.y = -1;
 			    	this.moveToCase(this.currCase.x, this.currCase.y - 1, target);
-
+			    	this.sprite.animations.play('up', 4, true);
 			    } else if (this.cursors.down.isDown) {
 			    	// target.y += 64; // this.setTarget(target); // this.sprite.body.velocity.y = 1;
 			    	this.moveToCase(this.currCase.x, this.currCase.y + 1, target);
-
+			    	this.sprite.animations.play('down', 4, true);
 			    } else if (this.cursors.left.isDown) {
 			    	// target.x -= 64; // this.setTarget(target); // this.sprite.body.velocity.x = -1;
 			    	this.moveToCase(this.currCase.x - 1, this.currCase.y, target);
-
+			    	this.sprite.animations.play('left', 8, true);
 			    } else if (this.cursors.right.isDown) {
 			    	// target.x += 64; // this.setTarget(target); // this.sprite.body.velocity.x = 1;
 			    	this.moveToCase(this.currCase.x + 1, this.currCase.y, target);
-
+			    	this.sprite.animations.play('right', 8, true);
 			    }
 			}
 
