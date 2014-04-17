@@ -10,6 +10,11 @@ define(function(require)
         this.y = y || 0;
         this.caseX = parent.lineNb || 0;
         this.caseY = parent.columnNb || 0;
+        console.log('bloc init', parent.lineNb, parent.columnNb);
+        this.initPos = {
+            x: parent.lineNb,
+            y: parent.columnNb
+        }
         this.sprite = Game.add.sprite(this.x, this.y, 'bloc');
         Game.sprites.push(this.sprite);
         //add the physics
@@ -53,7 +58,14 @@ define(function(require)
         {
             this.sprite.body.velocity.x = 0;
             this.sprite.body.velocity.y = 0;
-        }
+        };
+
+        this.resetToInitPos = function(){
+            this.sprite.body.x = this.initPos.x * 64;
+            this.sprite.body.y = this.initPos.y * 64;
+            this.sprite.visible = true;
+            this.setNewPosition(this.initPos);
+        };
 
         this.setTarget = function(target, optionCallBack)
         {

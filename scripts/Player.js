@@ -59,6 +59,7 @@ define(function(require){
 			this.canMove = false;
 			this.nbActions = 0;
 			this.noMoreActions = false;
+			Game.playerDisappear();
 		},
 
 		resetManagers: function()

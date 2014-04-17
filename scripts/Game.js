@@ -191,6 +191,10 @@ define(function(require) {
 		this.playerMove = function(){
 			blocsManager.moveBlocs();
 		};
+
+		this.playerDisappear = function(){
+			blocsManager.resetPos();
+		};
 	});
 	
 });
