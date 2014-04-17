@@ -64,7 +64,7 @@ define(function(require) {
 
 			/*this.game.stage.backgroundColor = '#787878';
 
-		    this.game.map = this.game.add.tilemap('level1');
+		    this.game.map = this.game.add.tilemap('level6');
 		    this.game.map.addTilesetImage('typeOfCase', 'tiles');
 		    this.game.map.addTilesetImage('links', 'linksImg');
 		    _this.game.map.addTilesetImage('graphs', 'renderTileSet');
