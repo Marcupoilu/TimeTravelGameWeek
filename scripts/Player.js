@@ -22,8 +22,9 @@ define(function(require){
 
 		create: function(caseDepart, maxActions, id){
 			this.currCase = _(caseDepart).clone() || new Case(1,1);
-			this.maxActions = maxActions || -1;
+			this.maxActions = maxActions || 15;
 			this.idColor = id;
+			console.log("Player create " + this.maxActions);
 
 			if(!this.created)
 			{
@@ -69,7 +70,6 @@ define(function(require){
 		    ExitManager.exitObjects[0].Deactivate();
 		    ProjectionManager.addCaseToCurrentProjection(this.currCase);
 		    ProjectionManager.moveAllProj();
-		    // DoorManager.closeAll();
 		    SwitchManager.deactivateAll();
 		},
 

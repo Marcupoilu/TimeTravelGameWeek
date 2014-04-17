@@ -6,6 +6,7 @@ define(function(require) {
 		projs: [],
 		timelines: [],
 		currentId: -1,
+		maxActions: -1,
 
 		preload: function(){
 			Game.load.spritesheet('projection', '../images/gabarit_chara.png', 64, 128, 1);
@@ -30,13 +31,13 @@ define(function(require) {
 			}
 		},
 
-		addProjection: function(proj){
+		addProjection: function(proj, max){
 			var y = 20 + this.currentId * 18;
 			this.currentId ++;
 			proj.create(proj.trajet[0]);
 			this.projs.push(proj);
 
-			this.timelines.push(new Timeline(20, y));
+			this.timelines.push(new Timeline(20, y, Player.maxActions + 1));
 			this.timelines[this.currentId].madeAnAction();
 		},
 
