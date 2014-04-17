@@ -16,7 +16,7 @@ define(function(require)
             x: parent.lineNb,
             y: parent.columnNb
         }
-        this.sprite = Game.add.sprite(this.x, this.y, 'bloc');
+        this.sprite = Game.add.sprite(this.x + 32, this.y + 64, 'bloc');
         Game.sprites.push(this.sprite);
         //add the physics
         Game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
