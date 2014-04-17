@@ -123,6 +123,7 @@ define(function(require) {
 		}
 	}), new function(){
 		this.loadLevel = function(int){
+			console.log(level+int)
 			if(_this.allCreate){
 				Player.resetManagers();
 				Player.destroy();
@@ -137,7 +138,7 @@ define(function(require) {
 				_this.game.layerObject.destroy();
 				_this.game.layerLinks.destroy();
 				_this.game.layerRender.destroy();
-				_this.game.layerRenderBis.destroy();
+				// _this.game.layerRenderBis.destroy();
 				_this.game.map.destroy();
 			}
 
@@ -158,7 +159,7 @@ define(function(require) {
 		    _this.game.layerObject = _this.game.map.createLayer('Objects');
 		    _this.game.layerLinks = _this.game.map.createLayer('Links');
 		    _this.game.layerRender = _this.game.map.createLayer('Render');
-		    _this.game.layerRenderBis = _this.game.map.createLayer('RenderBis');
+		    // _this.game.layerRenderBis = _this.game.map.createLayer('RenderBis');
 
 		    //_this.game.map.setCollision(2, true, _this.game.layerObject);
 		    _this.game.layerTiles.debug = true;
