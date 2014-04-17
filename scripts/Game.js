@@ -126,8 +126,12 @@ define(function(require) {
 			if(_this.allCreate){
 				Player.resetManagers();
 				Player.destroy();
+				console.log(_this.game.sprites);
 				_.each(_this.game.sprites, function(sprite){
-					sprite.destroy();
+					//console.log(sprite);
+					if(sprite){
+						sprite.destroy();
+					}
 				});
 				_this.game.layerTiles.destroy();
 				_this.game.layerObject.destroy();
