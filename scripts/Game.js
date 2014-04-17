@@ -35,6 +35,8 @@ define(function(require) {
 
     		this.game.load.image('tiles', 'Assets/typeOfCase.png');
     		this.game.load.image('linksImg', 'Assets/links.png');
+    		this.game.load.image('timelineOn', '../images/GA/Blocs/slow.png');
+    		this.game.load.image('timelineOff', '../images/GA/Auras_blue.png');
     		podsManager.preload();
     		DoorManager.preload();
     		SwitchManager.preload();

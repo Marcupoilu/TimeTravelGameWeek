@@ -22,7 +22,7 @@
    <property name="" value=""/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYKAN4ITSrDjkOQjoF0DDDEg0MXrw8Ym1Exemp35s4oT043MLPkCJ24k1AwS40PRgSwssUBpb+mEnwh3EAgB3DgRp
+   eJxjYKAN4ITSrDjkOQjoF0DDDEg0MXrw8Ym1ExdGB6xk6McWLrjUErIfXT8+t+AD5PidVDNAgAtND7a0wAKlsYUTOxHuIBYAAIdiBHM=
   </data>
  </layer>
  <layer name="Links" width="16" height="12">
@@ -31,6 +31,11 @@
   </data>
  </layer>
  <layer name="blocs" width="16" height="12">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2DkAgADAAAB
+  </data>
+ </layer>
+ <layer name="Render" width="16" height="12">
   <data encoding="base64" compression="zlib">
    eJxjYBgFo2DkAgADAAAB
   </data>
