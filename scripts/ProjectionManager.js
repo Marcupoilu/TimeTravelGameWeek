@@ -44,6 +44,13 @@ define(function(require) {
 		addCaseToCurrentProjection: function(proCase){
 			if(this.currentId == -1 || this.projs[this.currentId].full)
 			{
+				var idProj = this.checkIfAlreadyProj(proCase);
+				if(idProj != -1)
+				{
+					// console.log("on a déjà une projection sur ce pod");
+					this.reverseTimelines(idProj);
+				}
+				//else
 				this.addProjection(new Projection(proCase));
 			}
 			else
@@ -51,6 +58,27 @@ define(function(require) {
 				this.projs[this.currentId].addCase(proCase);
 				this.timelines[this.currentId].madeAnAction();
 			}
+		},
+
+		reverseTimelines: function(id){
+			for(var i = id; i < this.projs.length; ++i)
+			{
+				this.projs[i].clear();
+				this.timelines[i].clear();
+			}
+			this.projs.splice(id, this.projs.length - id);
+			this.timelines.splice(id, this.timelines.length - id);
+			this.currentId = id - 1;
+		},
+
+		checkIfAlreadyProj: function(onCase){
+			var id = -1;
+			for(var i = 0; i < this.projs.length; ++i)
+			{
+				if(this.projs[i].trajet[0].x == onCase.x && this.projs[i].trajet[0].y == onCase.y)
+					id = i;
+			}
+			return id;
 		},
 
 		closeCurrentProjection: function(){
