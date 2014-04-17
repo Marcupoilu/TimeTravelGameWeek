@@ -4,7 +4,7 @@ define(function(require) {
 
 	var TeleporteurManager = {
 		preload: function(){
-			//Game.load.image('door', '../images/spawn.png');
+			Game.load.image('teleport', './images/TP_green.png');
 		},
 
 		create : function(map){

@@ -55,6 +55,9 @@ define(function(require) {
                     tile = map.layers[1].data[y][x];
                     if(tile && tile.index != 0)
                         this.layer2[y][x] = new Case(tile.x, tile.y, typeCase[tile.index]);
+                    // if (tile.index == 4){
+                        
+                    // }
                     else
                         this.layer2[y][x] = new Case(x, y, "");
                 }

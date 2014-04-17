@@ -5,6 +5,7 @@ define(function(require) {
 		this.x = x;
 		this.y = y;
 		this.target = null;
+		this.sprite = Game.add.sprite(this.x*64, this.y*64, 'teleport');
 
 		this.setTarget = function(target){
 			this.target = target;

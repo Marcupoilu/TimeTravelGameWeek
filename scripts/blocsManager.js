@@ -5,7 +5,7 @@ define(function(require) {
     var blocManager = {
         preload : function()
         {
-            Game.load.image('bloc', '../images/spawn.png');
+            Game.load.image('bloc', '../images/bloc.png');
         },
 
         create : function(map)
@@ -35,7 +35,7 @@ define(function(require) {
             var _this = this;
             _.each(this.blocsTable, function(bloc)
             {
-                Game.debug.body(bloc.sprite);   
+                Game.debug.body(bloc.sprite);
             });
         },
 

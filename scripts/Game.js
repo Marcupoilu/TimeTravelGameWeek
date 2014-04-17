@@ -38,13 +38,18 @@ define(function(require) {
        		this.game.load.image('renderTileSet', 'Assets/renderTileSet.png');
     		this.game.load.image('timelineOn', '../images/ui/time_on.png');
     		this.game.load.image('timelineOff', '../images/ui/time_off.png');
+       		this.game.load.image('background', '../images/ground.png');
+			this.game.load.spritesheet('vortex', '../images/vortex.png', 64, 128, 1);
+
     		podsManager.preload();
     		DoorManager.preload();
     		SwitchManager.preload();
     		ConsoleManager.preload();
+    		blocsManager.preload();
     		ExitManager.preload();
     		WinMenu.preload();
     		GameOverMenu.preload();
+  			TeleporteurManager.preload();
     		Player.preload();
     		ProjectionManager.preload();
 		},
@@ -64,6 +69,7 @@ define(function(require) {
 		    this.game.map.setCollision([2, 10]);
 		    
 		    this.game.layerTiles = this.game.map.createLayer('Tiles');
+			this.backgroundSprite = Game.add.sprite(0, 0, 'background');
 		    this.game.layerObject = this.game.map.createLayer('Objects');
 		    this.game.layerLinks = this.game.map.createLayer('Links');
 		    this.game.layerRender = _this.game.map.createLayer('Render');
@@ -71,7 +77,7 @@ define(function(require) {
 
 		    //this.game.map.setCollision(2, true, this.game.layerObject);
 
-		    this.game.layerTiles.debug = true;
+		    // this.game.layerTiles.debug = true;
 
 		    this.game.mapCases = new Map(this.game.map,12,16);
 		    this.game.mapCases.init();
@@ -98,6 +104,7 @@ define(function(require) {
 				DoorManager.update();
 				SwitchManager.update();
 				ConsoleManager.update();
+				blocsManager.update();
 				if(Player.created){
 					Player.update();
 				}

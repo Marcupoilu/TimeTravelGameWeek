@@ -24,6 +24,7 @@ define(function(require)
         this.sprite.body.bounce.x = 0;
         this.sprite.body.velocity = 0;
         this.sprite.body.setSize(64,64);
+        this.sprite.anchor.setTo(0.5, 1);
         this.canMove = true;
         
         this.moveDirection = function(velocity) {
