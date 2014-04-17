@@ -125,26 +125,6 @@ define(function(require)
                 return move;
             }
 
-            if(future.type == "teleport")
-            {
-                // ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
-                // ProjectionManager.moveAllProj();
-                this.whenMoved(idX, idY);
-                this.setTarget(target, function(){
-                    var tp = _.findWhere(TPManager.teleporteurs, {x: future.x, y: future.y});
-                    target.x = tp.target.x * 64;
-                    target.y = tp.target.y * 64;
-                    idX = tp.target.x;
-                    idY = tp.target.y;
-                    _this.currCase.x = idX;
-                    _this.currCase.y = idY;
-                    
-                    _this.sprite.body.x = target.x;
-                    _this.sprite.body.y = target.y;
-                });
-                return;
-            }
-
             if(future.type == 'ice'){
                 this.iceVelocity = velocity;
                 move = true;

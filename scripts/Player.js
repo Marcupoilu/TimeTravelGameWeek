@@ -180,10 +180,12 @@ define(function(require){
 			{
 				// ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
 				// ProjectionManager.moveAllProj();
-				this.whenMoved(idX, idY);
 				
 				var tp = _.findWhere(TPManager.teleporteurs, {x: future.x, y: future.y});
 				if(tp){
+					this.whenMoved(idX, idY);
+					var noOtherWhenMoved = true;
+
 					target.x = (tp.target.x + this.sprite.body.velocity.x) * 64;
 					target.y = (tp.target.y + this.sprite.body.velocity.y) * 64;
 
@@ -294,7 +296,9 @@ define(function(require){
 			if(move){
 				this.currCase.x = idX;
 				this.currCase.y = idY;
-				this.whenMoved(idX, idY);
+				if(!noOtherWhenMoved){
+					this.whenMoved(idX, idY);
+				}
 				// ProjectionManager.addCaseToCurrentProjection(new Case(idX, idY));
 				// ProjectionManager.moveAllProj();
 			}
@@ -359,7 +363,6 @@ define(function(require){
 				return;
 			}
 			this.canMove = true;
-			console.log('last setTarget');
 			this.setTarget(target);
 			
 		}
