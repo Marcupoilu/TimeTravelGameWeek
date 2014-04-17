@@ -55,6 +55,7 @@ define(function(require){
 
 			    this.sprite.body.setSize(64,64,0,64);
 				this.initInputs();
+				// ProjectionManager.resetAll();
 		    }
 			else
 			{
@@ -197,6 +198,18 @@ define(function(require){
 			var futureBloc = Game.mapCases.layer3[idY][idX];
 			var move = false;
 
+			if(future.type.split("_")[0] == "door"){//console.log(future.x*64); console.log(future.y*64);
+				var doorToCheck = _.findWhere(DoorManager.doorsObject, {x:future.x*64, y:future.y*64});
+				if(doorToCheck.opened)
+					console.log("door open")
+				else
+				{
+					this.resetVelocity();
+					this.canMove = true;
+					return;
+				}
+			}
+
 			//pour que le check des collisions se fasse quand même
 			this.sprite.body.velocity.x = idX - this.currCase.x;
 			this.sprite.body.velocity.y = idY - this.currCase.y;
@@ -234,13 +247,7 @@ define(function(require){
 				//return;
 			}
 
-			if(future.type == "door"){//console.log(future.x*64); console.log(future.y*64);
-				var doorToCheck = _.findWhere(DoorManager.doorsObject, {x:future.x*64, y:future.y*64});
-				if(doorToCheck.opened)
-					console.log(open)
-				else
-					return
-			}
+
 
 			if(future.type == "switch"){//console.log(future.x*64); console.log(future.y*64);
 				var switchToCheck = _.findWhere(SwitchManager.switchObjects, {x:future.x*64, y:future.y*64});
