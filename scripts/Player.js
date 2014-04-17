@@ -27,7 +27,7 @@ define(function(require){
 			if(!this.created)
 			{
 				this.sprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64 - 64, 'character');
-	        	Game.sprites.push(this.sprite);
+	        	// Game.sprites.push(this.sprite);
 				this.created = true;
 				//sprite.animations.add('walk');
 			    //sprite.animations.play('walk', 50, true);
@@ -50,6 +50,11 @@ define(function(require){
 		    Game.gameState = 'play';
 		    this.resetManagers();
 		    this.isReady = true;
+		},
+
+		destroy: function(){
+			this.created = false;
+			this.sprite.destroy();
 		},
 
 		disappear: function(){

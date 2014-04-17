@@ -35,6 +35,7 @@ define(function(require) {
 
     		this.game.load.image('tiles', 'Assets/typeOfCase.png');
     		this.game.load.image('linksImg', 'Assets/links.png');
+       		this.game.load.image('renderTileSet', 'Assets/renderTileSet.png');
     		podsManager.preload();
     		DoorManager.preload();
     		SwitchManager.preload();
@@ -57,11 +58,14 @@ define(function(require) {
 		    this.game.map = this.game.add.tilemap('level0');
 		    this.game.map.addTilesetImage('typeOfCase', 'tiles');
 		    this.game.map.addTilesetImage('links', 'linksImg');
+		    _this.game.map.addTilesetImage('graphs', 'renderTileSet');
 		    this.game.map.setCollision([2, 10]);
 		    
 		    this.game.layerTiles = this.game.map.createLayer('Tiles');
 		    this.game.layerObject = this.game.map.createLayer('Objects');
 		    this.game.layerLinks = this.game.map.createLayer('Links');
+		    this.game.layerRender = _this.game.map.createLayer('Render');
+		    this.game.layerRenderBis = _this.game.map.createLayer('RenderBis');
 
 		    //this.game.map.setCollision(2, true, this.game.layerObject);
 
@@ -107,13 +111,17 @@ define(function(require) {
 		}
 	}), new function(){
 		this.loadLevel = function(int){
+			Player.resetManagers();
+			Player.destroy();
 			_.each(_this.game.sprites, function(sprite){
 				sprite.destroy();
 			});
 			_this.game.layerTiles.destroy();
-			_this.game.map.destroy();
 			_this.game.layerObject.destroy();
 			_this.game.layerLinks.destroy();
+			_this.game.layerRender.destroy();
+			_this.game.layerRenderBis.destroy();
+			_this.game.map.destroy();
 
 			//	Enable p2 physics
 			_this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -123,16 +131,18 @@ define(function(require) {
 		    _this.game.map = _this.game.add.tilemap('level'+int);
 		    _this.game.map.addTilesetImage('typeOfCase', 'tiles');
 		    _this.game.map.addTilesetImage('links', 'linksImg');
+		    _this.game.map.addTilesetImage('graphs', 'renderTileSet');
 		    _this.game.map.setCollision([2, 10]);
 		    
 		    _this.game.layerTiles = _this.game.map.createLayer('Tiles');
 		    _this.game.layerObject = _this.game.map.createLayer('Objects');
 		    _this.game.layerLinks = _this.game.map.createLayer('Links');
+		    _this.game.layerRender = _this.game.map.createLayer('Render');
+		    _this.game.layerRenderBis = _this.game.map.createLayer('RenderBis');
 
 		    //_this.game.map.setCollision(2, true, _this.game.layerObject);
-
 		    _this.game.layerTiles.debug = true;
-
+			_this.game.mapCases = {};
 		    _this.game.mapCases = new Map(_this.game.map,12,16);
 		    _this.game.mapCases.init();
 		    //_this.game.layerObject.debug = true;
