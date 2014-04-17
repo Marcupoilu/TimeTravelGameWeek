@@ -43,7 +43,7 @@ define(function(require) {
 		addCaseToCurrentProjection: function(proCase){
 			if(this.currentId == -1 || this.projs[this.currentId].full)
 			{
-				this.addProjection(new Projection(proCase));
+				this.addProjection(new Projection(proCase, this.currColor));
 			}
 			else
 			{

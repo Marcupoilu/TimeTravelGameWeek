@@ -39,6 +39,7 @@ define(function(require){
 			//console.log('id color', id);
 			console.log(color, id,  'perso_' + color[id]);
 			this.idColor = id;
+			ProjectionManager.currColor = this.idColor;
 
 			if(!this.created)
 			{
