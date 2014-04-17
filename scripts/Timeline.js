@@ -22,7 +22,7 @@ define(function(require) {
 		}
 
 		this.madeAnAction = function(){
-			console.log("timeline madeAnAction ", this);
+			// console.log("timeline madeAnAction ", this);
 			if(this.max == -1)
 			{
 				this.sprites.push(Game.add.sprite(this.futureX, this.y, 'timelineOn'));
@@ -56,6 +56,14 @@ define(function(require) {
 					this.sprites[i].loadTexture("timelineOff");
 				}
 			}
+		};
+
+		this.clear = function(){
+			for(var i = 0; i < this.sprites.length; ++i)
+			{
+				this.sprites[i].destroy();
+			}
+			this.sprites.splice(0, this.sprites.length);
 		};
 	};
 

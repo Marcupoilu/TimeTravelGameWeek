@@ -41,6 +41,7 @@ define(function(require){
 			this.idColor = id;
 			ProjectionManager.currColor = this.idColor;
 
+
 			if(!this.created)
 			{
 				this.sprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64 - 64, 'perso_' + color[this.idColor]);
@@ -95,7 +96,6 @@ define(function(require){
 		    ExitManager.exitObjects[0].Deactivate();
 		    ProjectionManager.addCaseToCurrentProjection(this.currCase);
 		    ProjectionManager.moveAllProj();
-		    // DoorManager.closeAll();
 		    SwitchManager.deactivateAll();
 		},
 

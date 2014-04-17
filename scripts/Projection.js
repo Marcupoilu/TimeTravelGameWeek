@@ -22,7 +22,6 @@ define(function(require) {
 		this.active = false;
 		this.currCase = _(this.trajet[0]).clone();
 		this.idColor = idColor;
-		console.log('toto', idColor);
 
 		this.preload = function()
 		{
