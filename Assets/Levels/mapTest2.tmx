@@ -30,6 +30,11 @@
    eJxjYKANEKKRuaOANDAaD/gBAEcQACU=
   </data>
  </layer>
+ <layer name="blocs" width="16" height="12">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2DkAgADAAAB
+  </data>
+ </layer>
  <layer name="Render" width="16" height="12">
   <data encoding="base64" compression="zlib">
    eJxjYBgFo2DkAgADAAAB

@@ -12,11 +12,11 @@
   <image source="../links.png" width="640" height="64"/>
  </tileset>
  <tileset firstgid="28" name="graphs" tilewidth="64" tileheight="64">
-  <image source="../../images/spritesheetwall.png" width="1024" height="64"/>
+  <image source="../renderTileSet.png" width="896" height="64"/>
  </tileset>
  <layer name="Tiles" width="16" height="12" opacity="0.9">
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYKIQM5KJh5p+Sv2PrnYg3D+Q/qdV/FGCAYAPAP8=
+   eJxjYmBgYKIQM5KJh5p+Bgr9j00tJe4nVT+l9g/H+AcAdr8A7A==
   </data>
  </layer>
  <layer name="Objects" width="16" height="12">
@@ -24,7 +24,7 @@
    <property name="" value=""/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYKAu4ARiQSziLBSYSUgvK5TmRcI8aGwY4MBjDjcSmwcHGx+gRD8zVD8I80ExMhsEuJDUs2MxA9kebhxsfIBS/bDwhvkDmQ8D+MIfBlixiGFLU9QAANbmAfM=
+   eJxjYKAu4ARiQSziLBSYSUgvK5TmRcI8aGwY4MBjDjcSmwcHGx+ghn4Q5oNiZDYIcCGpZceiH9kebhxsfIBS/bDwhvkDmQ8D+MIfBlixiGFLU9QAANJ+AfA=
   </data>
  </layer>
  <layer name="Links" width="16" height="12">
@@ -34,12 +34,17 @@
  </layer>
  <layer name="blocs" width="16" height="12">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2DkAgADAAAB
+   eJxjYBgFgwEwD7QDRigAAAdoAAQ=
   </data>
  </layer>
  <layer name="Render" width="16" height="12">
   <data encoding="base64" compression="zlib">
-   eJxTZWBg0MCDtYFYHQsGyakBsSID+UBpiOlHD4Oh5n5K9aswDD7/o7uJFKwMxAD8XAi2
+   eJxTZ2BgkAViOSCWJxGrAbEmA/lAY4jpVwdiBSSsQqJ+bGopcT+p+qlt/3CIfwBNjQXT
+  </data>
+ </layer>
+ <layer name="RenderBis" width="16" height="12">
+  <data encoding="base64" compression="zlib">
+   eJzTYGBgkIdiUoEmEGuQoW+o6gepBYWTDBDLArEKGfqJESMF0NN+VSCWY0Ckl6EWf9j0AwCJHQTc
   </data>
  </layer>
 </map>
