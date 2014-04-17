@@ -15,6 +15,12 @@ define(function(require) {
 			var doorToActivate = _.findWhere(DoorManager.doorsObject, {id:this.id});
 			doorToActivate.Open();
 		};
+
+		this.deactivate = function(){
+			this.activated = false;
+			var doorToActivate = _.findWhere(DoorManager.doorsObject, {id:this.id});
+			doorToActivate.Close();
+		};
 	};
 
 	return Switch;

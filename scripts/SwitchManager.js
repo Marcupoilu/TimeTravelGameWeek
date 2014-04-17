@@ -41,6 +41,14 @@ define(function(require) {
 		    var boundsB = spriteB.getBounds();
 
 		    return Phaser.Rectangle.intersects(boundsA, boundsB);
+		},
+
+		deactivateAll: function()
+		{
+			for(var i = 0; i < this.switchObjects.length; ++i)
+			{
+				this.switchObjects[i].deactivate();
+			}
 		}
 	}
 

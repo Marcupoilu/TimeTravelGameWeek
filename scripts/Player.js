@@ -67,6 +67,8 @@ define(function(require){
 		    ExitManager.exitObjects[0].Deactivate();
 		    ProjectionManager.addCaseToCurrentProjection(this.currCase);
 		    ProjectionManager.moveAllProj();
+		    // DoorManager.closeAll();
+		    SwitchManager.deactivateAll();
 		},
 
 		initInputs: function(){

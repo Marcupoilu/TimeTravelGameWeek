@@ -27,15 +27,22 @@ define(function(require) {
 		},
 
 		update: function(){
-			var _this = this;
-			_.each(this.doorsObject, function(door){
-				// Game.debug.body(door.sprite);
-		    	// if(Game.physics.arcade.collide(Player.sprite, door.sprite))
-		    	// 	console.log("de")
-		    						// if(_this.checkOverlap(door.sprite, Player.sprite)){
-					// 	console.log("overlapDoor")
-					// }		
-			});
+			// var _this = this;
+			// _.each(this.doorsObject, function(door){
+			// 	// Game.debug.body(door.sprite);
+		 //    	// if(Game.physics.arcade.collide(Player.sprite, door.sprite))
+		 //    	// 	console.log("de")
+		 //    						// if(_this.checkOverlap(door.sprite, Player.sprite)){
+			// 		// 	console.log("overlapDoor")
+			// 		// }		
+			// });
+		},
+
+		closeAll: function(){
+			for(var i = 0; i < this.doorsObject.length; ++i)
+			{
+				this.doorsObject[i].Close();
+			}
 		}
 	}
 
