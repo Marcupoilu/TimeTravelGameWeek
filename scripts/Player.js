@@ -48,6 +48,7 @@ define(function(require){
 				this.sprite.animations.add('right', [4, 5, 6, 7]);
 				this.sprite.animations.add('left', [8, 9, 10, 11]);
 	        	Game.sprites.push(this.sprite);
+
 				this.created = true;
 				//sprite.animations.add('walk');
 			    //sprite.animations.play('walk', 50, true);
@@ -70,6 +71,11 @@ define(function(require){
 		    Game.gameState = 'play';
 		    this.resetManagers();
 		    this.isReady = true;
+		},
+
+		destroy: function(){
+			this.created = false;
+			this.sprite.destroy();
 		},
 
 		disappear: function(){

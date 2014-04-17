@@ -54,6 +54,7 @@ define(function(require) {
 			// console.log("moveToNext this.currID = " + this.currId + ", this.trajet = ", this.trajet.length - 1);
 			this.finish = (this.currId >= this.trajet.length - 1);
 			// console.log(this.finish);
+			return !this.finish;
 		};
 
 		this.resetVelocity = function(){
@@ -69,6 +70,12 @@ define(function(require) {
 			
 			this.sprite.body.x = this.currCase.x * 64;
 			this.sprite.body.y = this.currCase.y * 64;
+		};
+
+		this.clear = function(){
+			this.reset();
+			this.trajet.splice(0, this.trajet.length);
+			this.trajet = [this.currCase];
 		};
 
 		this.moveToCase = function(idX, idY, target){
