@@ -17,7 +17,7 @@ define(function(require) {
 			this.sprite = Game.add.sprite(Game.world.centerX/2,0, 'win');
   			this.buttonMainMenu = Game.add.button(50, 450, 'button', this.onClickMainMenu, this);
     		this.buttonNextLevel = Game.add.button(550, 450, 'button', this.onClickNextLevel, this);
-		  	this.t = Game.add.text(Game.world.centerX/2 + 180, 280, this.labelWin, this.style);
+		  	this.t = Game.add.text(Game.world.centerX/2 + 170, 240, this.labelWin, this.style);
 		  	this.tMainMenu = Game.add.text(Game.world.centerX/2 - 80, 490, this.labelMainMenu, this.style);
 		  	this.tNextLevel = Game.add.text(Game.world.centerX/2 + 420, 490, this.labelNextLevel, this.style);
 
