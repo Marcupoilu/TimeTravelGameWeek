@@ -1,10 +1,24 @@
 define(function(require) {
 	var Teleporteur = require("./Teleporteur");
 	var Case = require("./Case");
+	
+	var colors = [
+		"blue",
+		"green",
+		"orange",
+		"purple"
+	];
 
 	var TeleporteurManager = {
 		preload: function(){
-			Game.load.image('teleport', './images/TP_green.png');
+			for(var i = 0; i < colors.length; ++i)
+			{
+				Game.load.image('teleport_'+colors[i], './images/GA/Blocs/TP_'+colors[i]+'.png');
+			}
+			// Game.load.image('teleport_blue', './images/GA/Blocs/TP_blue.png');
+			// Game.load.image('teleport_green', './images/GA/Blocs/TP_green.png');
+			// Game.load.image('teleport_orange', './images/GA/Blocs/TP_orange.png');
+			// Game.load.image('teleport_purple', './images/GA/Blocs/TP_purple.png');
 		},
 
 		create : function(map){
@@ -12,7 +26,6 @@ define(function(require) {
 			this.tpTiles = [];
 			this.teleporteurs = [];
 			var objectsLayer = map.layer2;
-			//var objectsLink = 
 			this.tpTemp = null;
 
 			_.each(objectsLayer, function(obj){
@@ -22,14 +35,13 @@ define(function(require) {
 				});
 			});
 
-			_.each(this.tpTiles, function(tp){
-				var idLink = Game.map.layers[2].data[tp.y][tp.x].index;
-				_this.teleporteurs.push(new Teleporteur(idLink, tp.x, tp.y));
+			_.each(this.tpTiles, function(tpT){
+				var idLink = Game.map.layers[2].data[tpT.y][tpT.x].index;
+				_this.teleporteurs.push(new Teleporteur(idLink, tpT.x, tpT.y));
 			});
 
 			this.linkTeleporteurs();
 
-			// console.log("this.teleporteurs = ", this.teleporteurs);
 		},
 
 		update: function(){
@@ -46,13 +58,51 @@ define(function(require) {
 
 		linkTeleporteurs: function(){
 			var _this = this;
-			_.each(this.teleporteurs, function(tp){
+			var idColor = 0;
+
+			/*_.each(this.teleporteurs, function(tp){
 				var _tp = tp;
+				tp.changeTexture(colors[idColor]);
 				_.each(_.where(_this.teleporteurs, {idLink: _tp.idLink}), function(link){
+					console.log("each where linkTeleporteurs _tp = ", _tp, ", link = ", link);
 					if(link.x != _tp.x || link.y != _tp.y)
-						_tp.target = new Case(link.x, link.y);
+					{
+						_tp.target = new Case(_(link).clone().x, _(link).clone().y);
+						// link.changeTexture(colors[idColor]);
+					}
 				});
-			});
+				idColor ++;
+				if(idColor >= colors.length)
+					idColor = 0;
+			});*/
+			var _tp, link,
+				_nb = this.teleporteurs.length,
+				_tps = _(this.teleporteurs).clone(),
+				_tps2 = _(this.teleporteurs).clone();
+
+			for(var i = 0; i < _nb; ++i)
+			{
+				_tp = _tps2[i];
+				_tp.changeTexture(colors[idColor]);
+				for(var j = 0; j < _nb; ++j)
+				{
+					link = _tps[j];
+					if(link.linkId == _tp.linkId)
+					{
+						// console.log("_link = ", link.idLink, ", _tp = ", _tp.idLink);
+						if(link.x != _tp.x || link.y != _tp.y)
+						{
+							_tp.target = new Case(link.x, link.y);
+							link.changeTexture(colors[idColor]);
+						}
+					}
+				}
+				link = null;
+				idColor++;
+				if(idColor >= colors.length)
+					idColor = 0;
+			}
+
 		}
 	}
 

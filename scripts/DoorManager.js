@@ -22,7 +22,6 @@ define(function(require) {
 					if(obj.type.split("_")[0] == "door")
 						_this.doorsTile.push(obj);
 				});
-				console.log("objectLayer.type = ", objectLayer);
 				// if(objectLayer.type.split("_")[0] == "door")
 				// 	_this.doorsTile.push(door);
 			});
