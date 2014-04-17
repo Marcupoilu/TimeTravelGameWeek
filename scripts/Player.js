@@ -116,12 +116,13 @@ define(function(require){
 			var _target = target;
 			this.sprite.animations.play('');
 			this.canMove = false;
-		    this.tween = Game.add.tween(this.sprite.body).to(target, 500, Phaser.Easing.Linear.None, true);
+		    this.tween = Game.add.tween(this.sprite.body).to(target, 300, Phaser.Easing.Linear.None, true);
 		    this.tween.onUpdateCallback(function(){
 		    	if(Game.physics.arcade.collide(_this.sprite, Game.layerTiles)){
 		    		_this.tween.stop();
 		    		_this.resetVelocity();
 		    		_this.canMove = true;
+		    		_this.sprite.animations.stop();
 				}
 		    });
 		    this.tween.onComplete.add(function(){
@@ -145,19 +146,19 @@ define(function(require){
 				if (this.cursors.up.isDown) {
 			    	// target.y -= 64; // this.setTarget(target); // this.sprite.body.velocity.y = -1;
 			    	this.moveToCase(this.currCase.x, this.currCase.y - 1, target);
-			    	this.sprite.animations.play('up', 4, true);
+			    	this.sprite.animations.play('up', 7, true);
 			    } else if (this.cursors.down.isDown) {
 			    	// target.y += 64; // this.setTarget(target); // this.sprite.body.velocity.y = 1;
 			    	this.moveToCase(this.currCase.x, this.currCase.y + 1, target);
-			    	this.sprite.animations.play('down', 4, true);
+			    	this.sprite.animations.play('down', 7, true);
 			    } else if (this.cursors.left.isDown) {
 			    	// target.x -= 64; // this.setTarget(target); // this.sprite.body.velocity.x = -1;
 			    	this.moveToCase(this.currCase.x - 1, this.currCase.y, target);
-			    	this.sprite.animations.play('left', 8, true);
+			    	this.sprite.animations.play('left', 14, true);
 			    } else if (this.cursors.right.isDown) {
 			    	// target.x += 64; // this.setTarget(target); // this.sprite.body.velocity.x = 1;
 			    	this.moveToCase(this.currCase.x + 1, this.currCase.y, target);
-			    	this.sprite.animations.play('right', 8, true);
+			    	this.sprite.animations.play('right', 14, true);
 			    }
 			}
 

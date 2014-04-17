@@ -31,6 +31,10 @@ define(function(require) {
 		this.create = function(){
 			// this.depart = depart || new Case(1,1);
 			this.sprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64 - 64, 'perso_' + color[this.idColor]);
+			this.sprite.animations.add('up', [0, 1]);
+			this.sprite.animations.add('down', [2, 3]);
+			this.sprite.animations.add('right', [4, 5, 6, 7]);
+			this.sprite.animations.add('left', [8, 9, 10, 11]);
         	Game.sprites.push(this.sprite);
 			Game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 			this.sprite.alpha = 0;
@@ -194,15 +198,24 @@ define(function(require) {
 		this.setTarget = function(target, onComplete){
 			// console.log("setTarget target = ", target, ", onComplete = ", onComplete);
 			var _this = this;
-			var lastPos = {
-				x: this.sprite.body.x,
-				y: this.sprite.body.y
+			var velocity = this.sprite.body.velocity;
+
+			if(velocity.y < 0){
+				this.sprite.animations.play('up', 7, true);
+			} else if(velocity.y > 0){
+				this.sprite.animations.play('down', 7, true);
+			} else if(velocity.x < 0){
+				this.sprite.animations.play('left', 14, true);
+			} else if(velocity.x > 0){
+				this.sprite.animations.play('right', 14, true);
 			}
+
 			this.canMove = false;
-		    this.tween = Game.add.tween(this.sprite.body).to(target, 200, Phaser.Easing.Linear.None, true);
+		    this.tween = Game.add.tween(this.sprite.body).to(target, 300, Phaser.Easing.Linear.None, true);
 		    this.tween.onComplete.add(function(){
 		    	this.resetVelocity();
 		    	//lookUtils.checkLook(this.currCase);
+		    	this.sprite.animations.stop();
 		    	if(onComplete) onComplete.apply();
 		    }, this);
 		};		
