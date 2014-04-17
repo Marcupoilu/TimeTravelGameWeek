@@ -1,7 +1,8 @@
 define(function(require) 
 {
-    var Case = require("./Case");
-    var DoorManager = require("./DoorManager");
+    var Case = require("./Case"),
+        TPManager = require("./TeleporteurManager"),
+        DoorManager = require("./DoorManager");
 
     var Bloc = function Bloc(x, y, parent)
     {
@@ -112,6 +113,32 @@ define(function(require)
             var future = Game.mapCases.layer2[idY][idX];
             var futureBloc = Game.mapCases.layer3[idY][idX];
             //Game.mapCases.layer2[idX][idY] = new Case(idX,idY,"bloc");
+
+            if(future.type == "teleport")
+            {
+                
+                //this.setTarget(target, function(){
+                var tp = _.findWhere(TPManager.teleporteurs, {x: future.x, y: future.y});
+                if(tp){
+                    target.x = tp.target.x + velocity.x;
+                    target.y = tp.target.y + velocity.y;
+
+                    this.sprite.body.x = tp.target.x * 64;
+                    this.sprite.body.y = tp.target.y * 64;
+
+                    this.caseX = tp.target.x;
+                    this.caseY = tp.target.y;
+
+                    idX = tp.target.x + velocity.x;
+                    idY = tp.target.y + velocity.y;
+
+                    future = Game.mapCases.layer2[idY][idX];
+                    futureBloc = Game.mapCases.layer3[idY][idX];
+                }
+                //});
+                //return;
+            }
+
             var move = false;
             if(future.type == "door")
             {
@@ -131,9 +158,10 @@ define(function(require)
                 return move;
             }
 
-            if(future.type == "vortex"){
-                move = true;
-                return move;
+            if(future.type == 'vortex' ||
+               future.type == 'pod' ||
+               future.type == 'switch'){
+                return true;
             }
 
             if(futureBloc.type == "bloc")
