@@ -12,7 +12,8 @@ define(function(require) {
 	    ConsoleManager = require("./ConsoleManager"),
 	    ExitManager = require("./ExitManager"),
 	    WinMenu = require("./WinMenu"),
-	    GameOverMenu = require("./GameOverMenu");
+	    GameOverMenu = require("./GameOverMenu"),
+	    MainMenu = require('./mainMenu');
 
 	var lookUtil = require('./playersLookUtil');
 
@@ -52,6 +53,7 @@ define(function(require) {
   			TeleporteurManager.preload();
     		Player.preload();
     		ProjectionManager.preload();
+    		MainMenu.preload();
 		},
 
 		create: function(){
@@ -60,7 +62,7 @@ define(function(require) {
 			//	Enable p2 physics
 			this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
-			this.game.stage.backgroundColor = '#787878';
+			/*this.game.stage.backgroundColor = '#787878';
 
 		    this.game.map = this.game.add.tilemap('level1');
 		    this.game.map.addTilesetImage('typeOfCase', 'tiles');
@@ -91,11 +93,11 @@ define(function(require) {
 			TeleporteurManager.create(this.game.mapCases);
 		    ConsoleManager.create(this.game.mapCases);
 			ProjectionManager.create();
-			ExitManager.create(this.game.mapCases);
+			ExitManager.create(this.game.mapCases);*/
 		    // Faire ça au click sur un pod
 		    //Player.create();
 
-		    this.game.gameState = 'readyToPlay';
+		    MainMenu.create();
 		},
 
 		update: function(){
@@ -121,17 +123,19 @@ define(function(require) {
 		}
 	}), new function(){
 		this.loadLevel = function(int){
-			Player.resetManagers();
-			Player.destroy();
-			_.each(_this.game.sprites, function(sprite){
-				sprite.destroy();
-			});
-			_this.game.layerTiles.destroy();
-			_this.game.layerObject.destroy();
-			_this.game.layerLinks.destroy();
-			_this.game.layerRender.destroy();
-			_this.game.layerRenderBis.destroy();
-			_this.game.map.destroy();
+			if(_this.allCreate){
+				Player.resetManagers();
+				Player.destroy();
+				_.each(_this.game.sprites, function(sprite){
+					sprite.destroy();
+				});
+				_this.game.layerTiles.destroy();
+				_this.game.layerObject.destroy();
+				_this.game.layerLinks.destroy();
+				_this.game.layerRender.destroy();
+				_this.game.layerRenderBis.destroy();
+				_this.game.map.destroy();
+			}
 
 			//	Enable p2 physics
 			_this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -171,6 +175,7 @@ define(function(require) {
 		    //Player.create();
 
 		    _this.game.gameState = 'readyToPlay';
+		    _this.allCreate = true;
 		};
 
 		this.GameOver = function(){

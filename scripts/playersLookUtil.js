@@ -35,9 +35,10 @@ define(function(require) {
 			look = _.sortBy(look, function(currCase){
 				return currCase[lookAxe]*direction[lookAxe];
 			});
+
 			var finalLook = [];
 			for(var i = 0; i < look.length; i++){
-				if(look[i].type != 'wall'){
+				if(look[i].type != 'wall' && Game.mapCases.layer3[look[i].y][look[i].x].type != 'bloc'){
 					finalLook.push(look[i]);
 				} else {
 					break;

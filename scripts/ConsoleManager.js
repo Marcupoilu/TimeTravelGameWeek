@@ -33,9 +33,11 @@ define(function(require) {
 		resetAll: function()
 		{
 			this.consolesON = 0;
-			for(var i = 0; i < this.consoleObjects.length; ++i)
-			{
-				this.consoleObjects[i].Deactivate();
+			if(this.consoleObjects){
+				for(var i = 0; i < this.consoleObjects.length; ++i)
+				{
+					this.consoleObjects[i].Deactivate();
+				}
 			}
 		},
 
