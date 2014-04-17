@@ -73,7 +73,7 @@ define(function(require)
         {
             var _this = this;
             this.canMove = false;
-            this.tween = Game.add.tween(this.sprite.body).to(target, 400, Phaser.Easing.Linear.None, true);
+            this.tween = Game.add.tween(this.sprite.body).to(target, 300, Phaser.Easing.Linear.None, true);
             this.tween.onUpdateCallback(function()
             {
                if(Game.physics.arcade.collide(_this.sprite, Game.layerTiles))
