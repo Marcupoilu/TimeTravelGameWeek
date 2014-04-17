@@ -55,7 +55,7 @@ define(function(require)
             this.sprite.body.velocity.y = 0;
         }
 
-        this.setTarget = function(target)
+        this.setTarget = function(target, optionCallBack)
         {
             var _this = this;
             this.canMove = false;
@@ -71,9 +71,19 @@ define(function(require)
             });
             this.tween.onComplete.add(function()
             {
+                if(optionCallBack){
+                    optionCallBack();
+                }
+                if(Game.mapCases.layer2[this.caseY][this.caseX].type == "vortex"){
+                    this.hide();
+                }
                 this.resetVelocity();
                 this.canMove = true;
             }, this);
+        }
+
+        this.hide = function(){
+            this.sprite.visible = false;
         }
 
         this.setNewPosition = function(target){
@@ -109,6 +119,10 @@ define(function(require)
                 return move;
             }
 
+            if(future.type == "vortex"){
+                move = true;
+                return move;
+            }
 
             if(futureBloc.type == "bloc")
             {
@@ -149,11 +163,17 @@ define(function(require)
                 nextCase = Game.mapCases.layer1[this.caseY][this.caseX-1];
             } else if (currCase.type == 'direction_up'){
                 nextCase = Game.mapCases.layer1[this.caseY-1][this.caseX];
-            } else if (currCase.type == 'ice') {
+            } else if (currCase.type == 'ice' && this.iceVelocity) {
                 nextCase = Game.mapCases.layer1[this.caseY + this.iceVelocity.y][this.caseX + this.iceVelocity.x];
+            } else {
+                this.iceVelocity = undefined;
             }
 
             if(nextCase && nextCase.type != 'wall'){
+
+                if(nextCase.type == "vortex"){
+                    this.sprite.visible = false;
+                }
                 //console.log('auto moveDirection');
                 this.setTarget({
                     x: nextCase.x*64,

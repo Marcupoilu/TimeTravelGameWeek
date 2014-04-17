@@ -41,7 +41,6 @@ define(function(require) {
 
         moveBlocs: function(){
             _.each(this.blocsTable, function(bloc){
-
                 bloc.autoMove();
             });
         }
