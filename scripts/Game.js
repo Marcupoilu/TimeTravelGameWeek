@@ -70,6 +70,7 @@ define(function(require) {
 		    
 		    this.game.layerTiles = this.game.map.createLayer('Tiles');
 			this.backgroundSprite = Game.add.sprite(0, 0, 'background');
+			this.game.sprites.push(this.backgroundSprite);
 		    this.game.layerObject = this.game.map.createLayer('Objects');
 		    this.game.layerLinks = this.game.map.createLayer('Links');
 		    this.game.layerRender = _this.game.map.createLayer('Render');
@@ -144,6 +145,8 @@ define(function(require) {
 		    _this.game.map.setCollision([2, 10]);
 		    
 		    _this.game.layerTiles = _this.game.map.createLayer('Tiles');
+			_this.backgroundSprite = Game.add.sprite(0, 0, 'background');
+			_this.game.sprites.push(_this.backgroundSprite);
 		    _this.game.layerObject = _this.game.map.createLayer('Objects');
 		    _this.game.layerLinks = _this.game.map.createLayer('Links');
 		    _this.game.layerRender = _this.game.map.createLayer('Render');
