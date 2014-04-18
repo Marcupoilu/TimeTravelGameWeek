@@ -6,7 +6,7 @@ define(function(require) {
 			Game.load.image('mainMenu', '../images/MainMenu.png');	
 			Game.load.image('button' , '../images/button.png');
 
-		    this.style = { font: "30px Arial", fill: "#fff", 'text-align': 'center', width: '100px'};
+		    this.style = { font: "30px Terminal", fill: "#fff", 'text-align': 'center', width: '100px'};
 
 			this.destroyArray = [];
 		},
@@ -30,7 +30,6 @@ define(function(require) {
 
 		onClickPlay: function(){
 			Game.loadLevel(0);
-
 		},
 
 		onClickcredit: function(){
