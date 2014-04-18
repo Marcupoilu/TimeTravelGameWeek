@@ -13,7 +13,8 @@ define(function(require) {
 	    ExitManager = require("./ExitManager"),
 	    WinMenu = require("./WinMenu"),
 	    GameOverMenu = require("./GameOverMenu"),
-	    MainMenu = require('./mainMenu');
+	    MainMenu = require('./mainMenu'),
+	    CreditsMenu = require("./CreditsMenu")
 
 	var lookUtil = require('./playersLookUtil');
 
@@ -61,6 +62,7 @@ define(function(require) {
     		Player.preload();
     		ProjectionManager.preload();
     		MainMenu.preload();
+    		CreditsMenu.preload();
 		},
 
 		create: function(){

@@ -1,6 +1,6 @@
 define(function(require) {
 	var Player = require("./Player");
-
+	var Credits = require("./CreditsMenu")
 	var mainMenu = {
 		preload: function(){
 			Game.load.image('mainMenu', '../images/MainMenu.png');	
@@ -29,11 +29,11 @@ define(function(require) {
 		},
 
 		onClickPlay: function(){
-			Game.loadLevel(5);
+			Game.loadLevel(0);
 		},
 
 		onClickCredit: function(){
-			console.log('Welcome in the Tardis');
+			Credits.create();
 		},
 
 		onDestroy: function(){

@@ -16,7 +16,7 @@ define(function(require)
             x: parent.lineNb,
             y: parent.columnNb
         }
-        this.sprite = Game.add.sprite(this.x + 32, this.y + 64, 'bloc');
+        this.sprite = Game.add.sprite(this.x, this.y, 'bloc');
         Game.sprites.push(this.sprite);
         //add the physics
         Game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
@@ -24,7 +24,7 @@ define(function(require)
         this.sprite.body.bounce.x = 0;
         this.sprite.body.velocity = 0;
         this.sprite.body.setSize(64,64);
-        this.sprite.anchor.setTo(0.5, 1);
+        //this.sprite.anchor.setTo(0.5, 1);
         this.canMove = true;
         
         this.moveDirection = function(velocity) {
@@ -65,6 +65,8 @@ define(function(require)
         this.resetToInitPos = function(){
             this.sprite.body.x = this.initPos.x * 64;
             this.sprite.body.y = this.initPos.y * 64;
+            this.sprite.x = this.sprite.body.x;
+            this.sprite.y = this.sprite.body.y;
             this.sprite.visible = true;
             this.setNewPosition(this.initPos);
         };
@@ -107,7 +109,7 @@ define(function(require)
             Game.mapCases.layer3[this.caseY][this.caseX] = new Case(this.caseX, this.caseY, "bloc");
             this.x = target.x*64;
             this.y = target.y*64;
-        };
+        }
 
         this.moveToCase = function(idX, idY, target, velocity)
         {
