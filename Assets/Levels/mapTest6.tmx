@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
 <map version="1.0" orientation="orthogonal" width="16" height="12" tilewidth="64" tileheight="64">
  <tileset firstgid="1" name="typeOfCase" tilewidth="64" tileheight="64">
-  <image source="../typeOfCase.png" width="1088" height="64"/>
+  <image source="../typeOfCase.png" width="1152" height="64"/>
   <tile id="9">
    <properties>
     <property name="id" value="&quot;porte_1&quot;"/>
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="18" name="links" tilewidth="64" tileheight="64">
+ <tileset firstgid="19" name="links" tilewidth="64" tileheight="64">
   <image source="../links.png" width="640" height="64"/>
+ </tileset>
+ <tileset firstgid="29" name="graphs" tilewidth="64" tileheight="64">
+  <image source="../../pixel/walls_64.png" width="832" height="192"/>
  </tileset>
  <layer name="Tiles" width="16" height="12" opacity="0.9">
   <data encoding="base64" compression="zlib">
@@ -27,7 +29,7 @@
  </layer>
  <layer name="Links" width="16" height="12">
   <data encoding="base64" compression="zlib">
-   eJxjYBg8QARKC0FpYSgthqRGmAE7kCDBHklSHEVnAAsDUSQxmP/FaWgvzD584QiLF2Lcgez+wRzeADVKAW4=
+   eJxjYBg8QBRKC0NpESgtjqRGhAE7kCTBHilSHEVnAAsDMSQxmP8laGgvzD584QiLF2Lcgez+wRzeAE/SAX8=
   </data>
  </layer>
  <layer name="blocs" width="16" height="12">
@@ -37,7 +39,7 @@
  </layer>
  <layer name="Render" width="16" height="12">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2DkAgADAAAB
+   eJyNklkKgDAMRHMRd/1xoeKu9z+YES0MQ6wWHm2zNROai0gMjHQP+Qolk3tFDx2cGfRdK33y0dZBPd7RF1E+xny9L5A/Ky2wKbvSEIeyUuxi6L+oP7S/6ff2mmryXFA/998H3h9e+udZr4b+jWJ4/ogz+ndGnM9nXfxPQvMrlYSYftoq5QTAzhcl
   </data>
  </layer>
 </map>
