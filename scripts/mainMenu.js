@@ -32,7 +32,7 @@ define(function(require) {
 			Game.loadLevel(0);
 		},
 
-		onClickcredit: function(){
+		onClickCredit: function(){
 			console.log('Welcome in the Tardis');
 		},
 
