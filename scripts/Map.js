@@ -54,11 +54,12 @@ define(function(require) {
                 for(var x = 0; x < this.columnNumber; ++x)
                 {
                     tile = map.layers[1].data[y][x];
-                    if(tile && tile.index != 0)
+                    if(tile && tile.index != 0){
                         this.layer2[y][x] = new Case(tile.x, tile.y, typeCase[tile.index]);
-                    if (tile.index == 16){
-                        var sprite = Game.add.sprite(this.layer2[y]*64, this.layer2[x]*64, 'ice');
-                        Game.sprites.push(sprite);
+                        if (tile.index == 16){
+                            var sprite = Game.add.sprite(tile.x*64, tile.y*64, 'ice');
+                            Game.sprites.push(sprite);
+                        }
                     }
                     else
                         this.layer2[y][x] = new Case(x, y, "");
