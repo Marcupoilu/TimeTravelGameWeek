@@ -23,7 +23,7 @@ define(function(require) {
 		  	this.tMainMenu = Game.add.text(Game.world.centerX/2 - 80, 490, this.labelMainMenu, this.style);
 		  	this.tNextLevel = Game.add.text(Game.world.centerX/2 + 420, 490, this.labelNextLevel, this.style);
 
-		 	Game.sprites.push(this.sprite, this.buttonNextLevel, this.buttonMainMenu, this.t, this.tMainMenu, this.tNextLevel)
+		 	Game.sprites.push(this.sprite, this.buttonNextLevel, this.buttonMainMenu, this.t, this.tMainMenu, this.tNextLevel, this.bgSprite);
 		},
 
 		update: function(){
