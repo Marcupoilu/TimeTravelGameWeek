@@ -35,6 +35,7 @@ define(function(require) {
 			});
     		//  Next we load the tileset. This.game is just an image, loaded in via the normal way we load images:
 
+    		this.game.load.image('exclamation', '../images/exclamation.png');
     		this.game.load.image('tiles', 'Assets/typeOfCase.png');
     		this.game.load.image('linksImg', 'Assets/links.png');
        		this.game.load.image('renderTileSet', 'Assets/renderTileSet.png');
@@ -215,6 +216,8 @@ define(function(require) {
 					//console.log(proj);
 					if(proj.active){
 						if(lookCase.x == proj.currCase.x && lookCase.y == proj.currCase.y){
+							_this.game.sprites.push(_this.game.add.sprite(lookCase.x*64, (lookCase.y - 1)*64, 'exclamation'),
+								_this.game.add.sprite(Player.currCase.x*64, (Player.currCase.y-1)*64, 'exclamation'));
 							console.log('player see projection', lookCase);
 							//break;
 						}
@@ -227,6 +230,7 @@ define(function(require) {
 					projLook = lookUtil.getLook(proj.currCase, proj.lookDirection);
 					if(lookUtil.checkLook(projLook, _.reject(ProjectionManager.projs, proj)) || 
 						lookUtil.checkLook(projLook, [Player])){
+						_this.game.sprites.push(_this.game.add.sprite(proj.currCase.x*64, (proj.currCase.y - 1)*64, 'exclamation'));
 						console.log('proj see something');
 					}
 				}
