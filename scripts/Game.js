@@ -41,7 +41,7 @@ define(function(require) {
     		this.game.load.image('timelineOff', '../images/ui/time_off.png');
        		this.game.load.image('background', '../images/ground.png');
         	this.game.load.image('ice', '../images/ice.png');
-			this.game.load.spritesheet('vortex', '../images/vortex.png', 64, 128, 1);
+			this.game.load.spritesheet('vortex', '../images/vortex.png', 64, 64, 4);
 
     		podsManager.preload();
     		DoorManager.preload();
@@ -109,6 +109,7 @@ define(function(require) {
 				SwitchManager.update();
 				ConsoleManager.update();
 				blocsManager.update();
+				// this.game.mapCases.update();
 				if(Player.created){
 					Player.update();
 				}

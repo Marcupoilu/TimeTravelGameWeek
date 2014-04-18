@@ -27,6 +27,8 @@ define(function(require) {
     var Map = function Map(map,line,column)
     {
         this.map = map;
+        this.map.vortexes = [];
+        this.map.pushUps = [];
         this.lineNumber = line || 12;
         this.columnNumber = column || 16;
         this.layer1 = [this.lineNumber];
@@ -60,6 +62,12 @@ define(function(require) {
                             var sprite = Game.add.sprite(tile.x*64, tile.y*64, 'ice');
                             Game.sprites.push(sprite);
                         }
+                        if (tile.index == 4){
+                            var spritesheetVort = Game.add.sprite(tile.x * 64, tile.y * 64, "vortex");
+                            spritesheetVort.animations.add('idle', [0, 1, 2, 3]);
+                            spritesheetVort.animations.play("idle",3, true);
+                            this.map.vortexes.push(spritesheetVort);
+                        }
                     }
                     else
                         this.layer2[y][x] = new Case(x, y, "");
@@ -84,6 +92,12 @@ define(function(require) {
             //console.log(this.layer1);
             //console.log(this.layer2);
             //console.log("layer",this.layer3);
+        }
+
+        this.update = function(){
+            for(var i = 0; i < this.map.vortexes.length; i++){
+                spritesheetVort.animations.play("idle");
+            }
         }
     }
 
