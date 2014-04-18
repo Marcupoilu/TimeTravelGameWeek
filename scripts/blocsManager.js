@@ -32,11 +32,11 @@ define(function(require) {
 
         update: function()
         {
-            var _this = this;
+           /* var _this = this;
             _.each(this.blocsTable, function(bloc)
             {
                 Game.debug.body(bloc.sprite);
-            });
+            });*/
         },
 
         moveBlocs: function(){
