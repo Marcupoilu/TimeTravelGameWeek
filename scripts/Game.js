@@ -22,7 +22,7 @@ define(function(require) {
 			console.log('Game Preload');
 			_this = this;
 			this.game.levels = [];
-			this.game.currentLevel = 1;
+			this.game.currentLevel = 0;
 			this.game.sprites = [];
 			this.game.menuSprites = [];
 
@@ -118,6 +118,7 @@ define(function(require) {
 				// this.game.mapCases.update();
 				if(Player.created){
 					Player.update();
+					// this.game.debug.body(Player.sprite);
 				}
 			}
 		},
@@ -140,6 +141,7 @@ define(function(require) {
 					//console.log(sprite);
 					if(sprite){
 						sprite.destroy();
+						delete sprite;
 					}
 				});
 				_this.game.layerTiles.destroy();
@@ -153,6 +155,7 @@ define(function(require) {
 					//console.log(sprite);
 					if(sprite){
 						sprite.destroy();
+						delete sprite;
 					}
 				});
 			}
