@@ -204,8 +204,12 @@ define(function(require) {
 		};
 
 		this.GameOver = function(){
-			GameOverMenu.create();
+			
 			_this.game.gameState = "GameOver";
+
+			setTimeout(function(){
+				GameOverMenu.create();
+			}, 1000);
 		};
 
 		this.Win = function(){
@@ -231,17 +235,21 @@ define(function(require) {
 				});
 			});
 
-			_.each(ProjectionManager.projs, function(proj){
-				if(proj.active){
-					projLook = lookUtil.getLook(proj.currCase, proj.lookDirection);
-					if(lookUtil.checkLook(projLook, _.reject(ProjectionManager.projs, proj)) || 
-						lookUtil.checkLook(projLook, [Player])){
-						_this.game.sprites.push(_this.game.add.sprite(proj.currCase.x*64, (proj.currCase.y - 1)*64, 'exclamation'));
-						_this.game.GameOver();
-						//console.log('proj see something');
+			if(_this.game.gameState != "GameOver"){
+
+				_.each(ProjectionManager.projs, function(proj){
+					if(proj.active){
+						projLook = lookUtil.getLook(proj.currCase, proj.lookDirection);
+						if(lookUtil.checkLook(projLook, _.reject(ProjectionManager.projs, proj)) || 
+							lookUtil.checkLook(projLook, [Player])){
+							_this.game.sprites.push(_this.game.add.sprite(proj.currCase.x*64, (proj.currCase.y - 1)*64, 'exclamation'));
+							_this.game.GameOver();
+							//console.log('proj see something');
+						}
 					}
-				}
-			});
+				});
+
+			}
 			//console.log(ProjectionManager);
 		};
 
