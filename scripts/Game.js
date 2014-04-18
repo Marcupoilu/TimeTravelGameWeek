@@ -41,6 +41,10 @@ define(function(require) {
     		this.game.load.image('timelineOff', '../images/ui/time_off.png');
        		this.game.load.image('background', '../images/ground.png');
         	this.game.load.image('ice', '../images/ice.png');
+        	this.game.load.image('push_down', '../images/pushDown.png');
+        	this.game.load.image('push_up', '../images/pushUp.png');
+        	this.game.load.image('push_left', '../images/pushLeft.png');
+        	this.game.load.image('push_right', '../images/pushRight.png');
 			this.game.load.spritesheet('vortex', '../images/vortex.png', 64, 64, 4);
 
     		podsManager.preload();

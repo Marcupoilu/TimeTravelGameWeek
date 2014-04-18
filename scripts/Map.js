@@ -58,7 +58,37 @@ define(function(require) {
                     tile = map.layers[1].data[y][x];
                     if(tile && tile.index != 0){
                         this.layer2[y][x] = new Case(tile.x, tile.y, typeCase[tile.index]);
-                        if (tile.index == 16){
+                        switch(tile.index)
+                        {
+                            case 16:
+                                var sprite = Game.add.sprite(tile.x*64, tile.y*64, 'ice');
+                                Game.sprites.push(sprite);
+                            break;
+                            case 4:
+                                var spritesheetVort = Game.add.sprite(tile.x * 64, tile.y * 64, "vortex");
+                                spritesheetVort.animations.add('idle', [0, 1, 2, 3]);
+                                spritesheetVort.animations.play("idle",3, true);
+                                this.map.vortexes.push(spritesheetVort);
+                            break;
+                            case 11:
+                                var sprite = Game.add.sprite(tile.x*64, tile.y*64, 'push_up');
+                                Game.sprites.push(sprite);
+                            break;
+                            case 12:
+                                var sprite = Game.add.sprite(tile.x*64, tile.y*64, 'push_down');
+                                Game.sprites.push(sprite);
+                            break;
+                            case 13:
+                                var sprite = Game.add.sprite(tile.x*64, tile.y*64, 'push_right');
+                                Game.sprites.push(sprite);
+                            break;
+                            case 14:
+                                var sprite = Game.add.sprite(tile.x*64, tile.y*64, 'push_left');
+                                Game.sprites.push(sprite);
+                            break;
+                            default:
+                        }
+                        /*if (tile.index == 16){
                             var sprite = Game.add.sprite(tile.x*64, tile.y*64, 'ice');
                             Game.sprites.push(sprite);
                         }
@@ -67,7 +97,7 @@ define(function(require) {
                             spritesheetVort.animations.add('idle', [0, 1, 2, 3]);
                             spritesheetVort.animations.play("idle",3, true);
                             this.map.vortexes.push(spritesheetVort);
-                        }
+                        }*/
                     }
                     else
                         this.layer2[y][x] = new Case(x, y, "");

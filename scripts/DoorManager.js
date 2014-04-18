@@ -5,7 +5,7 @@ define(function(require) {
 	var DoorManager = {
 		preload: function(){
 			Game.load.image('door_profil', '../images/GA/walls/door_profil.png');
-			Game.load.image('door_face', '../images/GA/walls/door_front.png');
+			Game.load.image('door_face', '../images/door.png');
 		},
 
 		create : function(map){
