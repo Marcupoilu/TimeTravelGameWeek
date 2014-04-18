@@ -414,6 +414,8 @@ define(function(require){
 				this.nbActions --;
 
 				this.setTarget(target, function(){
+			    	_this.sprite.animations.play('right', 14, true);
+			    	_this.sprite.body.velocity.x = 1;
 					_this.canMove = false;
 					_this.moveToCase(idX+1, idY, target);
 				});
@@ -425,6 +427,8 @@ define(function(require){
 				this.nbActions --;
 
 				this.setTarget(target, function(){
+			    	_this.sprite.body.velocity.y = 1;
+			    	_this.sprite.animations.play('down', 7, true);
 					_this.canMove = false;
 					_this.moveToCase(idX, idY+1, target);
 				});
@@ -436,6 +440,8 @@ define(function(require){
 				this.nbActions --;
 				
 				this.setTarget(target, function(){
+			    	_this.sprite.body.velocity.x = -1;
+			    	_this.sprite.animations.play('left', 14, true);
 					_this.canMove = false;
 					_this.moveToCase(idX-1, idY, target);
 				});
@@ -447,6 +453,8 @@ define(function(require){
 				this.nbActions --;
 				
 				this.setTarget(target, function(){
+			    	_this.sprite.body.velocity.y = -1;
+			    	_this.sprite.animations.play('up', 7, true);
 					_this.canMove = false;
 					_this.moveToCase(idX, idY-1, target);
 				});
