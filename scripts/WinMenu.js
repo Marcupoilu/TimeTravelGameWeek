@@ -1,5 +1,6 @@
 define(function(require) {
 	var Player = require("./Player");
+	var MainMenu = require("./MainMenu");
 
 	var WinMenu = {
 		preload: function(){
@@ -31,7 +32,7 @@ define(function(require) {
 		},
 
 		onClickMainMenu: function(){
-			console.log("retour main menu");
+			MainMenu.create();
 		},
 
 		onClickNextLevel: function(){
