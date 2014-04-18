@@ -123,7 +123,7 @@ define(function(require) {
 		}
 	}), new function(){
 		this.loadLevel = function(int){
-			console.log(level+int)
+			console.log("level"+int)
 			if(_this.allCreate){
 				Player.resetManagers();
 				Player.destroy();

@@ -23,10 +23,10 @@ define(function(require){
 		noMoreActions : false,
 
 		preload: function(){
-			Game.load.spritesheet('perso_bleu', '../images/perso/perso_bleu.png', 64, 128, 12);
-			Game.load.spritesheet('perso_orange', '../images/perso/perso_orange.png', 64, 128, 12);
-			Game.load.spritesheet('perso_vert', '../images/perso/perso_vert.png', 64, 128, 12);
-			Game.load.spritesheet('perso_violet', '../images/perso/perso_violet.png', 64, 128, 12);
+			Game.load.spritesheet('perso_bleu', '../images/perso/player-blue.png', 64, 64, 15);
+			Game.load.spritesheet('perso_violet', '../images/perso/player-red.png', 64, 64, 15);
+			Game.load.spritesheet('perso_vert', '../images/perso/player-green.png', 64, 64, 15);
+			Game.load.spritesheet('perso_orange', '../images/perso/player-orange.png', 64, 64, 15);
 
 			this.created = false;
 		},
@@ -43,7 +43,7 @@ define(function(require){
 
 			if(!this.created)
 			{
-				this.sprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64 - 64, 'perso_' + color[this.idColor]);
+				this.sprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64, 'perso_' + color[this.idColor]);
 	        	Game.sprites.push(this.sprite);
 
 				this.created = true;
@@ -53,7 +53,7 @@ define(function(require){
 			    //  Enable if for physics. This creates a default rectangular body.
 				Game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 
-			    this.sprite.body.setSize(64,64,0,64);
+			    this.sprite.body.setSize(64,64);
 				this.initInputs();
 				ProjectionManager.resetAll();
 		    }
@@ -65,10 +65,10 @@ define(function(require){
 				this.sprite.alpha = 1;
 				this.canMove = true;
 			}
-			this.sprite.animations.add('up', [0, 1]);
-			this.sprite.animations.add('down', [2, 3]);
-			this.sprite.animations.add('right', [4, 5, 6, 7]);
-			this.sprite.animations.add('left', [8, 9, 10, 11]);
+			this.sprite.animations.add('up', [4, 5, 6, 7]);
+			this.sprite.animations.add('down', [0,1,2,3]);
+			this.sprite.animations.add('right', [8,9, 10, 11]);
+			this.sprite.animations.add('left', [12, 13, 14, 15]);
 
 		    console.log('Player Create', this);
 		    Game.gameState = 'play';
