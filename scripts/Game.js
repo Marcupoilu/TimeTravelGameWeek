@@ -22,7 +22,7 @@ define(function(require) {
 			console.log('Game Preload');
 			_this = this;
 			this.game.levels = [];
-			this.game.currentLevel = 0;
+			this.game.currentLevel = 1;
 			this.game.sprites = [];
 
 			for(var i = 0; i < 10; i++){
@@ -118,7 +118,6 @@ define(function(require) {
 			// console.log('Game Render');
 			if(Player.isReady){
 				Player.render();
-				this.game.debug.body(Player.sprite);
 			}
 		}
 	}), new function(){

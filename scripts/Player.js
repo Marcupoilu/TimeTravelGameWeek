@@ -74,6 +74,7 @@ define(function(require){
 		    Game.gameState = 'play';
 		    this.resetManagers();
 		    this.isReady = true;
+		    this.canMove = true;
 		},
 
 		destroy: function(){
@@ -305,6 +306,7 @@ define(function(require){
 				this.setTarget(target, function(){
 					//_this.sprite.destroy();
 					_this.disappear();
+					Game.GameOver();
 				});
 				return;
 			}
