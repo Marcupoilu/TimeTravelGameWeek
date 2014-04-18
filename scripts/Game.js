@@ -25,7 +25,7 @@ define(function(require) {
 			this.game.currentLevel = 1;
 			this.game.sprites = [];
 
-			for(var i = 0; i < 10; i++){
+			for(var i = 0; i < 9; i++){
 				this.game.levels.push(i);	
 			}
 
