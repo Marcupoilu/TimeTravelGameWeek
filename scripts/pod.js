@@ -17,6 +17,8 @@ define(function(require) {
         Game.sprites.push(this.sprite2);
 		this.sprite.update = function(){
 			//console.log(_this.sprite.input.pointerDown());
+		    this.style = { font: "30px Terminal", fill: "#fff", 'text-align': 'center', width: '100px'};
+		  	this.tChoosePod = Game.add.text(Game.world.centerX/2 + 150, 320, 'Choose a time travel pod !', this.style);
 			if(!Player.isReady && _this.sprite.input.pointerDown()){
 				if (Player.created)
 					Player.resetVelocity();
