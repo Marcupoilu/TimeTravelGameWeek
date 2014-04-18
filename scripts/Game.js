@@ -220,7 +220,8 @@ define(function(require) {
 						if(lookCase.x == proj.currCase.x && lookCase.y == proj.currCase.y){
 							_this.game.sprites.push(_this.game.add.sprite(lookCase.x*64, (lookCase.y - 1)*64, 'exclamation'),
 								_this.game.add.sprite(Player.currCase.x*64, (Player.currCase.y-1)*64, 'exclamation'));
-							console.log('player see projection', lookCase);
+							//console.log('player see projection', lookCase);
+							_this.game.GameOver();
 							//break;
 						}
 					}
@@ -233,7 +234,8 @@ define(function(require) {
 					if(lookUtil.checkLook(projLook, _.reject(ProjectionManager.projs, proj)) || 
 						lookUtil.checkLook(projLook, [Player])){
 						_this.game.sprites.push(_this.game.add.sprite(proj.currCase.x*64, (proj.currCase.y - 1)*64, 'exclamation'));
-						console.log('proj see something');
+						_this.game.GameOver();
+						//console.log('proj see something');
 					}
 				}
 			});
