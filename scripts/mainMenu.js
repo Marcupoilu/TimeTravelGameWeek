@@ -29,7 +29,7 @@ define(function(require) {
 		},
 
 		onClickPlay: function(){
-			Game.loadLevel(0);
+			Game.loadLevel(5);
 		},
 
 		onClickcredit: function(){
