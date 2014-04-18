@@ -40,6 +40,7 @@ define(function(require) {
     		this.game.load.image('timelineOn', '../images/ui/time_on.png');
     		this.game.load.image('timelineOff', '../images/ui/time_off.png');
        		this.game.load.image('background', '../images/ground.png');
+        	this.game.load.image('ice', '../images/ice.png');
 			this.game.load.spritesheet('vortex', '../images/vortex.png', 64, 128, 1);
 
     		podsManager.preload();
