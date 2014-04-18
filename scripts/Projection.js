@@ -199,6 +199,10 @@ define(function(require) {
 			// console.log("setTarget target = ", target, ", onComplete = ", onComplete);
 			var _this = this;
 			var velocity = this.sprite.body.velocity;
+			this.lookDirection = {
+				x: velocity.x,
+				y: velocity.y
+			}
 
 			if(velocity.y < 0){
 				this.sprite.animations.play('up', 7, true);

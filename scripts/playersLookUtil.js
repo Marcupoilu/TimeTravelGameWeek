@@ -55,6 +55,7 @@ define(function(require) {
 				_.each(toChecks, function(obj){
 					if(lookCase.x == obj.currCase.x && lookCase.y == obj.currCase.y){
 						//console.log('player see projection', lookCase);
+						_this.game.sprites.push(_this.game.add.sprite(obj.currCase.x*64, (obj.currCase.y-1)*64, 'exclamation'));
 						seeOther = true;
 					}
 				});
