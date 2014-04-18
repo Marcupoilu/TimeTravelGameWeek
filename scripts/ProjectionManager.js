@@ -96,7 +96,12 @@ define(function(require) {
 		closeCurrentProjection: function(){
 			for(var i=0; i < this.projs.length; ++i)
 			{
-				this.projs[i].reset();
+				if(this.projs[i].active){
+					//if(!this.projs[i].isResetting){
+						this.projs[i].reset();
+					//}
+					//this.projs[i].teleport('reset');
+				}
 				this.timelines[i].reset();
 			}
 			this.projs[this.currentId].full = true;
