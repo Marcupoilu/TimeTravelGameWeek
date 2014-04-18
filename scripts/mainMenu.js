@@ -21,7 +21,7 @@ define(function(require) {
 		  	this.buttonPlay.scale.setTo(0.85, 1.1);
 		  	this.buttonCredit.scale.setTo(0.85, 1.1);
 
-		 	Game.sprites.push(this.backgroundImg, this.buttonPlay, this.buttonCredit, this.tbuttonPlay, this.tbuttonCredit);
+		 	Game.menuSprites.push(this.backgroundImg, this.buttonPlay, this.buttonCredit, this.tbuttonPlay, this.tbuttonCredit);
 		},
 
 		update: function(){
