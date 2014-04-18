@@ -24,6 +24,7 @@ define(function(require) {
 			this.game.levels = [];
 			this.game.currentLevel = 1;
 			this.game.sprites = [];
+			this.game.menuSprites = [];
 
 			for(var i = 0; i < 9; i++){
 				this.game.levels.push(i);	
@@ -124,7 +125,8 @@ define(function(require) {
 		}
 	}), new function(){
 		this.loadLevel = function(int){
-			console.log("level"+int)
+			console.log("level"+int);
+			
 			if(_this.allCreate){
 				Player.resetManagers();
 				Player.destroy();
@@ -141,6 +143,13 @@ define(function(require) {
 				_this.game.layerRender.destroy();
 				// _this.game.layerRenderBis.destroy();
 				_this.game.map.destroy();
+			} else {
+				_.each(_this.game.menuSprites, function(sprite){
+					//console.log(sprite);
+					if(sprite){
+						sprite.destroy();
+					}
+				});
 			}
 
 			//	Enable p2 physics
