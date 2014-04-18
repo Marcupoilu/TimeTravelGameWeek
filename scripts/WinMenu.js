@@ -5,6 +5,7 @@ define(function(require) {
 		preload: function(){
 			Game.load.image('win', '../images/win.png');	
 			Game.load.image("button" , "../images/button.png");
+			Game.load.image('bgWin', '../images/fond_gris.png');
 			this.labelWin = "Congratulations ! \n Level Finished !";
 		    this.style = { font: "30px Arial", fill: "#fff", align: "center" };
 			this.labelMainMenu = "Main Menu";
@@ -14,6 +15,7 @@ define(function(require) {
 		},
 
 		create: function(){
+			this.bgSprite = Game.add.sprite(0,0, 'bgWin');
 			this.sprite = Game.add.sprite(Game.world.centerX/2,0, 'win');
   			this.buttonMainMenu = Game.add.button(50, 450, 'button', this.onClickMainMenu, this);
     		this.buttonNextLevel = Game.add.button(550, 450, 'button', this.onClickNextLevel, this);

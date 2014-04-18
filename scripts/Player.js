@@ -75,6 +75,7 @@ define(function(require){
 		    this.resetManagers();
 		    this.isReady = true;
 		    this.canMove = true;
+		  	Game.tChoosePod.alpha = 0;
 		},
 
 		destroy: function(){
@@ -90,6 +91,7 @@ define(function(require){
 			this.nbActions = 0;
 			this.noMoreActions = false;
 			Game.playerDisappear();
+		  	Game.tChoosePod.alpha = 1;
 		},
 
 		resetManagers: function()

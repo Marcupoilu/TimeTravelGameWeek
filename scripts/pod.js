@@ -15,16 +15,17 @@ define(function(require) {
 		//console.log(this.sprite.input);
         Game.sprites.push(this.sprite);
         Game.sprites.push(this.sprite2);
+
 		this.sprite.update = function(){
 			//console.log(_this.sprite.input.pointerDown());
-		    this.style = { font: "30px Terminal", fill: "#fff", 'text-align': 'center', width: '100px'};
-		  	this.tChoosePod = Game.add.text(Game.world.centerX/2 + 150, 320, 'Choose a time travel pod !', this.style);
 			if(!Player.isReady && _this.sprite.input.pointerDown()){
 				if (Player.created)
 					Player.resetVelocity();
-				console.log('player id', _this.id);
 				Player.create(_this.startCase, -1, _this.id);
+		  		Game.tChoosePod.alpha = 1;
 			}
+			if (Player.isReady)
+		  		Game.tChoosePod.alpha = 0;
 		}
 	}
 

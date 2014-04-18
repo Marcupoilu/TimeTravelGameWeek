@@ -196,6 +196,8 @@ define(function(require) {
 
 		    _this.game.gameState = 'readyToPlay';
 		    _this.allCreate = true;
+		    _this.style = { font: "30px Terminal", fill: "#fff", 'text-align': 'center', width: '100px'};
+   	 		_this.game.tChoosePod = _this.game.add.text(Game.world.centerX/2 + 100, 320, 'Choose a time travel pod !', _this.game.style);
 		};
 
 		this.GameOver = function(){
