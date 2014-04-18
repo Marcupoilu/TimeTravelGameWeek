@@ -69,6 +69,46 @@ define(function(require) {
 			return !this.finish;
 		};
 
+		this.teleport = function(callback, unTeleport){
+			var _this = this;
+			this.sprite.alpha = 0;
+			this.isResetting = true;
+			this.telepSprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64, 'telep_' + color[this.idColor]);
+			this.telepAnim = this.telepSprite.animations.add('Telep', [0, 1, 2, 3]);
+			Game.sprites.push(this.telepSprite);
+			this.telepAnim.onComplete.add(function(){
+				if(callback && !unTeleport){
+					if(_this[callback]){
+						_this[callback]();
+					} else {
+						callback();
+					}
+					//callback();
+				}
+				if(unTeleport){
+					if(_this[callback]){
+						_this.unTeleport(_this[callback]);
+					} else {
+						_this.unTeleport(callback);
+					}
+				}
+				_this.telepSprite.alpha = 0;
+				//_this.telepSprite.animations.stop();
+			}, this);
+			this.telepSprite.animations.play('Telep', 4);
+		},
+
+		this.unTeleport = function(){
+			this.sprite.alpha = 0;
+			//this.telepSprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64, 'telep_' + color[this.idColor]);
+			this.unTelepAnim = this.teleSprite.animations.add('Telep', [4, 5, 6, 7]);
+			this.unTelepAnim.onComplete.add(function(){
+				this.sprite.alpha = 1;
+				console.log('end anim');
+			}, this);
+			this.teleSprite.animations.play('Telep', 4);
+		},
+
 		this.resetVelocity = function(){
 			this.sprite.body.velocity.x = 0;
 		    this.sprite.body.velocity.y = 0;
@@ -78,10 +118,12 @@ define(function(require) {
 			this.currId = -1;
 			this.sprite.alpha = 0;
 			this.active = false;
+			console.log(this);
 			this.currCase = _(this.trajet[0]).clone();
 			
 			this.sprite.body.x = this.currCase.x * 64;
 			this.sprite.body.y = this.currCase.y * 64;
+			this.isResetting = false;
 		};
 
 		this.clear = function(){

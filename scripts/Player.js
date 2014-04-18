@@ -28,6 +28,11 @@ define(function(require){
 			Game.load.spritesheet('perso_vert', '../images/perso/player-green.png', 64, 64, 15);
 			Game.load.spritesheet('perso_orange', '../images/perso/player-orange.png', 64, 64, 15);
 
+			Game.load.spritesheet('telep_bleu', '../images/perso/anim_telep_blue.png', 64, 64, 8);
+			Game.load.spritesheet('telep_violet', '../images/perso/anim_telep_red.png', 64, 64, 8);
+			Game.load.spritesheet('telep_vert', '../images/perso/anim_telep_green.png', 64, 64, 8);
+			Game.load.spritesheet('telep_orange', '../images/perso/anim_telep_orange.png', 64, 64, 8);
+
 			this.created = false;
 		},
 
@@ -44,6 +49,7 @@ define(function(require){
 			if(!this.created)
 			{
 				this.sprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64, 'perso_' + color[this.idColor]);
+
 	        	Game.sprites.push(this.sprite);
 
 				this.created = true;
@@ -78,20 +84,63 @@ define(function(require){
 		  	Game.tChoosePod.alpha = 0;
 		},
 
+		teleport: function(callback, unTeleport){
+			var _this = this;
+			this.sprite.alpha = 0;
+			this.telepSprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64, 'telep_' + color[this.idColor]);
+			this.telepAnim = this.telepSprite.animations.add('Telep', [0, 1, 2, 3]);
+			Game.sprites.push(this.telepSprite);
+			this.telepAnim.onComplete.add(function(){
+				if(callback && !unTeleport){
+					callback();
+				}
+				if(unTeleport){
+					_this.unTeleport(callback);
+				}
+				_this.telepSprite.alpha = 0;
+				//_this.telepSprite.animations.stop();
+			}, this);
+			this.telepSprite.animations.play('Telep', 4);
+		},
+
+		unTeleport: function(){
+			this.sprite.alpha = 0;
+			//this.telepSprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64, 'telep_' + color[this.idColor]);
+			this.unTelepAnim = this.teleSprite.animations.add('Telep', [4, 5, 6, 7]);
+			this.unTelepAnim.onComplete.add(function(){
+				this.sprite.alpha = 1;
+				console.log('end anim');
+			}, this);
+			this.teleSprite.animations.play('Telep', 4);
+		},
+
 		destroy: function(){
 			this.created = false;
 			this.sprite.destroy();
 		},
 
 		disappear: function(){
-			this.resetVelocity();
-			this.isReady = false;
-			this.sprite.alpha = 0;
-			this.canMove = false;
-			this.nbActions = 0;
-			this.noMoreActions = false;
-			Game.playerDisappear();
-		  	Game.tChoosePod.alpha = 1;
+			var _this = this;
+			if(!this.isDisappearing){
+				this.isDisappearing = true;
+				this.resetVelocity();
+				this.isReady = false;
+				//this.sprite.alpha = 0;
+				this.canMove = false;
+				/*_.each(ProjectionManager.projs, function(proj){
+					if(proj.active){
+						proj.teleport();
+					}
+				});*/
+				this.teleport(function(){
+					_this.isDisappearing = false;
+					//console.log('calback');
+					_this.nbActions = 0;
+					_this.noMoreActions = false;
+					Game.playerDisappear();
+			  		Game.tChoosePod.alpha = 1;
+				});
+			}
 		},
 
 		resetManagers: function()
@@ -292,10 +341,11 @@ define(function(require){
 
 						consoleToCheck.Activate();
 
-						ProjectionManager.closeCurrentProjection();
 						if (ConsoleManager.consolesON == ConsoleManager.maxConsolesON){
 							ExitManager.exitObjects[0].Activate();
 						}
+						//this.currCase = future;
+						ProjectionManager.closeCurrentProjection();
 						_this.disappear();
 					}
 				});
