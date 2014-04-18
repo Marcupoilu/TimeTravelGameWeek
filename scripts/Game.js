@@ -224,9 +224,7 @@ define(function(require) {
 
 			_.each(ProjectionManager.projs, function(proj){
 				if(proj.active){
-					projLook = lookUtil.getLook(proj.currCase, proj.sprite.body.velocity);
-					console.log('checkLook proj', proj.currCase, proj.sprite.body.velocity, projLook);
-
+					projLook = lookUtil.getLook(proj.currCase, proj.lookDirection);
 					if(lookUtil.checkLook(projLook, _.reject(ProjectionManager.projs, proj)) || 
 						lookUtil.checkLook(projLook, [Player])){
 						console.log('proj see something');
