@@ -140,6 +140,7 @@ define(function(require) {
 					//console.log(sprite);
 					if(sprite){
 						sprite.destroy();
+						delete sprite;
 					}
 				});
 				_this.game.layerTiles.destroy();
@@ -153,6 +154,7 @@ define(function(require) {
 					//console.log(sprite);
 					if(sprite){
 						sprite.destroy();
+						delete sprite;
 					}
 				});
 			}
