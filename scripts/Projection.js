@@ -30,16 +30,16 @@ define(function(require) {
 
 		this.create = function(){
 			// this.depart = depart || new Case(1,1);
-			this.sprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64 - 64, 'perso_' + color[this.idColor]);
-			this.sprite.animations.add('up', [0, 1]);
-			this.sprite.animations.add('down', [2, 3]);
-			this.sprite.animations.add('right', [4, 5, 6, 7]);
-			this.sprite.animations.add('left', [8, 9, 10, 11]);
+			this.sprite = Game.add.sprite(this.currCase.x * 64, this.currCase.y * 64, 'perso_' + color[this.idColor]);
+			this.sprite.animations.add('up', [4, 5, 6, 7]);
+			this.sprite.animations.add('down', [0,1,2,3]);
+			this.sprite.animations.add('right', [8,9, 10, 11]);
+			this.sprite.animations.add('left', [12, 13, 14, 15]);
         	Game.sprites.push(this.sprite);
 			Game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 			this.sprite.alpha = 0;
 
-			this.sprite.body.setSize(64,64,0,64);
+			this.sprite.body.setSize(64,64);
 		};
 
 		this.addCase = function(proCase)
