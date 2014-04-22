@@ -3,8 +3,8 @@ define(function(require) {
 	var Credits = require("./CreditsMenu")
 	var mainMenu = {
 		preload: function(){
-			Game.load.image('mainMenu', '../images/MainMenu.png');	
-			Game.load.image('button' , '../images/button.png');
+			Game.load.image('mainMenu', './images/MainMenu.png');	
+			Game.load.image('button' , './images/button.png');
 
 		    this.style = { font: "30px Terminal", fill: "#fff", 'text-align': 'center', width: '100px'};
 

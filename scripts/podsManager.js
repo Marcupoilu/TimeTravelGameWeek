@@ -5,11 +5,11 @@ define(function(require){
 
 	var podManager = {
 		preload : function(){
-			Game.load.image('pod', '../images/spawn.png');
-			Game.load.image('aura1', '../images/Aura_green.png');
-			Game.load.image('aura2', '../images/Aura_orange.png');
-			Game.load.image('aura3', '../images/Aura_purple.png');
-			Game.load.image('aura4', '../images/Auras_blue.png');
+			Game.load.image('pod', './images/spawn.png');
+			Game.load.image('aura1', './images/Aura_green.png');
+			Game.load.image('aura2', './images/Aura_orange.png');
+			Game.load.image('aura3', './images/Aura_purple.png');
+			Game.load.image('aura4', './images/Auras_blue.png');
 		},
 
 		create : function(map){

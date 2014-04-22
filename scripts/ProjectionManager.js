@@ -9,7 +9,7 @@ define(function(require) {
 		maxActions: -1,
 
 		preload: function(){
-			Game.load.spritesheet('projection', '../images/gabarit_chara.png', 64, 128, 1);
+//			Game.load.spritesheet('projection', '../images/gabarit_chara.png', 64, 128, 1);
 		},
 
 		create: function(pods){

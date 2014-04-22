@@ -3,8 +3,8 @@ define(function(require) {
 
 	var SwitchManager = {
 		preload: function(){
-			Game.load.image('switch_on', '../images/switch_on.png');
-			Game.load.image('switch_off', '../images/switch_off.png');
+			Game.load.image('switch_on', './images/switch_on.png');
+			Game.load.image('switch_off', './images/switch_off.png');
 		},
 
 		create: function(map){

@@ -2,7 +2,7 @@ define(function(require) {
 
 	var WinMenu = {
 		preload: function(){
-			Game.load.image('credits', '../images/credits.png');
+			Game.load.image('credits', './images/credits.png');
 		},
 
 		create: function(){

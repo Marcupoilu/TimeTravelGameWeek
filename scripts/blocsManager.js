@@ -5,7 +5,7 @@ define(function(require) {
     var blocManager = {
         preload : function()
         {
-            Game.load.image('bloc', '../images/bloc.png');
+            Game.load.image('bloc', './images/bloc.png');
         },
 
         create : function(map)

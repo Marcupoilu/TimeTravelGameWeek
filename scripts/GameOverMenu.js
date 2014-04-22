@@ -4,9 +4,9 @@ define(function(require) {
 
 	var GameOverMenu = {
 		preload: function(){
-			Game.load.image('bg', '../images/fond_gris.png');
-			Game.load.image('loose', '../images/loose.png');	
-			Game.load.image("button" , "../images/button.png");
+			Game.load.image('bg', './images/fond_gris.png');
+			Game.load.image('loose', './images/loose.png');	
+			Game.load.image("button" , "./images/button.png");
 			this.labelOver = "You've created a paradox...\n You have never existed !";
 		    this.style = { font: "30px Arial", fill: "#fff", align: "center" };
 			this.labelMainMenu = "Main Menu";

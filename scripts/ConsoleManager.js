@@ -4,8 +4,8 @@ define(function(require) {
 
 	var ConsoleManager = {
 		preload: function(){
-			Game.load.image('consoleOFF', '../images/Command_board_red.png');
-			Game.load.image('consoleON', '../images/Command_board_green.png');
+			Game.load.image('consoleOFF', './images/Command_board_red.png');
+			Game.load.image('consoleON', './images/Command_board_green.png');
 		},
 
 		create : function(map){

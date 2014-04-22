@@ -4,9 +4,9 @@ define(function(require) {
 
 	var WinMenu = {
 		preload: function(){
-			Game.load.image('win', '../images/win.png');	
-			Game.load.image("button" , "../images/button.png");
-			Game.load.image('bgWin', '../images/fond_gris.png');
+			Game.load.image('win', './images/win.png');	
+			Game.load.image("button" , "./images/button.png");
+			Game.load.image('bgWin', './images/fond_gris.png');
 			this.labelWin = "Congratulations ! \n Level Finished !";
 		    this.style = { font: "30px Arial", fill: "#fff", align: "center" };
 			this.labelMainMenu = "Main Menu";

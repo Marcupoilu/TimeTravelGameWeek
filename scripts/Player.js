@@ -23,15 +23,15 @@ define(function(require){
 		noMoreActions : false,
 
 		preload: function(){
-			Game.load.spritesheet('perso_bleu', '../images/perso/player-blue.png', 64, 64, 15);
-			Game.load.spritesheet('perso_violet', '../images/perso/player-red.png', 64, 64, 15);
-			Game.load.spritesheet('perso_vert', '../images/perso/player-green.png', 64, 64, 15);
-			Game.load.spritesheet('perso_orange', '../images/perso/player-orange.png', 64, 64, 15);
+			Game.load.spritesheet('perso_bleu', './images/perso/player-blue.png', 64, 64, 15);
+			Game.load.spritesheet('perso_violet', './images/perso/player-red.png', 64, 64, 15);
+			Game.load.spritesheet('perso_vert', './images/perso/player-green.png', 64, 64, 15);
+			Game.load.spritesheet('perso_orange', './images/perso/player-orange.png', 64, 64, 15);
 
-			Game.load.spritesheet('telep_bleu', '../images/perso/anim_telep_blue.png', 64, 64, 8);
-			Game.load.spritesheet('telep_violet', '../images/perso/anim_telep_red.png', 64, 64, 8);
-			Game.load.spritesheet('telep_vert', '../images/perso/anim_telep_green.png', 64, 64, 8);
-			Game.load.spritesheet('telep_orange', '../images/perso/anim_telep_orange.png', 64, 64, 8);
+			Game.load.spritesheet('telep_bleu', './images/perso/anim_telep_blue.png', 64, 64, 8);
+			Game.load.spritesheet('telep_violet', './images/perso/anim_telep_red.png', 64, 64, 8);
+			Game.load.spritesheet('telep_vert', './images/perso/anim_telep_green.png', 64, 64, 8);
+			Game.load.spritesheet('telep_orange', './images/perso/anim_telep_orange.png', 64, 64, 8);
 
 			this.created = false;
 		},

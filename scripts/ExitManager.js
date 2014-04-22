@@ -4,8 +4,8 @@ define(function(require) {
 
 	var ExitManager = {
 		preload: function(){
-			Game.load.image('exit_close', '../images/exit_close.png');
-			Game.load.image('exit_open', '../images/exit_open.png');
+			Game.load.image('exit_close', './images/exit_close.png');
+			Game.load.image('exit_open', './images/exit_open.png');
 		},
 
 		create : function(map){

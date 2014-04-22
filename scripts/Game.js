@@ -36,19 +36,19 @@ define(function(require) {
 			});
     		//  Next we load the tileset. This.game is just an image, loaded in via the normal way we load images:
 
-    		this.game.load.image('exclamation', '../images/exclamation.png');
-    		this.game.load.image('tiles', 'Assets/typeOfCase.png');
-    		this.game.load.image('linksImg', 'Assets/links.png');
-       		this.game.load.image('renderTileSet', 'Assets/renderTileSet.png');
-    		this.game.load.image('timelineOn', '../images/ui/time_on.png');
-    		this.game.load.image('timelineOff', '../images/ui/time_off.png');
-       		this.game.load.image('background', '../images/ground.png');
-        	this.game.load.image('ice', '../images/ice.png');
-        	this.game.load.image('push_down', '../images/pushDown.png');
-        	this.game.load.image('push_up', '../images/pushUp.png');
-        	this.game.load.image('push_left', '../images/pushLeft.png');
-        	this.game.load.image('push_right', '../images/pushRight.png');
-			this.game.load.spritesheet('vortex', '../images/vortex.png', 64, 64, 4);
+    		this.game.load.image('exclamation', './images/exclamation.png');
+    		this.game.load.image('tiles', './Assets/typeOfCase.png');
+    		this.game.load.image('linksImg', './Assets/links.png');
+       		this.game.load.image('renderTileSet', './Assets/renderTileSet.png');
+    		this.game.load.image('timelineOn', './images/ui/time_on.png');
+    		this.game.load.image('timelineOff', './images/ui/time_off.png');
+       		this.game.load.image('background', './images/ground.png');
+        	this.game.load.image('ice', './images/ice.png');
+        	this.game.load.image('push_down', './images/pushDown.png');
+        	this.game.load.image('push_up', './images/pushUp.png');
+        	this.game.load.image('push_left', './images/pushLeft.png');
+        	this.game.load.image('push_right', './images/pushRight.png');
+			this.game.load.spritesheet('vortex', './images/vortex.png', 64, 64, 4);
 
     		podsManager.preload();
     		DoorManager.preload();
