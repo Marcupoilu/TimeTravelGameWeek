@@ -1,6 +1,6 @@
 define(function(require) {
 	var Player = require("./Player");
-	var MainMenu = require("./MainMenu");
+	var MainMenu = require("./mainMenu");
 
 	var GameOverMenu = {
 		preload: function(){
